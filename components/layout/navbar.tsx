@@ -42,7 +42,7 @@ export default function Navbar() {
             <div className="flex items-center gap-3">
               <a
                 href="/resume.pdf"
-                className="hidden rounded-full border border-[#D7B893]/70 bg-[#D7B893]/28 px-4 py-2 text-sm font-medium text-[#2F2A26] transition hover:-translate-y-0.5 hover:bg-[#D7B893]/38 md:inline-flex"
+                className="btn-primary rounded-full px-4 py-2 text-sm font-medium"
               >
                 Resume
               </a>

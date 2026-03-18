@@ -1,3 +1,5 @@
+"use client";
+
 import Container from "../ui/container";
 import FadeUp from "../ui/fade-up";
 import GlassCard from "../ui/glass-card";
@@ -9,10 +11,11 @@ const experienceItems = [
     company: "Lifewood Data Technology",
     period: "Feb 2025 — Present",
     points: [
-      "Led development of end-to-end automated AI-powered data pipelines across computer vision, text extraction, NLP, data enrichment, and metadata generation.",
-      "Built workflows that processed 100k high-fidelity images in 5 hours.",
-      "Delivered AI solutions for clients including Apple, South African Department of Defence, iSoftStone, and FamilySearch.",
-      "Developed Python-based models and automation pipelines using TensorFlow, PyTorch, OpenCV, Hugging Face, AWS, Docker, and RESTful APIs.",
+      "Led development of end-to-end AI-powered data pipelines across computer vision, text extraction, NLP, data enrichment, and metadata generation.",
+      "Built automated workflows that processed 100,000 high-fidelity images in under 5 hours, significantly improving operational throughput.",
+      "Delivered production-ready AI solutions across multiple modalities for clients including Apple, South African Department of Defence, iSoftStone, and FamilySearch.",
+      "Developed and deployed models using Python, TensorFlow, PyTorch, OpenCV, Hugging Face, and AWS, with RESTful APIs for automation, integration, and fine-tuning.",
+      "Built proprietary tooling for metadata generation, correction, audit, annotation, and rework, including ad-hoc systems for large-scale U.S. data operations.",
     ],
   },
   {
@@ -20,10 +23,10 @@ const experienceItems = [
     company: "Sunway Digital Technology Solutions",
     period: "Apr 2024 — Dec 2024",
     points: [
-      "Maintained and improved the Customer 360 Profile project pipeline spanning multiple Sunway business units.",
-      "Worked on ETL and processing using Python, PySpark, Huawei Cloud, and AWS.",
-      "Developed scripts and Airflow DAGs for data ingestion, transformation, and workflow automation.",
-      "Supported interactive reporting workflows with Pandas, NLTK, NumPy, Seaborn, and PySpark.",
+      "Maintained and enhanced the Customer 360 Profile data pipeline, centralizing customer data across multiple Sunway business units.",
+      "Improved data reliability and processing efficiency through ETL pipeline optimization and workflow enhancements.",
+      "Worked with distributed data systems using Python, PySpark, AWS, and Huawei Cloud to support large-scale data processing.",
+      "Supported downstream analytics and reporting workflows by ensuring clean, structured, and accessible data across teams.",
     ],
   },
   {
@@ -31,10 +34,11 @@ const experienceItems = [
     company: "Setel Ventures",
     period: "Aug 2023 — Jan 2024",
     points: [
-      "Maintained and monitored data and machine learning pipelines for reliable production performance.",
-      "Researched, trained, and fine-tuned machine learning models including Random Forest and Linear Regression.",
-      "Developed a deep learning solution for churn prevention and fuelling pattern analysis in the Petronas ecosystem.",
-      "Contributed to AB testing, customer behavior analysis, and a customer profile consolidation mock-up using ETL and Power BI.",
+      "Maintained and monitored data and machine learning pipelines to ensure reliable model deployment and performance in production environments.",
+      "Researched, trained, and fine-tuned machine learning models including Random Forest, Linear Regression, and statistical models.",
+      "Developed a deep learning solution for churn prediction and fuelling pattern analysis across Petronas stations nationwide.",
+      "Conducted customer behavior analysis and A/B testing to evaluate campaign performance and optimize business decisions.",
+      "Led a mock customer profile consolidation project using ETL pipelines, machine learning techniques, and Power BI for visualization.",
     ],
   },
 ];

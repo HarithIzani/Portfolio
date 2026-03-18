@@ -11,14 +11,29 @@ html {
 
 body {
   min-height: 100vh;
+
   background:
-    radial-gradient(circle at 10% 10%, rgba(198, 162, 122, 0.20), transparent 22%),
-    radial-gradient(circle at 84% 14%, rgba(231, 216, 199, 0.30), transparent 24%),
-    radial-gradient(circle at 68% 76%, rgba(220, 199, 176, 0.24), transparent 24%),
-    radial-gradient(circle at 28% 82%, rgba(214, 184, 147, 0.16), transparent 18%),
-    radial-gradient(circle at 52% 42%, rgba(255, 255, 255, 0.14), transparent 30%),
-    linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.03)),
-    #ede4d8;
+    /* warm right-side depth (like your reference lighting) */
+    radial-gradient(circle at 85% 50%, rgba(184, 140, 96, 0.28), transparent 40%),
+
+    /* soft shadow bottom right */
+    radial-gradient(circle at 70% 85%, rgba(160, 120, 82, 0.22), transparent 45%),
+
+    /* subtle top lighting */
+    radial-gradient(circle at 30% 10%, rgba(255, 255, 255, 0.22), transparent 30%),
+
+    /* mid warmth */
+    radial-gradient(circle at 50% 40%, rgba(220, 199, 176, 0.18), transparent 35%),
+
+    /* base gradient (this is key change) */
+    linear-gradient(
+      135deg,
+      #f3ebe2 0%,
+      #e7d8c7 40%,
+      #dcc7b0 70%,
+      #c9a984 100%
+    );
+
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
@@ -49,4 +64,21 @@ h3,
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+.btn-primary {
+  background-color: rgba(194, 223, 195, 0.35); /* faint green */
+  color: #2F2A26;
+  border: 1px solid rgba(180, 200, 180, 0.35);
+
+  backdrop-filter: blur(10px);
+  transition: all 0.25s ease;
+}
+
+.btn-primary:hover {
+  background-color: #D2EOD3; /* full green */
+  border-color: rgba(180, 200, 180, 0.6);
+
+  transform: translateY(-1px);
+  box-shadow: 0 10px 30px rgba(120, 160, 120, 0.18);
 }

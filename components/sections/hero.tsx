@@ -22,26 +22,26 @@ export default function HeroSection() {
               </p>
 
               <h1 className="max-w-5xl text-4xl font-semibold leading-[0.95] tracking-tight text-[#2F2A26] md:text-7xl">
-                AI Engineer & Data Scientist building production-ready intelligent systems.
+                Data Science Graduate.
               </h1>
 
               <p className="mt-6 max-w-3xl text-base leading-8 text-[#6B625A] md:text-lg">
-                I build end-to-end AI and data systems across computer vision, NLP,
-                automation, and large-scale pipelines with a focus on practical deployment,
-                operational reliability, and measurable impact.
+                I am an AI Engineer and Data Scientist with strong research foundation and experience building production-ready AI and data systems.
+                Developed end-to-end pipelines transforming large-scale raw data into actionable insights, including processing 100k images for archival applications and building machine learning models for churn analysis in the Petronas ecosystem.
+                Gold Medallist Computer Science graduate with expertise in computer vision, NLP, and large-scale data pipelines.
               </p>
 
               <div className="mt-8 flex flex-wrap gap-4">
                 <a
                   href="#projects"
-                  className="rounded-full border border-[#D7B893]/70 bg-[#D7B893]/28 px-6 py-3 text-sm font-medium text-[#2F2A26] transition hover:-translate-y-0.5 hover:bg-[#D7B893]/40"
+                  className="btn-primary rounded-full px-6 py-3 text-sm font-medium"
                 >
                   View Projects
                 </a>
 
                 <a
                   href="/resume.pdf"
-                  className="rounded-full border border-white/45 bg-white/16 px-6 py-3 text-sm font-medium text-[#2F2A26] transition hover:bg-white/24"
+                  className="btn-primary rounded-full px-6 py-3 text-sm font-medium"
                 >
                   Download Resume
                 </a>

@@ -173,12 +173,12 @@ export default function ProjectsSection() {
           </div>
         </FadeUp>
 
-        <div className="relative -mx-6 px-6">
-          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-[#EDE4D8] to-transparent" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-[#EDE4D8] to-transparent" />
+        <div className="relative -mx-6 px-6 pt-8">
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-[#f3ebe2] to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-[#f3ebe2] to-transparent" />
 
-          <div className="no-scrollbar overflow-x-auto overflow-y-hidden pb-4">
-            <div className="flex w-max gap-6 snap-x snap-mandatory touch-pan-x">
+          <div className="no-scrollbar overflow-x-auto overflow-y-hidden px-2 pt-6 pb-10">
+            <div className="flex w-max gap-8 snap-x snap-mandatory touch-pan-x items-stretch">
               {projects.map((project, index) => (
                 <FadeUp key={project.title} delay={index * 0.06}>
                   <motion.article
@@ -199,14 +199,14 @@ export default function ProjectsSection() {
                           ? "warm"
                           : "default"
                       }
-                      className="group relative h-full overflow-hidden border border-white/32 p-8 transition duration-300 hover:border-white/60 hover:bg-white/18 hover:shadow-[0_28px_70px_rgba(120,88,56,0.14)] focus-within:border-white/60"
+                      className="group relative h-full overflow-hidden border border-white/32 p-8 transition duration-300 hover:!bg-[#D2EOD3] hover:!backdrop-blur-none hover:!bg-opacity-100 hover:border-[#BFDDBF] hover:shadow-[0_34px_90px_rgba(120,88,56,0.18),0_0_0_1px_rgba(210,224,211,0.9),0_0_100px_rgba(210,224,211,0.8)] focus-within:border-[#D2EOD3]"
                     >
-                      <div className="absolute inset-x-0 top-0 h-px bg-white/40" />
+                      <div className="absolute inset-x-0 top-0 h-px bg-white/40 transition duration-300 group-hover:bg-white/70" />
 
                       <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100">
-                        <div className="absolute -right-8 -top-8 h-28 w-28 rounded-full bg-[#C6A27A]/16 blur-3xl" />
-                        <div className="absolute bottom-0 left-0 h-24 w-24 rounded-full bg-[#E7D8C7]/18 blur-3xl" />
-                        <div className="absolute right-1/3 top-1/2 h-20 w-20 rounded-full bg-[#DCC7B0]/16 blur-2xl" />
+                        <div className="absolute -right-10 -top-10 h-36 w-36 rounded-full bg-[#D2EOD3]/30 blur-3xl" />
+                        <div className="absolute bottom-0 left-0 h-32 w-32 rounded-full bg-[#D2EOD3]/22 blur-3xl" />
+                        <div className="absolute right-1/3 top-1/2 h-24 w-24 rounded-full bg-[#D2EOD3]/18 blur-2xl" />
                       </div>
 
                       <div className="relative z-10 flex items-start justify-between gap-4">

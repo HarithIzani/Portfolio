@@ -13,11 +13,11 @@ export default function GlassCard({
 }: GlassCardProps) {
   const variantStyles = {
     default:
-      "border-white/45 bg-white/16 shadow-[0_24px_70px_rgba(84,62,42,0.10)]",
+      "border-white/50 bg-white/20 shadow-[0_28px_80px_rgba(84,62,42,0.14)]",
     warm:
-      "border-[#E6D3BF]/70 bg-[#F2E8DD]/35 shadow-[0_24px_70px_rgba(120,88,56,0.12)]",
+      "border-[#E6D3BF]/80 bg-[#F2E8DD]/40 shadow-[0_28px_80px_rgba(120,88,56,0.16)]",
     highlight:
-      "border-[#D7B893]/70 bg-[linear-gradient(180deg,rgba(255,255,255,0.22),rgba(231,216,199,0.22))] shadow-[0_26px_80px_rgba(140,102,66,0.14)]",
+      "border-[#D7B893]/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.28),rgba(231,216,199,0.25))] shadow-[0_32px_90px_rgba(140,102,66,0.18)]",
   };
 
   return (
