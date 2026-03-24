@@ -13,24 +13,21 @@ body {
   min-height: 100vh;
 
   background:
-    /* warm right-side depth (like your reference lighting) */
-    radial-gradient(circle at 85% 50%, rgba(184, 140, 96, 0.28), transparent 40%),
+    /* subtle top highlight */
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.18), transparent 35%),
 
-    /* soft shadow bottom right */
-    radial-gradient(circle at 70% 85%, rgba(160, 120, 82, 0.22), transparent 45%),
+    /* soft mid warmth */
+    radial-gradient(circle at 50% 40%, rgba(220, 199, 176, 0.18), transparent 40%),
 
-    /* subtle top lighting */
-    radial-gradient(circle at 30% 10%, rgba(255, 255, 255, 0.22), transparent 30%),
+    /* gentle bottom depth */
+    radial-gradient(circle at 50% 100%, rgba(160, 120, 82, 0.18), transparent 45%),
 
-    /* mid warmth */
-    radial-gradient(circle at 50% 40%, rgba(220, 199, 176, 0.18), transparent 35%),
-
-    /* base gradient (this is key change) */
+    /* base vertical gradient */
     linear-gradient(
-      135deg,
+      to bottom,
       #f3ebe2 0%,
-      #e7d8c7 40%,
-      #dcc7b0 70%,
+      #e7d8c7 35%,
+      #dcc7b0 65%,
       #c9a984 100%
     );
 

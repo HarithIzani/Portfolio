@@ -1,7 +1,11 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import GlassCard from "@/components/ui/glass-card";
 
 export default function ArchivalAIPipelinePage() {
+  const [isOpen, setIsOpen] = useState(false);
   const tech = [
     "Python",
     "TensorFlow",
@@ -19,7 +23,7 @@ export default function ArchivalAIPipelinePage() {
         <div className="mb-8">
           <Link
             href="/"
-            className="inline-flex rounded-full border border-white/45 bg-white/18 px-4 py-2 text-sm text-[#4F4842] backdrop-blur-[20px] transition hover:bg-white/26"
+            className="btn-primary rounded-full px-6 py-3 text-sm font-medium"
           >
             ← Back to Portfolio
           </Link>
@@ -131,7 +135,55 @@ export default function ArchivalAIPipelinePage() {
             </p>
           </GlassCard>
         </section>
+
+        <section className="mt-8">
+          <GlassCard variant="highlight" className="p-8 md:p-10">
+            <h2 className="text-2xl font-semibold">Pipeline Overview</h2>
+            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
+
+            <p className="mt-6 text-sm text-[#6B625A]">
+              High-level view of input, processing stages, and output structure.
+            </p>
+
+            <div className="mt-6">
+              <div
+                onClick={() => setIsOpen(true)}
+                className="cursor-pointer overflow-hidden rounded-[20px] border border-white/40"
+              >
+                <img
+                  src="/archival-pipeline.jpg"
+                  alt="Archival AI Pipeline Diagram"
+                  className="w-full object-cover transition duration-300 hover:scale-[1.02]"
+                />
+              </div>
+            </div>
+          </GlassCard>
+        </section>
+
       </div>
+
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md"
+          onClick={() => setIsOpen(false)}
+        >
+          <div className="relative max-h-[90vh] max-w-[90vw]">
+            <img
+              src="/archival-pipeline.jpg"
+              alt="Full Pipeline"
+              className="max-h-[90vh] max-w-[90vw] rounded-[16px] shadow-2xl"
+            />
+
+            <button
+              onClick={() => setIsOpen(false)}
+              className="absolute -right-4 -top-4 rounded-full bg-white px-3 py-1 text-sm shadow-lg"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
+
     </main>
   );
 }

@@ -26,40 +26,38 @@ const projects: Project[] = [
     title: "Archival AI Pipeline",
     summary:
       "End-to-end AI-powered pipeline for computer vision, text extraction, NLP, data enrichment, and metadata generation. Built for large-scale archival and enterprise data workflows, including processing 100k high-fidelity images in 5 hours.",
-    type: "Case Study",
+    type: "Live App",
     action: "View Details",
     link: "/projects/archival-ai-pipeline",
     tech: [
       "Python",
-      "TensorFlow",
       "PyTorch",
       "OpenCV",
-      "Hugging Face",
       "AWS",
       "Docker",
-      "REST APIs",
+      "Triton Inference Server",
+      "Data Enrichment",
+      "Metadata Generation",
     ],
     status: "Production",
-    secondaryLinks: [{ label: "Resume", url: "/resume.pdf" }],
+    /*secondaryLinks: [{ label: "Resume", url: "/resume.pdf" }],*/
   },
   {
-    title: "Customer 360 Data Pipeline",
+    title: "Portable Traffic Data Gathering Tool",
     summary:
-      "Maintained and improved a centralized Customer 360 pipeline that unified data from multiple Sunway business units. Included ETL processing, Airflow orchestration, and reporting support for interactive dashboards.",
+      "Gold Medal Award final year project using transfer learning with MobileNet V2 640 for near real-time traffic data gathering, including cars, pedestrians, weather condition, and brightness monitoring.",
     type: "Case Study",
     action: "View Details",
-    link: "/projects/customer-360-data-pipeline",
+    link: "/projects/portable-traffic-data-gathering-tool",
     tech: [
       "Python",
-      "PySpark",
-      "Airflow",
-      "AWS",
-      "Huawei Cloud",
-      "Pandas",
-      "NLTK",
+      "MobileNet V2 640",
+      "Transfer Learning",
+      "Computer Vision",
+      "Raspberry Pi",
+      "Berkeley DeepDrive",
     ],
-    status: "Production",
-    secondaryLinks: [{ label: "Resume", url: "/resume.pdf" }],
+    status: "Research",
   },
   {
     title: "Churn Prevention & Fuelling Analysis",
@@ -102,28 +100,31 @@ const projects: Project[] = [
 function getTypeStyles(type: Project["type"]) {
   switch (type) {
     case "Live App":
-      return "border-white/40 bg-[#B7D4D8]/28 text-slate-800";
+      return "border-white/40 bg-[#aed1d6]/32 text-[#2F2A26]";
+
     case "GitHub":
-      return "border-white/40 bg-[#E9D6C7]/28 text-slate-800";
+      return "border-white/40 bg-[#aed1d6]/32 text-[#2F2A26]";
+
     case "Demo":
-      return "border-white/40 bg-[#DCC7B0]/28 text-slate-800";
+      return "border-white/40 bg-[#aed1d6]/32 text-[#2F2A26]";
+
     case "Case Study":
     default:
-      return "border-white/40 bg-[#E7D8C7]/28 text-slate-800";
+      return "border-white/40 bg-[#aed1d6]/32 text-[#2F2A26]";
   }
 }
 
 function getStatusStyles(status?: Project["status"]) {
   switch (status) {
     case "Production":
-      return "border-white/35 bg-[#DCC7B0]/25 text-slate-700";
+      return "border-white/35 bg-[#cfb0cd]/25 text-slate-700";
     case "Internal":
-      return "border-white/35 bg-[#E7D8C7]/25 text-slate-700";
+      return "border-white/35 bg-[#cfb0cd]/25 text-slate-700";
     case "Prototype":
-      return "border-white/35 bg-[#B7D4D8]/25 text-slate-700";
+      return "border-white/35 bg-[#cfb0cd]/25 text-slate-700";
     case "Research":
     default:
-      return "border-white/35 bg-white/18 text-slate-700";
+      return "border-white/35 bg-[#cfb0cd]/25 text-slate-700";
   }
 }
 
@@ -174,8 +175,8 @@ export default function ProjectsSection() {
         </FadeUp>
 
         <div className="relative -mx-6 px-6 pt-8">
-          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-[#f3ebe2] to-transparent" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-[#f3ebe2] to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-gradient-to-r from-[#E2CFBA]/90 to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-gradient-to-l from-[#E2CFBA]/90 to-transparent" />
 
           <div className="no-scrollbar overflow-x-auto overflow-y-hidden px-2 pt-6 pb-10">
             <div className="flex w-max gap-8 snap-x snap-mandatory touch-pan-x items-stretch">

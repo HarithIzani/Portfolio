@@ -22,7 +22,7 @@ export default function HeroSection() {
               </p>
 
               <h1 className="max-w-5xl text-4xl font-semibold leading-[0.95] tracking-tight text-[#2F2A26] md:text-7xl">
-                Data Science Graduate.
+                Welcome to my Portfolio.
               </h1>
 
               <p className="mt-6 max-w-3xl text-base leading-8 text-[#6B625A] md:text-lg">
