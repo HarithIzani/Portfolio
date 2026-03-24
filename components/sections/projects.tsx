@@ -60,40 +60,38 @@ const projects: Project[] = [
     status: "Research",
   },
   {
-    title: "Churn Prevention & Fuelling Analysis",
+    title: "Human Stress Analysis Between Normal and ADHD Patients by Using Neural Network Based on EEG Signals",
     summary:
-      "Deep learning and machine learning work for churn prevention and fuelling pattern analysis in the Petronas ecosystem, alongside production monitoring, AB testing, and customer behavior analysis.",
+      "University research using EEG signals and neural networks to study stress and control response between normal and ADHD patients through controlled stimuli and patient profiling.",
     type: "Case Study",
     action: "View Details",
-    link: "/projects/churn-prevention-fuelling-analysis",
+    link: "/projects/human-stress-analysis",
     tech: [
-      "Python",
-      "Machine Learning",
-      "Deep Learning",
-      "Random Forest",
-      "Linear Regression",
-      "Power BI",
+      "Neural Network",
+      "EEG Signals",
+      "MATLAB",
+      "Signal Processing",
+      "Medical Brain Imaging",
+      "Human-Machine Interface",
     ],
     status: "Research",
-    secondaryLinks: [{ label: "Resume", url: "/resume.pdf" }],
   },
   {
-    title: "Metadata Audit & Annotation Tools",
+    title: "Analysis of Attention-Span on Prolonged Short-Form Online Content Consumption Using Neural Network Based on EEG Signals",
     summary:
-      "Proprietary internal tooling for metadata generation, fixing, audit, annotation, and rework. Included ad-hoc software supporting large-scale data collection and cleaning workflows.",
+      "University research using EEG signals and neural networks to analyze attention-span response under prolonged short-form content consumption with controlled stimuli.",
     type: "Case Study",
     action: "View Details",
-    link: "/projects/metadata-audit-annotation-tools",
+    link: "/projects/attention-span-analysis",
     tech: [
-      "Python",
-      "SQL",
-      "Data Cleaning",
-      "Automation",
-      "REST APIs",
-      "Docker",
+      "Neural Network",
+      "EEG Signals",
+      "MATLAB",
+      "Signal Processing",
+      "Medical Brain Imaging",
+      "Human-Machine Interface",
     ],
-    status: "Internal",
-    secondaryLinks: [{ label: "Resume", url: "/resume.pdf" }],
+    status: "Research",
   },
 ];
 
@@ -163,14 +161,14 @@ export default function ProjectsSection() {
         <FadeUp>
           <SectionTitle
             eyebrow="Projects"
-            title="Selected work"
+            title="Featured Works"
             description="A unified showcase of production AI systems, data platforms, internal tooling, and applied machine learning work."
           />
         </FadeUp>
 
         <FadeUp delay={0.06}>
           <div className="mb-4 flex items-center justify-between">
-            <p className="text-sm text-[#6B625A]">Explore selected projects →</p>
+            <p className="text-sm text-[#6B625A]">Scroll → Explore featured works</p>
           </div>
         </FadeUp>
 
