@@ -13,7 +13,7 @@ export default function HumanStressAnalysisPage() {
     "Human-Machine Interface",
   ];
 
-  const githubUrl = "https://github.com/harithizani/YOUR-STRESS-PROJECT";
+  const githubUrl = "https://github.com/HarithIzani/Normal-ADHD-Matlab-EEG";
 
   return (
     <main className="min-h-screen px-6 py-10 text-[#2F2A26]">
