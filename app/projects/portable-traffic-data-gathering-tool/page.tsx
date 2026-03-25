@@ -25,11 +25,12 @@ export default function PortableTrafficDataGatheringToolPage() {
   const diagramSrc = "/portable-traffic-diagram.svg";
   const additionalImageSrc = "/traffic-data-diagram.png";
   const documentationSrc = "/Traffic_Data_Documentation.html";
+  const researchPaperUrl = "/Traffic_Data_Research_Paper.pdf";
 
   return (
     <main className="min-h-screen px-6 py-10 text-[#2F2A26]">
       <div className="mx-auto max-w-6xl">
-        <div className="mb-8 flex items-center justify-between">
+        <div className="mb-8 flex items-center justify-between gap-4">
           <Link
             href="/"
             className="btn-primary rounded-full px-6 py-3 text-sm font-medium"
@@ -266,6 +267,40 @@ export default function PortableTrafficDataGatheringToolPage() {
 
         <section className="mt-8">
           <GlassCard variant="highlight" className="p-8 md:p-10">
+            <h2 className="text-3xl font-semibold">Key Findings</h2>
+            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
+
+            <ul className="mt-6 space-y-4 text-[#6B625A] leading-8">
+              <li>
+                • Lightweight object detection models such as MobileNetV2 are
+                viable for edge deployment without requiring heavy compute.
+              </li>
+              <li>
+                • Detection performance varies significantly between daylight
+                and low-light conditions.
+              </li>
+              <li>
+                • Grayscale preprocessing improves object recognition in darker
+                environments.
+              </li>
+              <li>
+                • Single-stage detectors provide a strong speed-performance
+                tradeoff for real-time traffic systems.
+              </li>
+              <li>
+                • Transfer learning on Berkeley DeepDrive helps bridge model
+                performance toward real-world street scenarios.
+              </li>
+              <li>
+                • A framework can combine preprocessing and model selection to
+                better handle both light and dark environments.
+              </li>
+            </ul>
+          </GlassCard>
+        </section>
+
+        <section className="mt-8">
+          <GlassCard variant="highlight" className="p-8 md:p-10">
             <h2 className="text-3xl font-semibold">System Diagram</h2>
             <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
 
@@ -282,7 +317,7 @@ export default function PortableTrafficDataGatheringToolPage() {
               <div className="overflow-hidden rounded-[24px] border border-white/35 bg-white/10 transition duration-300 hover:shadow-[0_24px_60px_rgba(120,88,56,0.12)]">
                 <img
                   src={diagramSrc}
-                  alt="Diagram"
+                  alt="Traffic system diagram"
                   className="w-full object-contain"
                 />
               </div>
@@ -292,7 +327,7 @@ export default function PortableTrafficDataGatheringToolPage() {
               <div className="overflow-hidden rounded-[24px] border border-white/35 bg-white/10">
                 <img
                   src={additionalImageSrc}
-                  alt="Example output"
+                  alt="Traffic detection output"
                   className="w-full object-cover"
                 />
               </div>
@@ -308,7 +343,7 @@ export default function PortableTrafficDataGatheringToolPage() {
             <p className="mt-6 max-w-3xl text-sm leading-7 text-[#6B625A]">
               Full project documentation for the portable traffic data gathering
               tool, including system design, model approach, workflow structure,
-              deployment context, and supporting implementation details.
+              deployment context, and implementation notes.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-4">
@@ -319,6 +354,15 @@ export default function PortableTrafficDataGatheringToolPage() {
                 className="btn-primary rounded-full px-6 py-3 text-sm font-medium"
               >
                 Open Full Documentation ↗
+              </a>
+
+              <a
+                href={researchPaperUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary rounded-full px-6 py-3 text-sm font-medium"
+              >
+                View Research Paper ↗
               </a>
 
               <button
@@ -348,18 +392,6 @@ export default function PortableTrafficDataGatheringToolPage() {
             <p className="mt-4 text-[#6B625A] leading-8">
               It bridges the gap between research-level models and practical
               real-world systems that can operate outside of cloud environments.
-            </p>
-          </GlassCard>
-        </section>
-
-        <section className="mt-8">
-          <GlassCard variant="highlight" className="p-8 md:p-10">
-            <h2 className="text-3xl font-semibold">Notes</h2>
-            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
-
-            <p className="mt-6 leading-8 text-[#6B625A]">
-              This case study is presented as a portfolio-safe summary based on
-              the final year project description in my resume.
             </p>
           </GlassCard>
         </section>

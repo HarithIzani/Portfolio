@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Human Stress Analysis: Normal vs ADHD — Complete Technical Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Source+Sans+3:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f0e8;
+    --bg-warm: #efe9dd;
+    --bg-card: rgba(255, 252, 245, 0.65);
+    --bg-card-solid: #fffcf5;
+    --fg: #2c2418;
+    --fg-muted: #6b5d4d;
+    --fg-light: #9a8b78;
+    --accent: #3d6b5e;
+    --accent-light: #5a9a87;
+    --accent-dark: #2a4a3f;
+    --accent-warm: #c4956a;
+    --accent-warm-light: #dbb896;
+    --gold: #b8923e;
+    --gold-light: #d4b06a;
+    --border: rgba(107, 93, 77, 0.15);
+    --border-strong: rgba(107, 93, 77, 0.3);
+    --glass: rgba(255, 252, 245, 0.55);
+    --glass-border: rgba(255, 255, 255, 0.35);
+    --code-bg: #2c2418;
+    --code-fg: #e8dcc8;
+    --red: #a83232;
+    --red-bg: rgba(168, 50, 50, 0.08);
+    --orange: #b07328;
+    --orange-bg: rgba(176, 115, 40, 0.08);
+    --blue-bg: rgba(61, 107, 94, 0.08);
+    --green-bg: rgba(90, 154, 135, 0.08);
+    --shadow-sm: 0 1px 3px rgba(44, 36, 24, 0.06);
+    --shadow-md: 0 4px 16px rgba(44, 36, 24, 0.08);
+    --shadow-lg: 0 8px 32px rgba(44, 36, 24, 0.1);
+    --radius: 12px;
+    --radius-lg: 20px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Source Sans 3', system-ui, sans-serif;
+    line-height: 1.75;
+    color: var(--fg);
+    background: var(--bg);
+    background-image:
+      radial-gradient(ellipse at 20% 0%, rgba(212, 176, 106, 0.12) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 100%, rgba(61, 107, 94, 0.08) 0%, transparent 50%);
+    min-height: 100vh;
+  }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 30px 40px 80px; }
+
+  @media print {
+    body { background: #fff; }
+    .container { max-width: 100%; padding: 10px 20px; font-size: 11px; line-height: 1.5; }
+    .no-print { display: none !important; }
+    h1, h2, h3 { page-break-after: avoid; }
+    pre, table, .step-card { page-break-inside: avoid; }
+    .glass-card { background: #fff; border: 1px solid #ddd; backdrop-filter: none; }
+  }
+
+  @media (max-width: 800px) { .container { padding: 15px; } }
+
+  .glass-card {
+    background: var(--glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 28px 32px;
+    margin: 20px 0;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2em; font-weight: 700;
+    color: var(--accent-dark);
+    margin: 50px 0 8px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--border-strong);
+    letter-spacing: -0.02em;
+  }
+  h1:first-of-type { margin-top: 30px; }
+  h2 { font-family: 'Playfair Display', serif; font-size: 1.5em; font-weight: 600; color: var(--fg); margin: 35px 0 12px; }
+  h3 { font-family: 'Source Sans 3', sans-serif; font-size: 1.15em; font-weight: 600; color: var(--accent-dark); margin: 25px 0 8px; }
+  h4 { font-family: 'Source Sans 3', sans-serif; font-size: 1.02em; font-weight: 600; color: var(--fg-muted); margin: 16px 0 6px; }
+
+  p { margin: 8px 0; color: var(--fg); }
+  a { color: var(--accent); text-decoration: none; font-weight: 500; }
+  a:hover { text-decoration: underline; color: var(--accent-light); }
+  ul, ol { margin: 8px 0 8px 24px; }
+  li { margin: 4px 0; color: var(--fg); }
+  hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+  strong { color: var(--fg); font-weight: 600; }
+
+  code {
+    background: rgba(44, 36, 24, 0.06);
+    padding: 2px 7px; border-radius: 5px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.88em; color: var(--accent-dark);
+  }
+  pre {
+    background: var(--code-bg); color: var(--code-fg);
+    padding: 18px 22px; border-radius: var(--radius);
+    overflow-x: auto; font-size: 0.85em; line-height: 1.6;
+    margin: 14px 0; font-family: 'JetBrains Mono', monospace;
+    box-shadow: var(--shadow-sm);
+  }
+  pre code { background: none; padding: 0; color: inherit; font-size: 1em; }
+
+  table {
+    border-collapse: collapse; width: 100%; margin: 14px 0;
+    font-size: 0.92em; background: var(--bg-card-solid);
+    border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm);
+  }
+  th, td { border: 1px solid var(--border); padding: 10px 14px; text-align: left; vertical-align: top; }
+  th { background: rgba(61, 107, 94, 0.08); font-weight: 600; color: var(--accent-dark); font-size: 0.93em; text-transform: uppercase; letter-spacing: 0.04em; }
+  tr:nth-child(even) td { background: rgba(245, 240, 232, 0.5); }
+  tr:hover td { background: rgba(61, 107, 94, 0.04); }
+
+  .callout { padding: 16px 20px; border-radius: var(--radius); margin: 14px 0; border-left: 4px solid; font-size: 0.95em; }
+  .callout-info { background: var(--blue-bg); border-color: var(--accent); }
+  .callout-warn { background: var(--orange-bg); border-color: var(--orange); }
+  .callout-error { background: var(--red-bg); border-color: var(--red); }
+  .callout-label { font-weight: 600; margin-bottom: 2px; }
+  .callout-info .callout-label { color: var(--accent-dark); }
+  .callout-warn .callout-label { color: var(--orange); }
+  .callout-error .callout-label { color: var(--red); }
+
+  .step-card {
+    background: var(--glass); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border); border-radius: var(--radius-lg);
+    padding: 24px 28px; margin: 20px 0; box-shadow: var(--shadow-md);
+    position: relative; overflow: hidden;
+  }
+  .step-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-warm));
+  }
+  .step-card h4:first-child {
+    color: var(--accent-dark); font-family: 'Playfair Display', serif;
+    font-size: 1.2em; font-weight: 700; margin-top: 4px;
+  }
+  .step-meta { font-size: 0.85em; color: var(--fg-muted); margin-bottom: 10px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+
+  .badge {
+    display: inline-block; padding: 2px 10px; border-radius: 20px;
+    font-size: 0.75em; font-weight: 600; letter-spacing: 0.04em;
+    text-transform: uppercase; color: #fff;
+  }
+  .badge-active { background: var(--accent); }
+  .badge-signal { background: #7a5195; }
+  .badge-ml { background: #3d6b5e; }
+  .badge-data { background: var(--orange); }
+  .badge-util { background: var(--fg-light); }
+  .badge-eeg { background: #4a5580; }
+
+  .toc { columns: 2; column-gap: 40px; }
+  .toc ol { margin-left: 18px; break-inside: avoid; }
+  .toc > ol > li { margin: 6px 0; break-inside: avoid; }
+  .toc a { font-weight: 500; color: var(--fg); transition: color 0.2s; }
+  .toc a:hover { color: var(--accent); }
+  @media (max-width: 700px) { .toc { columns: 1; } }
+
+  .cover {
+    text-align: center; padding: 70px 20px 50px; margin-bottom: 20px; position: relative;
+  }
+  .cover h1 { border: none; font-size: 2.6em; margin: 0; color: var(--fg); letter-spacing: -0.03em; }
+  .cover .subtitle { font-family: 'Source Sans 3', sans-serif; font-size: 1.1em; color: var(--fg-muted); margin: 10px 0 5px; font-weight: 300; letter-spacing: 0.1em; text-transform: uppercase; }
+  .cover .version { font-size: 0.95em; color: var(--fg-light); font-weight: 400; }
+  .cover .date { font-size: 0.9em; color: var(--fg-light); margin-top: 16px; }
+  .cover .divider { width: 80px; height: 2px; background: linear-gradient(90deg, var(--accent), var(--gold)); margin: 20px auto; border-radius: 1px; }
+  .cover .tag { display: inline-block; margin: 6px 4px; padding: 4px 14px; background: rgba(61,107,94,0.08); border: 1px solid rgba(61,107,94,0.2); border-radius: 20px; font-size: 0.85em; color: var(--accent-dark); }
+
+  .print-btn {
+    position: fixed; top: 20px; right: 20px; z-index: 100;
+    background: var(--accent-dark); color: #fff; border: none;
+    border-radius: var(--radius); padding: 10px 22px; font-size: 14px;
+    cursor: pointer; font-weight: 600; font-family: 'Source Sans 3', sans-serif;
+    box-shadow: var(--shadow-md); transition: all 0.2s;
+  }
+  .print-btn:hover { background: var(--accent); transform: translateY(-1px); box-shadow: var(--shadow-lg); }
+
+  .diagram-container { margin: 24px 0; overflow-x: auto; padding: 10px 0; }
+  .diagram-container svg { display: block; margin: 0 auto; max-width: 100%; height: auto; }
+
+  .data-flow-step { display: flex; align-items: stretch; margin: 0; position: relative; }
+  .data-flow-number { width: 52px; min-width: 52px; display: flex; flex-direction: column; align-items: center; position: relative; }
+  .data-flow-number .num { width: 36px; height: 36px; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 700; font-size: 0.85em; display: flex; align-items: center; justify-content: center; position: relative; z-index: 2; box-shadow: 0 2px 8px rgba(61, 107, 94, 0.3); }
+  .data-flow-number .line { flex: 1; width: 2px; background: var(--border-strong); }
+  .data-flow-content { flex: 1; padding: 0 0 20px 18px; }
+  .data-flow-content .df-title { font-weight: 700; color: var(--accent-dark); font-size: 0.95em; margin-bottom: 2px; }
+  .data-flow-content .df-desc { font-size: 0.88em; color: var(--fg-muted); line-height: 1.6; }
+  .df-tag { display: inline-block; font-size: 0.75em; font-weight: 600; padding: 1px 8px; border-radius: 10px; margin-left: 6px; vertical-align: middle; }
+  .df-tag-signal { background: rgba(122, 81, 149, 0.15); color: #7a5195; }
+  .df-tag-ml { background: rgba(61, 107, 94, 0.15); color: var(--accent-dark); }
+  .df-tag-data { background: rgba(176, 115, 40, 0.15); color: var(--orange); }
+
+  .band-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin: 16px 0; }
+  @media (max-width: 700px) { .band-grid { grid-template-columns: 1fr 1fr; } }
+  .band-card { background: var(--glass); border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 14px 16px; box-shadow: var(--shadow-sm); text-align: center; }
+  .band-card .band-name { font-family: 'Playfair Display', serif; font-size: 1.1em; font-weight: 700; color: var(--accent-dark); }
+  .band-card .band-range { font-size: 0.8em; color: var(--fg-muted); margin-top: 2px; font-family: 'JetBrains Mono', monospace; }
+  .band-card .band-role { font-size: 0.78em; color: var(--fg-muted); margin-top: 6px; line-height: 1.4; }
+
+  .va-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+  @media (max-width: 600px) { .va-grid { grid-template-columns: 1fr; } }
+  .va-card { background: var(--glass); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 18px 22px; box-shadow: var(--shadow-sm); position: relative; overflow: hidden; }
+  .va-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .va-calm::before { background: #5a9a87; }
+  .va-happy::before { background: #c49a1e; }
+  .va-sad::before { background: #4a5580; }
+  .va-fear::before { background: #a83232; }
+
+  .footer { text-align: center; color: var(--fg-light); margin-top: 50px; padding: 30px 20px; font-size: 0.9em; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">Print / Save PDF</button>
+
+<div class="container">
+
+<!-- ═══ COVER ═══ -->
+<div class="cover">
+  <h1>Human Stress Analysis:<br>Normal vs ADHD Patients</h1>
+  <div class="divider"></div>
+  <div class="subtitle">Complete Technical Documentation</div>
+  <div class="version">University Research &nbsp;·&nbsp; MATLAB · Signal Processing · Neural Network · EEG</div>
+  <div style="margin-top:14px;">
+    <span class="tag">EEG Brain Signals</span>
+    <span class="tag">Valence-Arousal Model</span>
+    <span class="tag">MFCC Feature Extraction</span>
+    <span class="tag">MLP Neural Network</span>
+    <span class="tag">Patient Profiling</span>
+  </div>
+  <div class="date">Author: Harith Izani &nbsp;·&nbsp; International Islamic University Malaysia &nbsp;·&nbsp; March 2026</div>
+</div>
+
+<!-- ═══ TOC ═══ -->
+<div class="glass-card">
+  <h3 style="margin-top:0; font-family:'Playfair Display',serif; font-size:1.3em; color:var(--accent-dark);">Table of Contents</h3>
+  <div class="toc">
+    <ol>
+      <li><a href="#overview">Project Overview</a></li>
+      <li><a href="#architecture">System Architecture &amp; Flowchart</a></li>
+      <li><a href="#directory">Directory Structure &amp; File Inventory</a></li>
+      <li><a href="#dataset">Dataset &amp; EEG Channels</a></li>
+      <li><a href="#pipeline">Processing Pipeline (Detailed)</a>
+        <ol type="a">
+          <li><a href="#step1">Step 1 — Data Loading &amp; Preprocessing</a></li>
+          <li><a href="#step2">Step 2 — Frequency Band Splitting</a></li>
+          <li><a href="#step3">Step 3 — MFCC Feature Extraction</a></li>
+          <li><a href="#step4">Step 4 — Feature Aggregation</a></li>
+          <li><a href="#step5">Step 5 — Valence-Arousal Label Encoding</a></li>
+          <li><a href="#step6">Step 6 — Data Randomization</a></li>
+          <li><a href="#step7">Step 7 — MLP Neural Network Training</a></li>
+          <li><a href="#step8">Step 8 — Evaluation &amp; Visualization</a></li>
+        </ol>
+      </li>
+      <li><a href="#bands">EEG Frequency Bands</a></li>
+      <li><a href="#va-model">Valence-Arousal Emotion Model</a></li>
+      <li><a href="#data-flow">Data Flow Diagram</a></li>
+      <li><a href="#api-ref">API Reference — All Functions</a></li>
+      <li><a href="#config-ref">Configuration Reference</a></li>
+      <li><a href="#data-schema">Data Schema</a></li>
+      <li><a href="#dependencies">Dependencies &amp; Toolboxes</a></li>
+    </ol>
+  </div>
+</div>
+
+<!-- ═══ 1. OVERVIEW ═══ -->
+<h1 id="overview">1. Project Overview</h1>
+
+<p><strong>Human Stress Analysis Between Normal and ADHD Patient Using Neural Network Based on EEG Signals</strong> is a university research project investigating how stress and cognitive response manifest differently in the brain activity of normal subjects versus ADHD patients. The study uses controlled emotional stimuli to elicit EEG responses, which are then processed through a signal processing and machine learning pipeline to build a discriminative patient profile.</p>
+
+<p>The core methodology applies the <strong>Russell Circumplex Model of Affect</strong> — mapping brain signals into a 2D Valence-Arousal emotional space — to study whether ADHD patients exhibit measurably distinct patterns from normal subjects across emotional states including Calm, Happy, Sad, Fear, and cognitive tasks (Eyes Open, Eyes Closed, Arithmetic).</p>
+
+<h3>Key Capabilities</h3>
+<ul>
+  <li><strong>Multi-Stimulus EEG Analysis</strong> — 7 controlled stimulus conditions applied to both patient groups</li>
+  <li><strong>Full-Spectrum Band Decomposition</strong> — Elliptic filters extract Delta, Theta, Alpha, Beta, and Gamma bands from all 19 EEG channels</li>
+  <li><strong>MFCC Feature Extraction</strong> — Mel-frequency cepstral coefficients applied to each frequency band, borrowed from speech processing for robust spectral feature capture</li>
+  <li><strong>Valence-Arousal Neural Network</strong> — Two-output MLP maps EEG features to emotional state coordinates on the circumplex model</li>
+  <li><strong>Patient Profiling</strong> — Per-band neural network models trained to classify emotional state from brain activity patterns</li>
+  <li><strong>MATLAB Signal Processing Toolkit</strong> — End-to-end pipeline using MATLAB's Signal Processing and Neural Network toolboxes</li>
+</ul>
+
+<h3>Project Metrics</h3>
+<table>
+  <tr><th>Metric</th><th>Value</th></tr>
+  <tr><td>Primary Script</td><td><code>FinalCoding_UPDATED.m</code> (1,937 lines)</td></tr>
+  <tr><td>Total MATLAB Files</td><td>7</td></tr>
+  <tr><td>Patient Groups</td><td>2 (Normal, ADHD)</td></tr>
+  <tr><td>Stimulus Conditions</td><td>7 (Calm, Sad, Happy, Fear, EC, EO, Arithmetic)</td></tr>
+  <tr><td>EEG Channels</td><td>19 (10-20 International System)</td></tr>
+  <tr><td>Sampling Rate</td><td>250 Hz (Δt = 0.004 s)</td></tr>
+  <tr><td>Samples per Recording</td><td>~13,099</td></tr>
+  <tr><td>Frequency Bands Extracted</td><td>5 (Delta, Theta, Alpha, Beta, Gamma) + broadband</td></tr>
+  <tr><td>MFCC Features per Band per Channel</td><td>12</td></tr>
+  <tr><td>Neural Network Architecture</td><td>MLP [10 → 10 → 2] (Valence, Arousal)</td></tr>
+  <tr><td>Total CSV Data Files</td><td>14 (7 conditions × 2 groups)</td></tr>
+  <tr><td>Institution</td><td>International Islamic University Malaysia (IIUM)</td></tr>
+</table>
+
+<!-- ═══ 2. ARCHITECTURE ═══ -->
+<h1 id="architecture">2. System Architecture &amp; Flowchart</h1>
+
+<p>The system follows a linear signal processing pipeline: raw EEG recordings are loaded per-stimulus per-group, decomposed into frequency bands, features are extracted from each band, assembled into per-band feature matrices with emotional labels, then fed to a two-output MLP that learns to map brain activity to Valence-Arousal coordinates.</p>
+
+<div class="diagram-container">
+<svg viewBox="0 0 920 860" xmlns="http://www.w3.org/2000/svg" font-family="'Source Sans 3', system-ui, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="10" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,3.5 L0,7 z" fill="#6b5d4d"/>
+    </marker>
+    <marker id="arrow-a" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="10" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,3.5 L0,7 z" fill="#3d6b5e"/>
+    </marker>
+    <marker id="arrow-p" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="10" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,3.5 L0,7 z" fill="#7a5195"/>
+    </marker>
+    <filter id="shadow" x="-4%" y="-4%" width="108%" height="108%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="rgba(44,36,24,0.1)"/>
+    </filter>
+  </defs>
+
+  <!-- ── Data Sources ── -->
+  <rect x="30" y="20" width="860" height="110" rx="14" fill="rgba(61,107,94,0.06)" stroke="rgba(61,107,94,0.25)" stroke-width="1.5"/>
+  <text x="50" y="46" font-size="12" font-weight="600" fill="#3d6b5e" letter-spacing="0.08em">DATA SOURCES — 14 CSV FILES (7 CONDITIONS × 2 GROUPS)</text>
+
+  <!-- ADHD box -->
+  <rect x="55" y="58" width="380" height="52" rx="8" fill="rgba(168,50,50,0.07)" stroke="rgba(168,50,50,0.3)" stroke-width="1.2" filter="url(#shadow)"/>
+  <text x="245" y="80" text-anchor="middle" font-size="13" font-weight="600" fill="#2a4a3f">ADHD Group</text>
+  <text x="245" y="97" text-anchor="middle" font-size="11" fill="#6b5d4d">Calm · Sad · Happy · Fear · EC · EO · Arithmetic</text>
+
+  <!-- Normal box -->
+  <rect x="465" y="58" width="380" height="52" rx="8" fill="rgba(61,107,94,0.07)" stroke="rgba(61,107,94,0.3)" stroke-width="1.2" filter="url(#shadow)"/>
+  <text x="655" y="80" text-anchor="middle" font-size="13" font-weight="600" fill="#2a4a3f">Normal Group</text>
+  <text x="655" y="97" text-anchor="middle" font-size="11" fill="#6b5d4d">Calm · Sad · Happy · Fear · EC · EO · Arithmetic</text>
+
+  <!-- Arrow down -->
+  <line x1="460" y1="130" x2="460" y2="168" stroke="#6b5d4d" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Preprocessing -->
+  <rect x="290" y="168" width="340" height="48" rx="8" fill="#fffcf5" stroke="rgba(61,107,94,0.3)" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="460" y="192" text-anchor="middle" font-size="13" font-weight="600" fill="#2a4a3f">Preprocessing</text>
+  <text x="460" y="207" text-anchor="middle" font-size="11" fill="#6b5d4d">Remove metadata rows · Drop time column · Extract 19 EEG channels</text>
+
+  <line x1="460" y1="216" x2="460" y2="254" stroke="#6b5d4d" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Band Splitting -->
+  <rect x="260" y="254" width="400" height="48" rx="8" fill="rgba(122,81,149,0.07)" stroke="rgba(122,81,149,0.3)" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="460" y="278" text-anchor="middle" font-size="13" font-weight="600" fill="#2a4a3f">Frequency Band Splitting  —  splitband.m</text>
+  <text x="460" y="295" text-anchor="middle" font-size="11" fill="#6b5d4d">Elliptic bandpass filters → Delta · Theta · Alpha · Beta · Gamma</text>
+
+  <line x1="460" y1="302" x2="460" y2="340" stroke="#7a5195" stroke-width="1.5" marker-end="url(#arrow-p)"/>
+
+  <!-- 5 band columns -->
+  <rect x="30" y="340" width="120" height="52" rx="8" fill="rgba(74,85,128,0.08)" stroke="rgba(74,85,128,0.3)" stroke-width="1.2" filter="url(#shadow)"/>
+  <text x="90" y="366" text-anchor="middle" font-size="12" font-weight="700" fill="#2a4a3f">Delta</text>
+  <text x="90" y="382" text-anchor="middle" font-size="10" fill="#6b5d4d">0–4 Hz</text>
+
+  <rect x="185" y="340" width="120" height="52" rx="8" fill="rgba(122,81,149,0.08)" stroke="rgba(122,81,149,0.3)" stroke-width="1.2" filter="url(#shadow)"/>
+  <text x="245" y="366" text-anchor="middle" font-size="12" font-weight="700" fill="#2a4a3f">Theta</text>
+  <text x="245" y="382" text-anchor="middle" font-size="10" fill="#6b5d4d">4–8 Hz</text>
+
+  <rect x="340" y="340" width="120" height="52" rx="8" fill="rgba(61,107,94,0.08)" stroke="rgba(61,107,94,0.3)" stroke-width="1.2" filter="url(#shadow)"/>
+  <text x="400" y="366" text-anchor="middle" font-size="12" font-weight="700" fill="#2a4a3f">Alpha</text>
+  <text x="400" y="382" text-anchor="middle" font-size="10" fill="#6b5d4d">8–13 Hz</text>
+
+  <rect x="495" y="340" width="120" height="52" rx="8" fill="rgba(176,115,40,0.08)" stroke="rgba(176,115,40,0.3)" stroke-width="1.2" filter="url(#shadow)"/>
+  <text x="555" y="366" text-anchor="middle" font-size="12" font-weight="700" fill="#2a4a3f">Beta</text>
+  <text x="555" y="382" text-anchor="middle" font-size="10" fill="#6b5d4d">13–30 Hz</text>
+
+  <rect x="650" y="340" width="120" height="52" rx="8" fill="rgba(184,146,62,0.08)" stroke="rgba(184,146,62,0.3)" stroke-width="1.2" filter="url(#shadow)"/>
+  <text x="710" y="366" text-anchor="middle" font-size="12" font-weight="700" fill="#2a4a3f">Gamma</text>
+  <text x="710" y="382" text-anchor="middle" font-size="10" fill="#6b5d4d">30–50 Hz</text>
+
+  <!-- Band arrows to MFCC -->
+  <line x1="90" y1="392" x2="90" y2="450" stroke="#6b5d4d" stroke-width="1.2"/>
+  <line x1="245" y1="392" x2="245" y2="450" stroke="#6b5d4d" stroke-width="1.2"/>
+  <line x1="400" y1="392" x2="400" y2="450" stroke="#6b5d4d" stroke-width="1.2"/>
+  <line x1="555" y1="392" x2="555" y2="450" stroke="#6b5d4d" stroke-width="1.2"/>
+  <line x1="710" y1="392" x2="710" y2="450" stroke="#6b5d4d" stroke-width="1.2"/>
+  <line x1="90" y1="450" x2="710" y2="450" stroke="#6b5d4d" stroke-width="1.2"/>
+  <line x1="400" y1="450" x2="400" y2="462" stroke="#6b5d4d" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- MFCC Feature Extraction -->
+  <rect x="250" y="462" width="420" height="48" rx="8" fill="rgba(122,81,149,0.07)" stroke="rgba(122,81,149,0.3)" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="460" y="486" text-anchor="middle" font-size="13" font-weight="600" fill="#2a4a3f">MFCC Feature Extraction  —  melcepst.m</text>
+  <text x="460" y="503" text-anchor="middle" font-size="11" fill="#6b5d4d">12 cepstral coefficients · 14 mel filters · 1024-pt FFT · 125 Hz</text>
+
+  <line x1="460" y1="510" x2="460" y2="548" stroke="#6b5d4d" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Feature Aggregation -->
+  <rect x="270" y="548" width="380" height="48" rx="8" fill="#fffcf5" stroke="rgba(107,93,77,0.25)" stroke-width="1.2" filter="url(#shadow)"/>
+  <text x="460" y="572" text-anchor="middle" font-size="13" font-weight="600" fill="#2a4a3f">Feature Matrix Assembly</text>
+  <text x="460" y="589" text-anchor="middle" font-size="11" fill="#6b5d4d">Concatenate 19 channels × 12 MFCC → band matrices (AATHETA, AALPHA…)</text>
+
+  <line x1="460" y1="596" x2="460" y2="634" stroke="#6b5d4d" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Label Encoding -->
+  <rect x="280" y="634" width="360" height="48" rx="8" fill="rgba(184,146,62,0.08)" stroke="rgba(184,146,62,0.3)" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="460" y="658" text-anchor="middle" font-size="13" font-weight="600" fill="#2a4a3f">Valence-Arousal Label Encoding</text>
+  <text x="460" y="675" text-anchor="middle" font-size="11" fill="#6b5d4d">Columns 13-14: Happy(1,1) · Calm(1,–1) · Sad(–1,–1) · Fear(–1,1)</text>
+
+  <line x1="460" y1="682" x2="460" y2="720" stroke="#6b5d4d" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- MLP Training -->
+  <rect x="270" y="720" width="380" height="52" rx="8" fill="rgba(61,107,94,0.08)" stroke="rgba(61,107,94,0.3)" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="460" y="746" text-anchor="middle" font-size="13" font-weight="600" fill="#2a4a3f">MLP Neural Network  —  MLPVA.m</text>
+  <text x="460" y="763" text-anchor="middle" font-size="11" fill="#6b5d4d">newff [10,10,2] · traingdx · lr=0.001 · 10,000 epochs · SSE≤0.01</text>
+
+  <line x1="460" y1="772" x2="460" y2="810" stroke="#6b5d4d" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Output -->
+  <rect x="310" y="810" width="300" height="40" rx="8" fill="rgba(184,146,62,0.08)" stroke="rgba(184,146,62,0.35)" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="460" y="834" text-anchor="middle" font-size="13" font-weight="600" fill="#2a4a3f">Patient Profile  ·  Valence-Arousal Plot  ·  Accuracy</text>
+</svg>
+</div>
+
+<!-- ═══ 3. DIRECTORY STRUCTURE ═══ -->
+<h1 id="directory">3. Directory Structure &amp; File Inventory</h1>
+
+<pre><code>Normal-ADHD-Matlab-EEG-main/
+│
+├── Code/                                   ← All MATLAB source files
+│   ├── FinalCoding_UPDATED.m               ← Main pipeline script (1,937 lines)
+│   ├── MLPVA.m                             ← MLP neural network training & evaluation (40 lines)
+│   ├── splitband.m                         ← EEG frequency band filter bank (44 lines)
+│   ├── melcepst.m                          ← Mel-frequency cepstral coefficient extraction
+│   ├── mel2frq.m                           ← Mel-to-frequency conversion utility
+│   ├── plotVA2.m                           ← Valence-Arousal output visualization (9 lines)
+│   └── random.m                            ← Row-wise random permutation utility (4 lines)
+│
+├── Data/
+│   ├── ADHD/                               ← EEG recordings for ADHD patient group
+│   │   ├── Calm.csv                        ← ~13,099 samples × 20 cols (time + 19 channels)
+│   │   ├── Sad.csv
+│   │   ├── Happy.csv
+│   │   ├── Fear.csv
+│   │   ├── EC.csv                          ← Eyes Closed stimulus
+│   │   ├── EO.csv                          ← Eyes Open stimulus
+│   │   └── Arithmetic.csv                  ← Mental arithmetic task
+│   │
+│   └── Normal/                             ← EEG recordings for Normal control group
+│       ├── Calm.csv
+│       ├── Sad.csv
+│       ├── Happy.csv
+│       ├── Fear.csv
+│       ├── EC.csv
+│       ├── EO.csv
+│       └── Arithmetic.csv
+│
+└── LICENSE</code></pre>
+
+<h3>File Inventory</h3>
+<table>
+  <tr><th>File</th><th>Lines</th><th>Role</th></tr>
+  <tr><td><code>FinalCoding_UPDATED.m</code></td><td>1,937</td><td>Main orchestrator — loads all data, runs band splitting, feature extraction, feature assembly, label encoding, randomization, and calls MLPVA for training per band</td></tr>
+  <tr><td><code>MLPVA.m</code></td><td>40</td><td>Function: trains a 3-layer MLP on the randomized feature matrix, evaluates on test set, returns accuracy, predictions, timing, and trained network object</td></tr>
+  <tr><td><code>splitband.m</code></td><td>44</td><td>Function: applies 6 elliptic bandpass/lowpass filters to a single EEG channel signal, returning Delta, Theta, Alpha, Beta, Gamma, and broadband (DtoG) sub-bands</td></tr>
+  <tr><td><code>melcepst.m</code></td><td>~100</td><td>Function: computes Mel-frequency cepstral coefficients from a signal — adapted from speech processing for EEG spectral feature extraction</td></tr>
+  <tr><td><code>mel2frq.m</code></td><td>~20</td><td>Utility: converts Mel-scale values to frequency Hz — used internally by <code>melcepst.m</code></td></tr>
+  <tr><td><code>plotVA2.m</code></td><td>9</td><td>Function: smooths and plots the two-row Valence-Arousal output matrix with red (valence) and blue (arousal) lines</td></tr>
+  <tr><td><code>random.m</code></td><td>4</td><td>Utility: randomly permutes rows of a matrix using <code>randperm()</code> — used for train/test shuffle before MLPVA</td></tr>
+</table>
+
+<!-- ═══ 4. DATASET ═══ -->
+<h1 id="dataset">4. Dataset &amp; EEG Channels</h1>
+
+<p>The dataset contains raw EEG recordings captured at <strong>250 Hz</strong> from two patient groups (ADHD and Normal) across seven controlled stimulus conditions. Each CSV file follows the same format — exported from an EEG acquisition device with a metadata header in the first 4 rows, followed by time-series data with 20 columns (1 timestamp + 19 electrode channels).</p>
+
+<h3>Recording Format</h3>
+<table>
+  <tr><th>Property</th><th>Value</th></tr>
+  <tr><td>Sampling rate</td><td>250 Hz (Δt = 0.004 s)</td></tr>
+  <tr><td>Samples per file</td><td>~13,099 (≈ 52 seconds of recording)</td></tr>
+  <tr><td>Columns per file</td><td>20 (time + 19 EEG channels)</td></tr>
+  <tr><td>Metadata rows removed</td><td>4 (waveform label, t0 timestamp, delta_t, column headers)</td></tr>
+  <tr><td>Total data files</td><td>14 (7 stimuli × 2 groups)</td></tr>
+</table>
+
+<h3>Stimulus Conditions</h3>
+<table>
+  <tr><th>File</th><th>Stimulus</th><th>Type</th><th>V-A Label</th></tr>
+  <tr><td><code>Happy.csv</code></td><td>Happy emotional state</td><td>Emotional</td><td>Valence=+1, Arousal=+1</td></tr>
+  <tr><td><code>Calm.csv</code></td><td>Calm emotional state</td><td>Emotional</td><td>Valence=+1, Arousal=−1</td></tr>
+  <tr><td><code>Sad.csv</code></td><td>Sad emotional state</td><td>Emotional</td><td>Valence=−1, Arousal=−1</td></tr>
+  <tr><td><code>Fear.csv</code></td><td>Fear emotional state</td><td>Emotional</td><td>Valence=−1, Arousal=+1</td></tr>
+  <tr><td><code>EC.csv</code></td><td>Eyes Closed resting</td><td>Baseline</td><td>V=0, A=0 (neutral)</td></tr>
+  <tr><td><code>EO.csv</code></td><td>Eyes Open resting</td><td>Baseline</td><td>V=0, A=0 (neutral)</td></tr>
+  <tr><td><code>Arithmetic.csv</code></td><td>Mental arithmetic task</td><td>Cognitive</td><td>V=0, A=0 (neutral)</td></tr>
+</table>
+
+<h3>EEG Electrode Placement (19-Channel 10-20 System)</h3>
+<p>Electrodes follow the International 10-20 system, covering the full scalp from frontal to occipital regions:</p>
+<table>
+  <tr><th>Index (Col)</th><th>Electrode</th><th>Region</th><th>Variable Prefix</th></tr>
+  <tr><td>1</td><td>FP1</td><td>Prefrontal (left)</td><td><code>FP1</code></td></tr>
+  <tr><td>2</td><td>FP2</td><td>Prefrontal (right)</td><td><code>FP2</code></td></tr>
+  <tr><td>3</td><td>F3</td><td>Frontal (left)</td><td><code>F3</code></td></tr>
+  <tr><td>4</td><td>F4</td><td>Frontal (right)</td><td><code>F4</code></td></tr>
+  <tr><td>5</td><td>F7</td><td>Frontal-temporal (left)</td><td><code>F7</code></td></tr>
+  <tr><td>6</td><td>F8</td><td>Frontal-temporal (right)</td><td><code>F8</code></td></tr>
+  <tr><td>7</td><td>C3</td><td>Central (left)</td><td><code>C3</code></td></tr>
+  <tr><td>8</td><td>C4</td><td>Central (right)</td><td><code>C4</code></td></tr>
+  <tr><td>9</td><td>T7</td><td>Temporal (left)</td><td><code>T7</code></td></tr>
+  <tr><td>10</td><td>T8</td><td>Temporal (right)</td><td><code>T8</code></td></tr>
+  <tr><td>11</td><td>P3</td><td>Parietal (left)</td><td><code>P3</code></td></tr>
+  <tr><td>12</td><td>P4</td><td>Parietal (right)</td><td><code>P4</code></td></tr>
+  <tr><td>13</td><td>P7</td><td>Parietal-temporal (left)</td><td><code>P7</code></td></tr>
+  <tr><td>14</td><td>P8</td><td>Parietal-temporal (right)</td><td><code>P8</code></td></tr>
+  <tr><td>15</td><td>O1</td><td>Occipital (left)</td><td><code>O1</code></td></tr>
+  <tr><td>16</td><td>O2</td><td>Occipital (right)</td><td><code>O2</code></td></tr>
+  <tr><td>17</td><td>Fz</td><td>Frontal midline</td><td><code>Fz</code></td></tr>
+  <tr><td>18</td><td>Cz</td><td>Central midline</td><td><code>Cz</code></td></tr>
+  <tr><td>19</td><td>Pz</td><td>Parietal midline</td><td><code>Pz</code></td></tr>
+</table>
+
+<!-- ═══ 5. PIPELINE ═══ -->
+<h1 id="pipeline">5. Processing Pipeline (Detailed)</h1>
+
+<div class="step-card" id="step1">
+  <h4>Step 1 — Data Loading &amp; Preprocessing</h4>
+  <div class="step-meta"><span>FinalCoding_UPDATED.m lines 1–29</span><span class="badge badge-data">Data</span></div>
+  <p>All 14 CSV files (7 stimuli × 2 groups) are loaded using MATLAB's <code>readtable()</code>. Note: the script runs with the working directory set to the group-specific data folder (either <code>Data/ADHD/</code> or <code>Data/Normal/</code>), so file paths are relative. The first 4 metadata rows are removed and the time column (column 1) is dropped, leaving a pure 19-column signal matrix per stimulus.</p>
+  <pre><code>%% Load all 7 stimulus CSVs
+Calm       = readtable("Calm.csv");
+Sad        = readtable("Sad.csv");
+Happy      = readtable("Happy.csv");
+Fear       = readtable('Fear.csv');
+EO         = readtable('EO.csv');   % Eyes Open
+EC         = readtable('EC.csv');   % Eyes Closed
+Arithmetic = readtable('Arithmetic.csv');
+
+%% Remove 4-row metadata header
+Calm(1:4,:) = [];  % (and same for all 7)
+
+%% Drop timestamp column, keep 19 EEG channels (cols 2–20)
+Calm = Calm(:, 2:20);  % (and same for all 7)</code></pre>
+  <p>Each resulting table has ~13,099 rows × 19 columns. Individual electrode columns are then extracted as numeric arrays via <code>table2array()</code> using named variables (e.g., <code>CFP1</code> = Calm / FP1 channel, <code>SFP1</code> = Sad / FP1, etc.).</p>
+</div>
+
+<div class="step-card" id="step2">
+  <h4>Step 2 — Frequency Band Splitting</h4>
+  <div class="step-meta"><span>splitband.m · Called from FinalCoding_UPDATED.m lines ~188–343</span><span class="badge badge-signal">Signal</span></div>
+  <p><code>splitband()</code> is called on every individual channel array across all 7 stimuli (19 channels × 7 conditions = 133 calls per group). It uses MATLAB's <code>ellipord</code> and <code>ellip</code> functions to design minimum-order elliptic filters, then <code>filter()</code> to apply them. The filter cutoffs reference John (1980) EEG band definitions.</p>
+  <pre><code>function [Delta, Theta, Alpha, Beta, Gamma, DtoG] = splitband(sig)
+
+% Delta: 0–4 Hz (lowpass)
+[N, Wp] = ellipord(4/125, 5/125, 0.1, 60);
+[B, A]  = ellip(N, 0.1, 60, Wp);
+Delta   = filter(B, A, sig);
+
+% Theta: 4–8 Hz (bandpass)
+[N, Wp] = ellipord([4 8]/125, [2 10]/125, 0.1, 60);
+[B, A]  = ellip(N, 0.1, 60, Wp);
+Theta   = filter(B, A, sig);
+
+% Alpha: 8–13 Hz, Beta: 13–30 Hz, Gamma: 30–50 Hz  (same pattern)
+
+% Broadband DtoG: 0–50 Hz (lowpass)
+[N, Wp] = ellipord(50/125, 51/125, 0.1, 60);
+DtoG    = filter(B, A, sig);</code></pre>
+  <div class="callout callout-info">
+    <div class="callout-label">Filter Design Note</div>
+    The normalized cutoff frequencies are expressed as fractions of the Nyquist frequency (125 Hz for a 250 Hz signal). Elliptic filters are chosen because they achieve the sharpest roll-off for a given filter order, critical for cleanly separating narrow EEG bands (e.g., Theta at 4–8 Hz and Alpha at 8–13 Hz share a boundary). Passband ripple = 0.1 dB, stopband attenuation = 60 dB.
+  </div>
+</div>
+
+<div class="step-card" id="step3">
+  <h4>Step 3 — MFCC Feature Extraction</h4>
+  <div class="step-meta"><span>melcepst.m · Called from FinalCoding_UPDATED.m</span><span class="badge badge-signal">Signal</span></div>
+  <p>Mel-frequency cepstral coefficients (MFCCs) — a feature technique originally developed for speech recognition — are applied to each frequency-band sub-signal. This captures the spectral envelope of the band signal in a compact, perceptually-weighted feature vector. The key parameters used throughout are fixed:</p>
+  <pre><code>% For every band of every channel of every stimulus:
+CextFP1G1 = melcepst(Cs1ec_bandsG1, 125, 'M', 12, 14, 1024, 93);
+%                    signal          fs    type  nc  p    n     inc
+%  fs  = 125 Hz (sampling rate passed to melcepst)
+%  'M' = magnitude spectrum
+%  nc  = 12 cepstral coefficients to return
+%  p   = 14 mel filterbank channels
+%  n   = 1024-point FFT window
+%  inc = 93-sample frame increment (hop size)</code></pre>
+  <p>Each call returns a matrix of shape <code>[num_frames × 12]</code>. With ~13,099 samples, a 1024-point window, and 93-sample hop, this produces approximately 140 frames per channel-band-stimulus combination, yielding a 140×12 MFCC matrix per call.</p>
+  <div class="callout callout-info">
+    <div class="callout-label">Why MFCC for EEG?</div>
+    MFCC was borrowed from speech processing because EEG band signals share important properties with audio: they are non-stationary time series whose local spectral shape is more informative than raw amplitude. MFCCs on filtered EEG bands capture how the spectral content of each brainwave band evolves over time, providing a compact feature set that generalizes better than raw sample values.
+  </div>
+</div>
+
+<div class="step-card" id="step4">
+  <h4>Step 4 — Feature Matrix Assembly</h4>
+  <div class="step-meta"><span>FinalCoding_UPDATED.m lines ~1700–1815</span><span class="badge badge-ml">ML Prep</span></div>
+  <p>After MFCC extraction, all channel-level feature matrices for a given band and stimulus are vertically concatenated into a single per-stimulus, per-band matrix. These are then stacked across stimuli into the final band-level training matrices (<code>AATHETA</code>, <code>AALPHA</code>, <code>ABETA</code>, <code>ADELTA</code>) that feed the neural network. Rows represent feature frames; columns 1–12 are MFCC features.</p>
+  <pre><code>%% Concatenate all 19 channels for Arithmetic / Theta band
+AATHETA = [AextFP1T1; AextFP2T2; AextFP3T3; AextFP4T4; AextFP5T5;
+           AextFP6T6; AextFP7T7; AextFP8T8; AextFP9T9; AextFP10T10;
+           AextFP11T11; AextFP12T12; AextFP13T13; AextFP14T14; AextFP15T15;
+           AextFP16T16; AextFP17T17; AextFP18T18; AextFP19T19];
+
+%% Transpose applied twice (net effect: returns to original orientation)
+AATHETA = AATHETA';
+AATHETA = AATHETA';</code></pre>
+  <div class="callout callout-warn">
+    <div class="callout-label">Double Transpose Note</div>
+    The script applies <code>AATHETA = AATHETA'</code> twice in succession (a comment notes "am too lazy to put ' everywhere"). This is a no-op — transposing twice returns to the original shape. The matrix retains its [frames × 12] orientation before label columns are appended.
+  </div>
+</div>
+
+<div class="step-card" id="step5">
+  <h4>Step 5 — Valence-Arousal Label Encoding</h4>
+  <div class="step-meta"><span>FinalCoding_UPDATED.m lines ~1816–1918</span><span class="badge badge-ml">ML Prep</span></div>
+  <p>Two additional columns (13 and 14) are appended to each band matrix representing the expected <strong>Valence</strong> (positive/negative affect) and <strong>Arousal</strong> (high/low energy) scores for that stimulus. This follows the Russell Circumplex Model, placing each emotion in a 2D space:</p>
+  <pre><code>% Happy: high valence (+1), high arousal (+1)
+HATHETA(:,13) = 1;   HATHETA(:,14) = 1;
+
+% Calm: high valence (+1), low arousal (–1)
+CATHETA(:,13) = 1;   CATHETA(:,14) = -1;
+
+% Sad: low valence (–1), low arousal (–1)
+SATHETA(:,13) = -1;  SATHETA(:,14) = -1;
+
+% Fear: low valence (–1), high arousal (+1)
+FATHETA(:,13) = -1;  FATHETA(:,14) = 1;
+
+% Eyes Open / Closed / Arithmetic: neutral (0, 0)
+EATHETA(:,13) = 0;   EATHETA(:,14) = 0;</code></pre>
+  <p>The four emotional stimuli are then stacked into the final training matrix. Baseline stimuli (EO, EC, Arithmetic) are <em>excluded</em> from the combined training set — they serve as baseline/reference conditions only:</p>
+  <pre><code>EmotionATHETA = [HATHETA; CATHETA; FATHETA; SATHETA];</code></pre>
+</div>
+
+<div class="step-card" id="step6">
+  <h4>Step 6 — Data Randomization</h4>
+  <div class="step-meta"><span>FinalCoding_UPDATED.m lines ~1920–1936 · random.m</span><span class="badge badge-ml">ML Prep</span></div>
+  <p>Before training, the combined emotion matrix rows are shuffled using <code>randperm()</code> to prevent the neural network from learning ordering artifacts (all Happy rows first, then Calm, etc.).</p>
+  <pre><code>[rowT, colT] = size(EmotionATHETA);
+RT = randperm(rowT);
+randomSigT = EmotionATHETA(RT, :);   % shuffled full matrix
+
+% random.m provides the same as a reusable function:
+function [randomSig] = random(sig1)
+    [row] = size(sig1);
+    R = randperm(row);
+    randomSig = sig1(R,:);</code></pre>
+</div>
+
+<div class="step-card" id="step7">
+  <h4>Step 7 — MLP Neural Network Training</h4>
+  <div class="step-meta"><span>MLPVA.m · Called from FinalCoding_UPDATED.m</span><span class="badge badge-ml">Neural Network</span></div>
+  <p>The <code>MLPVA</code> function trains a Multi-Layer Perceptron using MATLAB's Neural Network Toolbox (<code>newff</code> API). The randomized feature matrix is split: columns 1–12 are the input features, columns 13–14 are the Valence-Arousal targets. The same split structure is used for both the training set (<code>randomSigT</code>) and the test set (<code>AATHETA</code>).</p>
+  <pre><code>function [y, tgtestS, perAcc, out, ts, perf, time, netVA] = MLPVA(randomSigT, AATHETA)
+
+trainS   = randomSigT(:, 1:12);     % input features (12 MFCC per frame)
+tgtrainS = randomSigT(:, 13:14);    % target: [Valence, Arousal]
+testS    = AATHETA(:, 1:12);        % test input
+tgtestS  = AATHETA(:, 13:14);       % test targets
+
+net = newff(minmax(trainS'), [10, 10, 2], ...
+            {'tansig', 'tansig', 'purelin'}, 'traingdx');
+net.trainParam.lr     = 0.001;      % learning rate
+net.trainParam.epochs = 10000;      % max iterations
+net.trainParam.show   = 100;        % display interval
+net.trainParam.goal   = 0.01;       % SSE convergence target
+
+[net, tr] = train(net, trainS', tgtrainS');  % train
+y = sim(netVA, testS');                       % test inference</code></pre>
+  <table>
+    <tr><th>Parameter</th><th>Value</th><th>Description</th></tr>
+    <tr><td>Architecture</td><td><code>[10, 10, 2]</code></td><td>2 hidden layers of 10 neurons, 2 output neurons (Valence + Arousal)</td></tr>
+    <tr><td>Activations</td><td><code>tansig, tansig, purelin</code></td><td>Hyperbolic tangent in hidden layers; linear output</td></tr>
+    <tr><td>Optimizer</td><td><code>traingdx</code></td><td>Gradient descent with adaptive learning rate and momentum</td></tr>
+    <tr><td>Learning rate</td><td>0.001</td><td>Step size per weight update</td></tr>
+    <tr><td>Max epochs</td><td>10,000</td><td>Training iterations ceiling</td></tr>
+    <tr><td>SSE goal</td><td>0.01</td><td>Sum-squared error convergence threshold — training stops early if reached</td></tr>
+  </table>
+</div>
+
+<div class="step-card" id="step8">
+  <h4>Step 8 — Evaluation &amp; Visualization</h4>
+  <div class="step-meta"><span>MLPVA.m lines 30–39 · plotVA2.m</span><span class="badge badge-active">Output</span></div>
+  <p>Accuracy is computed as the percentage of test frames where the absolute difference between the predicted and target output is below a threshold of 1.2 (reflecting a correct classification on the ±1 scale):</p>
+  <pre><code>out = abs(tgtestS' - y);    % absolute error per output neuron
+accuracy = 0;
+for j = 1:length(out)
+    if (out(j) < 1.2)
+        accuracy = accuracy + 1;
+    end
+end
+perAcc = accuracy / length(out) * 100;  % percentage accuracy</code></pre>
+  <p>The training loss curve is plotted with <code>semilogy(tr.epoch, tr.perf)</code> (MSE vs. epoch on a log scale). The Valence-Arousal output is visualized via <code>plotVA2</code>, which applies LOESS smoothing and overlays the two outputs in red (Valence) and blue (Arousal):</p>
+  <pre><code>function [y1, y2] = plotVA2(y)
+    y1 = smooth(y(1,:), 0.1, 'rloess');   % Valence output (red)
+    y2 = smooth(y(2,:), 0.1, 'rloess');   % Arousal output (blue)
+    plot(y1, 'Color', 'red', 'LineWidth', 2);
+    hold;
+    plot(y2, 'Color', 'blue', 'LineWidth', 2);</code></pre>
+</div>
+
+<!-- ═══ 6. EEG BANDS ═══ -->
+<h1 id="bands">6. EEG Frequency Bands</h1>
+
+<div class="band-grid">
+  <div class="band-card">
+    <div class="band-name">Delta</div>
+    <div class="band-range">0 – 4 Hz</div>
+    <div class="band-role">Deep sleep, unconscious processing. Elevated in ADHD during cognitive tasks.</div>
+  </div>
+  <div class="band-card">
+    <div class="band-name">Theta</div>
+    <div class="band-range">4 – 8 Hz</div>
+    <div class="band-role">Drowsiness, memory encoding, emotional processing. Higher in ADHD frontal regions.</div>
+  </div>
+  <div class="band-card">
+    <div class="band-name">Alpha</div>
+    <div class="band-range">8 – 13 Hz</div>
+    <div class="band-role">Relaxed wakefulness, idle cortex. Reduced during active processing.</div>
+  </div>
+  <div class="band-card">
+    <div class="band-name">Beta</div>
+    <div class="band-range">13 – 30 Hz</div>
+    <div class="band-role">Active thinking, concentration, anxiety. Key marker for stress and arousal states.</div>
+  </div>
+  <div class="band-card">
+    <div class="band-name">Gamma</div>
+    <div class="band-range">30 – 50 Hz</div>
+    <div class="band-role">High-level cognition, cross-region binding. Altered in ADHD attention networks.</div>
+  </div>
+</div>
+
+<table>
+  <tr><th>Band</th><th>Passband (Hz)</th><th>MATLAB Normalized Cutoff</th><th>Filter Type</th><th>Variable Suffix</th></tr>
+  <tr><td>Delta</td><td>0–4</td><td><code>Wp = 4/125</code></td><td>Elliptic lowpass</td><td><code>Delta</code></td></tr>
+  <tr><td>Theta</td><td>4–8</td><td><code>Wp = [4 8]/125</code></td><td>Elliptic bandpass</td><td><code>Theta</code></td></tr>
+  <tr><td>Alpha</td><td>8–13</td><td><code>Wp = [8 13]/125</code></td><td>Elliptic bandpass</td><td><code>Alpha</code></td></tr>
+  <tr><td>Beta</td><td>13–30</td><td><code>Wp = [13 30]/125</code></td><td>Elliptic bandpass</td><td><code>Beta</code></td></tr>
+  <tr><td>Gamma</td><td>30–50</td><td><code>Wp = [30 50]/125</code></td><td>Elliptic bandpass</td><td><code>Gamma</code></td></tr>
+  <tr><td>Broadband (DtoG)</td><td>0–50</td><td><code>Wp = 50/125</code></td><td>Elliptic lowpass</td><td><code>DtoG / Sig060x</code></td></tr>
+</table>
+
+<!-- ═══ 7. VALENCE-AROUSAL ═══ -->
+<h1 id="va-model">7. Valence-Arousal Emotion Model</h1>
+
+<p>The project uses the <strong>Russell Circumplex Model of Affect</strong> (1980) to represent emotional states in a continuous 2D space rather than discrete categories. This is particularly relevant for brain-computer interface research as it allows the neural network to output a <em>position</em> in emotional space rather than a class label, enabling gradient-based analysis of how ADHD affects emotional processing.</p>
+
+<div class="va-grid">
+  <div class="va-card va-happy">
+    <h4>😊 Happy</h4>
+    <p><strong>Valence: +1 &nbsp;&nbsp; Arousal: +1</strong></p>
+    <p style="font-size:0.9em; color:var(--fg-muted); margin-top:6px;">High positive affect, high energy. Top-right quadrant. Associated with elevated Beta and Gamma activity.</p>
+  </div>
+  <div class="va-card va-calm">
+    <h4>😌 Calm</h4>
+    <p><strong>Valence: +1 &nbsp;&nbsp; Arousal: −1</strong></p>
+    <p style="font-size:0.9em; color:var(--fg-muted); margin-top:6px;">Positive affect, low energy. Top-left quadrant. Associated with elevated Alpha band.</p>
+  </div>
+  <div class="va-card va-fear">
+    <h4>😨 Fear</h4>
+    <p><strong>Valence: −1 &nbsp;&nbsp; Arousal: +1</strong></p>
+    <p style="font-size:0.9em; color:var(--fg-muted); margin-top:6px;">Negative affect, high energy. Bottom-right quadrant. Elevated Beta frontal activity.</p>
+  </div>
+  <div class="va-card va-sad">
+    <h4>😢 Sad</h4>
+    <p><strong>Valence: −1 &nbsp;&nbsp; Arousal: −1</strong></p>
+    <p style="font-size:0.9em; color:var(--fg-muted); margin-top:6px;">Negative affect, low energy. Bottom-left quadrant. Elevated Theta/Delta, reduced Alpha.</p>
+  </div>
+</div>
+
+<p>The three baseline conditions (Eyes Open, Eyes Closed, Arithmetic) are labelled (0, 0) — the neutral center of the circumplex. They are included in individual band matrices but excluded from the combined <code>EmotionA*</code> training matrix, so the neural network is trained only on the four emotionally-labelled states.</p>
+
+<table>
+  <tr><th>Stimulus</th><th>Valence (col 13)</th><th>Arousal (col 14)</th><th>Included in Training</th></tr>
+  <tr><td>Happy</td><td>+1</td><td>+1</td><td>Yes</td></tr>
+  <tr><td>Calm</td><td>+1</td><td>−1</td><td>Yes</td></tr>
+  <tr><td>Fear</td><td>−1</td><td>+1</td><td>Yes</td></tr>
+  <tr><td>Sad</td><td>−1</td><td>−1</td><td>Yes</td></tr>
+  <tr><td>Eyes Open</td><td>0</td><td>0</td><td>No (baseline only)</td></tr>
+  <tr><td>Eyes Closed</td><td>0</td><td>0</td><td>No (baseline only)</td></tr>
+  <tr><td>Arithmetic</td><td>0</td><td>0</td><td>No (baseline only)</td></tr>
+</table>
+
+<!-- ═══ 8. DATA FLOW ═══ -->
+<h1 id="data-flow">8. Data Flow Diagram</h1>
+
+<div class="glass-card">
+  <div class="data-flow-step">
+    <div class="data-flow-number"><div class="num">①</div><div class="line"></div></div>
+    <div class="data-flow-content">
+      <div class="df-title">Raw CSV Files <span class="df-tag df-tag-data">14 files</span></div>
+      <div class="df-desc">7 stimulus CSVs per group, each ~13,099 rows × 20 columns. Metadata header (4 rows) removed; time column dropped → 19 electrode columns of float64 voltage values.</div>
+    </div>
+  </div>
+  <div class="data-flow-step">
+    <div class="data-flow-number"><div class="num">②</div><div class="line"></div></div>
+    <div class="data-flow-content">
+      <div class="df-title">Per-Channel Signal Arrays <span class="df-tag df-tag-data">133 arrays</span></div>
+      <div class="df-desc">19 channels × 7 stimuli = 133 signal vectors per group. Each is a 1D float array of ~13,095 samples. Named with stimulus-channel prefix (e.g., <code>CFP1</code> = Calm/FP1, <code>HFP2</code> = Happy/FP2).</div>
+    </div>
+  </div>
+  <div class="data-flow-step">
+    <div class="data-flow-number"><div class="num">③</div><div class="line"></div></div>
+    <div class="data-flow-content">
+      <div class="df-title">Band-Decomposed Sub-Signals <span class="df-tag df-tag-signal">5 bands × 133</span></div>
+      <div class="df-desc">Each signal → 5 band sub-signals (+ broadband) via <code>splitband()</code>. Named e.g., <code>CGamma1</code>, <code>CBeta1</code>, <code>CAlpha1</code>, <code>CTheta1</code>, <code>CDelta1</code>. Same length as input signal (~13,095 samples).</div>
+    </div>
+  </div>
+  <div class="data-flow-step">
+    <div class="data-flow-number"><div class="num">④</div><div class="line"></div></div>
+    <div class="data-flow-content">
+      <div class="df-title">MFCC Feature Matrices <span class="df-tag df-tag-signal">~140 × 12 per call</span></div>
+      <div class="df-desc"><code>melcepst()</code> applied to each band-signal → matrix of 12 cepstral features per time frame (~140 frames for a 13,099-sample signal with 1024 window and 93 hop). Named e.g., <code>CextFP1G1</code> = Calm/FP1/Gamma.</div>
+    </div>
+  </div>
+  <div class="data-flow-step">
+    <div class="data-flow-number"><div class="num">⑤</div><div class="line"></div></div>
+    <div class="data-flow-content">
+      <div class="df-title">Per-Band Training Matrices <span class="df-tag df-tag-ml">N × 12</span></div>
+      <div class="df-desc">All 19 channel MFCC matrices for a given band and stimulus are vertically concatenated → one matrix per band per stimulus (e.g., <code>AATHETA</code> for Arithmetic/Theta). Then labelled with columns 13–14 for Valence-Arousal targets.</div>
+    </div>
+  </div>
+  <div class="data-flow-step">
+    <div class="data-flow-number"><div class="num">⑥</div><div class="line"></div></div>
+    <div class="data-flow-content">
+      <div class="df-title">Combined Emotion Matrices <span class="df-tag df-tag-ml">4N × 14</span></div>
+      <div class="df-desc">4 emotional stimuli stacked: <code>EmotionATHETA = [HATHETA; CATHETA; FATHETA; SATHETA]</code>. Each row has 12 features + 2 labels. Rows are then randomized with <code>randperm()</code>.</div>
+    </div>
+  </div>
+  <div class="data-flow-step">
+    <div class="data-flow-number"><div class="num">⑦</div><div class="line"></div></div>
+    <div class="data-flow-content">
+      <div class="df-title">Trained MLP + Evaluation <span class="df-tag df-tag-ml">Output</span></div>
+      <div class="df-desc">Columns 1–12 → input to MLP. Columns 13–14 → target. Network trained; test set evaluated. Returns: <code>perAcc</code> (% accuracy), <code>y</code> (predictions), <code>netVA</code> (saved model), <code>time</code> (training duration), <code>perf</code> (MSE).</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 9. API REFERENCE ═══ -->
+<h1 id="api-ref">9. API Reference — All Functions</h1>
+
+<div class="glass-card">
+  <h4 style="font-family:'Playfair Display',serif; color:var(--accent-dark); margin-top:0;">splitband(sig)</h4>
+  <p><strong>File:</strong> <code>splitband.m</code></p>
+  <p>Decomposes a single EEG channel signal into 6 frequency-band sub-signals using minimum-order elliptic filters. All filters share Rp=0.1 dB passband ripple and Rs=60 dB stopband attenuation.</p>
+  <table>
+    <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+    <tr><td><code>sig</code></td><td><code>double [N×1]</code></td><td>Single-channel EEG time-series signal (one electrode, one stimulus condition)</td></tr>
+  </table>
+  <table style="margin-top:10px;">
+    <tr><th>Return</th><th>Type</th><th>Description</th></tr>
+    <tr><td><code>Delta</code></td><td><code>double [N×1]</code></td><td>0–4 Hz sub-band (lowpass)</td></tr>
+    <tr><td><code>Theta</code></td><td><code>double [N×1]</code></td><td>4–8 Hz sub-band</td></tr>
+    <tr><td><code>Alpha</code></td><td><code>double [N×1]</code></td><td>8–13 Hz sub-band</td></tr>
+    <tr><td><code>Beta</code></td><td><code>double [N×1]</code></td><td>13–30 Hz sub-band</td></tr>
+    <tr><td><code>Gamma</code></td><td><code>double [N×1]</code></td><td>30–50 Hz sub-band</td></tr>
+    <tr><td><code>DtoG</code></td><td><code>double [N×1]</code></td><td>0–50 Hz broadband (Delta-to-Gamma)</td></tr>
+  </table>
+</div>
+
+<div class="glass-card" style="margin-top:16px;">
+  <h4 style="font-family:'Playfair Display',serif; color:var(--accent-dark); margin-top:0;">MLPVA(randomSigT, AATHETA)</h4>
+  <p><strong>File:</strong> <code>MLPVA.m</code></p>
+  <p>Trains a 3-layer MLP feedforward neural network on a randomized EEG feature matrix and evaluates it on a test set. Returns performance metrics, predictions, and the trained network object.</p>
+  <table>
+    <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+    <tr><td><code>randomSigT</code></td><td><code>double [M×14]</code></td><td>Randomized training matrix — columns 1–12 are MFCC features, columns 13–14 are Valence/Arousal labels</td></tr>
+    <tr><td><code>AATHETA</code></td><td><code>double [P×14]</code></td><td>Test matrix in the same format (one specific band-stimulus combination used as held-out test)</td></tr>
+  </table>
+  <table style="margin-top:10px;">
+    <tr><th>Return</th><th>Type</th><th>Description</th></tr>
+    <tr><td><code>y</code></td><td><code>double [2×P]</code></td><td>Network predictions for test set — row 1 = Valence, row 2 = Arousal</td></tr>
+    <tr><td><code>tgtestS</code></td><td><code>double [P×2]</code></td><td>Ground truth test targets</td></tr>
+    <tr><td><code>perAcc</code></td><td><code>double</code></td><td>Percentage accuracy (predictions within ±1.2 of target)</td></tr>
+    <tr><td><code>out</code></td><td><code>double</code></td><td>Absolute error matrix <code>|target − prediction|</code></td></tr>
+    <tr><td><code>ts</code></td><td><code>double</code></td><td>Inference time for test set (seconds, via <code>toc</code>)</td></tr>
+    <tr><td><code>perf</code></td><td><code>double</code></td><td>Mean squared error on test predictions</td></tr>
+    <tr><td><code>time</code></td><td><code>double</code></td><td>Total training time (seconds, via <code>toc</code>)</td></tr>
+    <tr><td><code>netVA</code></td><td><code>network</code></td><td>Trained MATLAB neural network object (can be saved and reused)</td></tr>
+  </table>
+</div>
+
+<div class="glass-card" style="margin-top:16px;">
+  <h4 style="font-family:'Playfair Display',serif; color:var(--accent-dark); margin-top:0;">plotVA2(y)</h4>
+  <p><strong>File:</strong> <code>plotVA2.m</code></p>
+  <p>Smooths and plots the two-row Valence-Arousal output matrix from <code>MLPVA</code>. Uses robust LOESS smoothing (10% span) to reduce noise in the prediction trajectory.</p>
+  <table>
+    <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+    <tr><td><code>y</code></td><td><code>double [2×N]</code></td><td>Neural network output — row 1: Valence trajectory, row 2: Arousal trajectory</td></tr>
+  </table>
+  <table style="margin-top:10px;">
+    <tr><th>Return</th><th>Description</th></tr>
+    <tr><td><code>y1</code></td><td>Smoothed Valence output (plotted in red)</td></tr>
+    <tr><td><code>y2</code></td><td>Smoothed Arousal output (plotted in blue)</td></tr>
+  </table>
+</div>
+
+<div class="glass-card" style="margin-top:16px;">
+  <h4 style="font-family:'Playfair Display',serif; color:var(--accent-dark); margin-top:0;">random(sig1)</h4>
+  <p><strong>File:</strong> <code>random.m</code></p>
+  <p>Randomly permutes all rows of a matrix using <code>randperm()</code>. Used to shuffle the combined emotion training matrix before neural network training.</p>
+  <table>
+    <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+    <tr><td><code>sig1</code></td><td><code>double [M×N]</code></td><td>Input matrix to shuffle row-wise</td></tr>
+  </table>
+  <table style="margin-top:10px;">
+    <tr><th>Return</th><th>Description</th></tr>
+    <tr><td><code>randomSig</code></td><td>Row-permuted version of <code>sig1</code> — same dimensions, rows in random order</td></tr>
+  </table>
+</div>
+
+<!-- ═══ 10. CONFIG REFERENCE ═══ -->
+<h1 id="config-ref">10. Configuration Reference</h1>
+
+<p>All parameters in the pipeline are hardcoded as inline constants in <code>FinalCoding_UPDATED.m</code> and <code>MLPVA.m</code>. There is no external configuration file.</p>
+
+<table>
+  <tr><th>Parameter</th><th>Location</th><th>Value</th><th>Description</th></tr>
+  <tr><td>Sampling rate (data)</td><td><code>splitband.m</code></td><td>250 Hz (Δt = 0.004)</td><td>EEG acquisition rate — Nyquist = 125 Hz used to normalize filter cutoffs</td></tr>
+  <tr><td>Sampling rate (melcepst)</td><td><code>FinalCoding_UPDATED.m</code></td><td>125</td><td>fs parameter passed to melcepst — half the EEG rate (Nyquist)</td></tr>
+  <tr><td>Filter passband ripple</td><td><code>splitband.m</code></td><td>0.1 dB (Rp)</td><td>Maximum ripple allowed in the elliptic filter's passband</td></tr>
+  <tr><td>Filter stopband attenuation</td><td><code>splitband.m</code></td><td>60 dB (Rs)</td><td>Minimum attenuation in the filter's stopband</td></tr>
+  <tr><td>MFCC coefficients</td><td><code>FinalCoding_UPDATED.m</code></td><td>12 (<code>nc</code>)</td><td>Number of cepstral coefficients returned per frame</td></tr>
+  <tr><td>Mel filterbank channels</td><td><code>FinalCoding_UPDATED.m</code></td><td>14 (<code>p</code>)</td><td>Number of mel-spaced filters in the filterbank</td></tr>
+  <tr><td>FFT window size</td><td><code>FinalCoding_UPDATED.m</code></td><td>1024 (<code>n</code>)</td><td>FFT length for STFT computation</td></tr>
+  <tr><td>Frame increment (hop)</td><td><code>FinalCoding_UPDATED.m</code></td><td>93 (<code>inc</code>)</td><td>Number of samples between consecutive MFCC frames</td></tr>
+  <tr><td>MLP hidden layers</td><td><code>MLPVA.m</code></td><td><code>[10, 10, 2]</code></td><td>Two hidden layers of 10 neurons; 2 output neurons (V, A)</td></tr>
+  <tr><td>MLP activations</td><td><code>MLPVA.m</code></td><td><code>tansig, tansig, purelin</code></td><td>Hidden: hyperbolic tangent; output: linear</td></tr>
+  <tr><td>MLP optimizer</td><td><code>MLPVA.m</code></td><td><code>traingdx</code></td><td>Gradient descent with adaptive LR and momentum</td></tr>
+  <tr><td>Learning rate</td><td><code>MLPVA.m</code></td><td>0.001</td><td>Initial gradient descent step size</td></tr>
+  <tr><td>Max epochs</td><td><code>MLPVA.m</code></td><td>10,000</td><td>Upper bound on training iterations</td></tr>
+  <tr><td>SSE goal</td><td><code>MLPVA.m</code></td><td>0.01</td><td>Sum-squared error threshold for early stopping</td></tr>
+  <tr><td>Accuracy threshold</td><td><code>MLPVA.m</code></td><td>1.2</td><td>|predicted − target| &lt; 1.2 counts as correct on ±1 scale</td></tr>
+  <tr><td>Metadata rows removed</td><td><code>FinalCoding_UPDATED.m</code></td><td>4</td><td>Header rows in raw CSV (waveform, t0, delta_t, column labels)</td></tr>
+  <tr><td>Channel column range</td><td><code>FinalCoding_UPDATED.m</code></td><td>cols 2–20</td><td>Columns kept after dropping timestamp (col 1) from each CSV</td></tr>
+  <tr><td>plotVA2 LOESS span</td><td><code>plotVA2.m</code></td><td>0.1 (10%)</td><td>Smoothing window as fraction of data length</td></tr>
+</table>
+
+<!-- ═══ 11. DATA SCHEMA ═══ -->
+<h1 id="data-schema">11. Data Schema</h1>
+
+<h3>Raw CSV Structure</h3>
+<table>
+  <tr><th>Row(s)</th><th>Content</th><th>Action</th></tr>
+  <tr><td>1</td><td>Waveform identifiers (<code>waveform</code>, <code>[0]</code>–<code>[18]</code>)</td><td>Removed (<code>table(1:4,:)=[]</code>)</td></tr>
+  <tr><td>2</td><td>Start timestamp (<code>t0</code>) for each channel</td><td>Removed</td></tr>
+  <tr><td>3</td><td>Sample interval (<code>delta t = 0.004000</code>)</td><td>Removed</td></tr>
+  <tr><td>4</td><td>Column headers (<code>time</code>, <code>Y[0]</code>–<code>Y[18]</code>)</td><td>Removed</td></tr>
+  <tr><td>5 – end</td><td>Time-series data: col 1 = timestamp, cols 2–20 = 19 EEG voltage values</td><td>Col 1 dropped; cols 2–20 kept</td></tr>
+</table>
+
+<h3>Final Training Matrix Structure</h3>
+<table>
+  <tr><th>Columns</th><th>Content</th><th>Description</th></tr>
+  <tr><td>1–12</td><td>MFCC features</td><td>12 cepstral coefficients extracted from the frequency band sub-signal</td></tr>
+  <tr><td>13</td><td>Valence label</td><td>+1 (positive), −1 (negative), 0 (neutral/baseline)</td></tr>
+  <tr><td>14</td><td>Arousal label</td><td>+1 (high), −1 (low), 0 (neutral/baseline)</td></tr>
+</table>
+
+<!-- ═══ 12. DEPENDENCIES ═══ -->
+<h1 id="dependencies">12. Dependencies &amp; Toolboxes</h1>
+
+<table>
+  <tr><th>Dependency</th><th>Type</th><th>Functions Used</th></tr>
+  <tr><td>MATLAB (R2019a or later recommended)</td><td>Core platform</td><td><code>readtable</code>, <code>table2array</code>, <code>filter</code>, <code>randperm</code>, <code>semilogy</code>, <code>smooth</code></td></tr>
+  <tr><td>Signal Processing Toolbox</td><td>MATLAB Toolbox</td><td><code>ellipord</code>, <code>ellip</code>, <code>filter</code> — used in <code>splitband.m</code> for bandpass filter design and application</td></tr>
+  <tr><td>Neural Network Toolbox (Deep Learning Toolbox)</td><td>MATLAB Toolbox</td><td><code>newff</code>, <code>train</code>, <code>sim</code>, <code>minmax</code>, <code>mse</code> — used in <code>MLPVA.m</code></td></tr>
+  <tr><td>Statistics and Machine Learning Toolbox</td><td>MATLAB Toolbox</td><td><code>smooth</code> with <code>'rloess'</code> — used in <code>plotVA2.m</code></td></tr>
+  <tr><td><code>melcepst.m</code> / <code>mel2frq.m</code></td><td>Included third-party</td><td>MFCC computation — included in the repository, not a standard MATLAB toolbox function</td></tr>
+</table>
+
+<div class="callout callout-warn">
+  <div class="callout-label">Toolbox Compatibility</div>
+  The <code>newff</code> function is part of the legacy Neural Network Toolbox API. In newer versions of MATLAB (R2019b+), it was superseded by <code>feedforwardnet</code>. The script uses the older API; if running on a newer MATLAB, ensure the Neural Network Toolbox (now Deep Learning Toolbox) is installed and that the legacy function layer is available. The core functionality remains the same.
+</div>
+
+<div class="callout callout-info">
+  <div class="callout-label">Running the Pipeline</div>
+  Set the MATLAB working directory to either <code>Data/ADHD/</code> or <code>Data/Normal/</code> before running <code>FinalCoding_UPDATED.m</code>, as all CSV paths are relative. Ensure all <code>.m</code> files in <code>Code/</code> are on the MATLAB path. The script runs end-to-end without user input — training outputs (MSE curve, V-A plot, accuracy) appear automatically on completion.
+</div>
+
+<hr>
+
+<div class="footer">
+  <p><strong>Human Stress Analysis: Normal vs ADHD — EEG Neural Network Research</strong></p>
+  <p>Harith Izani &nbsp;·&nbsp; International Islamic University Malaysia (IIUM)</p>
+  <p style="margin-top:8px; font-size:0.85em;">University Research &nbsp;·&nbsp; MATLAB Signal Processing &nbsp;·&nbsp; Elliptic Bandpass Filters &nbsp;·&nbsp; MFCC &nbsp;·&nbsp; MLP &nbsp;·&nbsp; Russell Circumplex Model &nbsp;·&nbsp; BCI</p>
+</div>
+
+</div>
+</body>
+</html>
