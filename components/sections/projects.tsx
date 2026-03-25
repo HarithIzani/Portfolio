@@ -40,7 +40,6 @@ const projects: Project[] = [
       "Metadata Generation",
     ],
     status: "Production",
-    /*secondaryLinks: [{ label: "Resume", url: "/resume.pdf" }],*/
   },
   {
     title: "Portable Traffic Data Gathering Tool",
@@ -60,7 +59,7 @@ const projects: Project[] = [
     status: "Research",
   },
   {
-    title: "Human Stress Analysis Between Normal and ADHD Patients by Using Neural Network Based on EEG Signals",
+    title: "EEG-Based Stress Profiling (ADHD vs Normal)",
     summary:
       "Developed neural network models to classify stress and cognitive response patterns from EEG signals, distinguishing between ADHD and normal patient groups.",
     type: "Case Study",
@@ -77,7 +76,7 @@ const projects: Project[] = [
     status: "Research",
   },
   {
-    title: "Analysis of Attention-Span on Prolonged Short-Form Online Content Consumption Using Neural Network Based on EEG Signals",
+    title: "EEG-Based Attention Span Modeling",
     summary:
       "Modeled attention-span degradation from EEG signals under prolonged short-form content exposure using neural networks and controlled stimuli.",
     type: "Case Study",
