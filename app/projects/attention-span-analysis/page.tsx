@@ -23,7 +23,7 @@ export default function AttentionSpanAnalysisPage() {
   const researchPaperUrl = "/Attention_Span_Research_Paper.pdf";
 
   return (
-    <main className="min-h-screen px-6 py-10 text-[#2F2A26]">
+    <main className="min-h-screen px-6 py-10 text-[#1E1410]">
       <div className="mx-auto max-w-6xl">
         <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
           <Link
@@ -44,7 +44,7 @@ export default function AttentionSpanAnalysisPage() {
         </div>
 
         <GlassCard variant="highlight" className="p-8 md:p-12">
-          <p className="mb-4 text-xs uppercase tracking-[0.24em] text-[#6B625A]">
+          <p className="mb-4 text-xs uppercase tracking-[0.24em] text-[#7A4E46]">
             University Research
           </p>
 
@@ -52,7 +52,7 @@ export default function AttentionSpanAnalysisPage() {
             EEG-Based Attention Span Analysis Under Short-Form Content Exposure
           </h1>
 
-          <p className="mt-6 max-w-3xl text-base leading-8 text-[#6B625A]">
+          <p className="mt-6 max-w-3xl text-base leading-8 text-[#7A4E46]">
             Built an end-to-end EEG signal processing and neural network system
             to quantify how prolonged exposure to short-form content impacts
             attention, emotional state, and cognitive engagement.
@@ -73,13 +73,13 @@ export default function AttentionSpanAnalysisPage() {
         <section className="mt-8 grid gap-6 md:grid-cols-2">
           <GlassCard variant="warm" className="p-8 md:p-10">
             <h2 className="text-3xl font-semibold">Overview</h2>
-            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
-            <p className="mt-6 leading-8 text-[#6B625A]">
+            <div className="mt-4 h-px w-16 bg-[#C9A84C]/60" />
+            <p className="mt-6 leading-8 text-[#7A4E46]">
               This research analyzes how continuous exposure to short-form
               digital content affects human attention span using EEG signals
               collected under controlled experimental conditions.
             </p>
-            <p className="mt-4 leading-8 text-[#6B625A]">
+            <p className="mt-4 leading-8 text-[#7A4E46]">
               Subjects were categorized into control and experimental groups and
               evaluated across baseline, emotional, and video-based stimuli to
               identify measurable shifts in brain activity and engagement.
@@ -88,9 +88,9 @@ export default function AttentionSpanAnalysisPage() {
 
           <GlassCard variant="default" className="p-8 md:p-10">
             <h2 className="text-3xl font-semibold">Impact</h2>
-            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
+            <div className="mt-4 h-px w-16 bg-[#C9A84C]/60" />
 
-            <ul className="mt-6 space-y-3 text-[#6B625A] leading-8">
+            <ul className="mt-6 space-y-3 text-[#7A4E46] leading-8">
               <li>• Built a full EEG → ML pipeline for attention-state modeling</li>
               <li>
                 • Identified measurable differences between high-consumption and
@@ -114,9 +114,9 @@ export default function AttentionSpanAnalysisPage() {
         <section className="mt-8 grid gap-6 lg:grid-cols-[1.5fr_0.9fr]">
           <GlassCard variant="default" className="p-8 md:p-10">
             <h2 className="text-3xl font-semibold">What I worked on</h2>
-            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
+            <div className="mt-4 h-px w-16 bg-[#C9A84C]/60" />
 
-            <ul className="mt-6 space-y-4 text-[#6B625A]">
+            <ul className="mt-6 space-y-4 text-[#7A4E46]">
               <li>• Designed full EEG data acquisition and experimental protocol</li>
               <li>
                 • Implemented preprocessing and noise filtering using elliptic
@@ -138,23 +138,23 @@ export default function AttentionSpanAnalysisPage() {
 
           <GlassCard variant="warm" className="p-8 md:p-10">
             <h2 className="text-3xl font-semibold">Project frame</h2>
-            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
+            <div className="mt-4 h-px w-16 bg-[#C9A84C]/60" />
 
-            <div className="mt-6 space-y-4 text-[#6B625A]">
+            <div className="mt-6 space-y-4 text-[#7A4E46]">
               <p>
-                <span className="font-medium text-[#2F2A26]">Type:</span>{" "}
+                <span className="font-medium text-[#1E1410]">Type:</span>{" "}
                 Research Project
               </p>
               <p>
-                <span className="font-medium text-[#2F2A26]">Domain:</span> EEG
+                <span className="font-medium text-[#1E1410]">Domain:</span> EEG
                 + Behavioral Analysis
               </p>
               <p>
-                <span className="font-medium text-[#2F2A26]">Focus:</span>{" "}
+                <span className="font-medium text-[#1E1410]">Focus:</span>{" "}
                 Attention & Digital Consumption
               </p>
               <p>
-                <span className="font-medium text-[#2F2A26]">Tools:</span>{" "}
+                <span className="font-medium text-[#1E1410]">Tools:</span>{" "}
                 MATLAB, Signal Processing Toolbox
               </p>
             </div>
@@ -164,27 +164,27 @@ export default function AttentionSpanAnalysisPage() {
         <section className="mt-8">
           <GlassCard variant="default" className="p-8 md:p-10">
             <h2 className="text-3xl font-semibold">System Architecture</h2>
-            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
+            <div className="mt-4 h-px w-16 bg-[#C9A84C]/60" />
 
-            <ul className="mt-6 space-y-4 text-[#6B625A]">
+            <ul className="mt-6 space-y-4 text-[#7A4E46]">
               <li>
-                <strong className="text-[#2F2A26]">Input:</strong> 19-channel EEG
+                <strong className="text-[#1E1410]">Input:</strong> 19-channel EEG
                 signals at 250Hz
               </li>
               <li>
-                <strong className="text-[#2F2A26]">Preprocessing:</strong>{" "}
+                <strong className="text-[#1E1410]">Preprocessing:</strong>{" "}
                 Elliptic filtering and noise removal
               </li>
               <li>
-                <strong className="text-[#2F2A26]">Feature Extraction:</strong>{" "}
+                <strong className="text-[#1E1410]">Feature Extraction:</strong>{" "}
                 MFCC across EEG bands
               </li>
               <li>
-                <strong className="text-[#2F2A26]">Model:</strong> MLP neural
+                <strong className="text-[#1E1410]">Model:</strong> MLP neural
                 network (valence-arousal output)
               </li>
               <li>
-                <strong className="text-[#2F2A26]">Output:</strong> Emotional
+                <strong className="text-[#1E1410]">Output:</strong> Emotional
                 state + attention trend analysis
               </li>
             </ul>
@@ -194,11 +194,11 @@ export default function AttentionSpanAnalysisPage() {
         <section className="mt-8">
           <GlassCard variant="highlight" className="p-8 md:p-10">
             <h2 className="text-3xl font-semibold">Processing Pipeline</h2>
-            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
+            <div className="mt-4 h-px w-16 bg-[#C9A84C]/60" />
 
-            <div className="mt-6 space-y-6 text-[#6B625A]">
+            <div className="mt-6 space-y-6 text-[#7A4E46]">
               <div>
-                <h3 className="font-semibold text-[#2F2A26]">
+                <h3 className="font-semibold text-[#1E1410]">
                   1. Data Collection
                 </h3>
                 <p>
@@ -208,42 +208,42 @@ export default function AttentionSpanAnalysisPage() {
               </div>
 
               <div>
-                <h3 className="font-semibold text-[#2F2A26]">
+                <h3 className="font-semibold text-[#1E1410]">
                   2. Preprocessing
                 </h3>
                 <p>Noise removal and signal cleaning using elliptic filters.</p>
               </div>
 
               <div>
-                <h3 className="font-semibold text-[#2F2A26]">
+                <h3 className="font-semibold text-[#1E1410]">
                   3. Band Decomposition
                 </h3>
                 <p>Signals split into Delta, Theta, Alpha, and Beta bands.</p>
               </div>
 
               <div>
-                <h3 className="font-semibold text-[#2F2A26]">
+                <h3 className="font-semibold text-[#1E1410]">
                   4. Feature Extraction
                 </h3>
                 <p>MFCC features extracted per band and channel.</p>
               </div>
 
               <div>
-                <h3 className="font-semibold text-[#2F2A26]">
+                <h3 className="font-semibold text-[#1E1410]">
                   5. Label Encoding
                 </h3>
                 <p>Mapped to valence-arousal emotional space.</p>
               </div>
 
               <div>
-                <h3 className="font-semibold text-[#2F2A26]">
+                <h3 className="font-semibold text-[#1E1410]">
                   6. Model Training
                 </h3>
                 <p>MLP trained on emotional datasets and applied to all conditions.</p>
               </div>
 
               <div>
-                <h3 className="font-semibold text-[#2F2A26]">
+                <h3 className="font-semibold text-[#1E1410]">
                   7. Analysis
                 </h3>
                 <p>
@@ -258,9 +258,9 @@ export default function AttentionSpanAnalysisPage() {
         <section className="mt-8">
           <GlassCard variant="highlight" className="p-8 md:p-10">
             <h2 className="text-3xl font-semibold">Research Findings</h2>
-            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
+            <div className="mt-4 h-px w-16 bg-[#C9A84C]/60" />
 
-            <ul className="mt-6 space-y-4 text-[#6B625A] leading-8">
+            <ul className="mt-6 space-y-4 text-[#7A4E46] leading-8">
               <li>
                 • The control subject’s default state stays within alpha-to-beta
                 range, indicating relaxed but engaged baseline activity.
@@ -294,9 +294,9 @@ export default function AttentionSpanAnalysisPage() {
         <section className="mt-8">
           <GlassCard variant="highlight" className="p-8 md:p-10">
             <h2 className="text-3xl font-semibold">Technical Documentation</h2>
-            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
+            <div className="mt-4 h-px w-16 bg-[#C9A84C]/60" />
 
-            <p className="mt-6 max-w-3xl text-sm leading-7 text-[#6B625A]">
+            <p className="mt-6 max-w-3xl text-sm leading-7 text-[#7A4E46]">
               Full system documentation including EEG pipeline, dataset
               structure, model architecture, and experimental findings.
             </p>
@@ -333,15 +333,15 @@ export default function AttentionSpanAnalysisPage() {
         <section className="mt-8">
           <GlassCard variant="warm" className="p-8 md:p-10">
             <h2 className="text-3xl font-semibold">Why this project matters</h2>
-            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
+            <div className="mt-4 h-px w-16 bg-[#C9A84C]/60" />
 
-            <p className="mt-6 text-[#6B625A] leading-8">
+            <p className="mt-6 text-[#7A4E46] leading-8">
               This project explores a modern behavioral question through a
               rigorous EEG + ML pipeline, connecting digital media consumption
               patterns to measurable changes in engagement and emotional state.
             </p>
 
-            <p className="mt-4 text-[#6B625A] leading-8">
+            <p className="mt-4 text-[#7A4E46] leading-8">
               It shows how experimental neuroscience, signal processing, and
               machine learning can be combined to study emerging human-computer
               interaction problems.

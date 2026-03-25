@@ -28,7 +28,7 @@ export default function PortableTrafficDataGatheringToolPage() {
   const researchPaperUrl = "/Traffic_Data_Research_Paper.pdf";
 
   return (
-    <main className="min-h-screen px-6 py-10 text-[#2F2A26]">
+    <main className="min-h-screen px-6 py-10 text-[#1E1410]">
       <div className="mx-auto max-w-6xl">
         <div className="mb-8 flex items-center justify-between gap-4">
           <Link
@@ -50,13 +50,13 @@ export default function PortableTrafficDataGatheringToolPage() {
 
         <GlassCard variant="highlight" className="p-8 md:p-12">
           <div className="pointer-events-none absolute inset-0">
-            <div className="absolute left-10 top-10 h-32 w-32 rounded-full bg-[#D7B893]/18 blur-3xl" />
-            <div className="absolute right-12 top-14 h-40 w-40 rounded-full bg-[#E7D8C7]/22 blur-3xl" />
+            <div className="absolute left-10 top-10 h-32 w-32 rounded-full bg-[rgba(27,107,98,0.10)] blur-3xl" />
+            <div className="absolute right-12 top-14 h-40 w-40 rounded-full bg-[rgba(201,168,76,0.12)] blur-3xl" />
             <div className="absolute bottom-8 left-1/3 h-28 w-28 rounded-full bg-white/10 blur-2xl" />
           </div>
 
           <div className="relative z-10">
-            <p className="mb-4 text-xs uppercase tracking-[0.24em] text-[#6B625A]">
+            <p className="mb-4 text-xs uppercase tracking-[0.24em] text-[#7A4E46]">
               Final Year Project • Gold Medal Award
             </p>
 
@@ -65,7 +65,7 @@ export default function PortableTrafficDataGatheringToolPage() {
               MobileNet V2 640
             </h1>
 
-            <p className="mt-6 max-w-3xl text-base leading-8 text-[#6B625A] md:text-lg">
+            <p className="mt-6 max-w-3xl text-base leading-8 text-[#7A4E46] md:text-lg">
               A portable computer vision system for near real-time traffic
               monitoring, detecting vehicles, pedestrians, and environmental
               conditions using transfer learning and edge-oriented deployment.
@@ -75,7 +75,7 @@ export default function PortableTrafficDataGatheringToolPage() {
               {tech.map((tag) => (
                 <span
                   key={tag}
-                  className="rounded-full border border-white/45 bg-white/16 px-3 py-1 text-sm text-[#4F4842]"
+                  className="rounded-full border border-white/45 bg-white/16 px-3 py-1 text-sm text-[#7A4E46]"
                 >
                   {tag}
                 </span>
@@ -87,8 +87,8 @@ export default function PortableTrafficDataGatheringToolPage() {
         <section className="mt-8 grid gap-6 md:grid-cols-2">
           <GlassCard variant="warm" className="p-8 md:p-10">
             <h2 className="text-3xl font-semibold">Overview</h2>
-            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
-            <p className="mt-6 leading-8 text-[#6B625A]">
+            <div className="mt-4 h-px w-16 bg-[#C9A84C]/60" />
+            <p className="mt-6 leading-8 text-[#7A4E46]">
               This project focused on building a portable traffic data gathering
               tool capable of capturing and interpreting traffic-related signals
               in near real time. The system was designed to identify cars and
@@ -99,9 +99,9 @@ export default function PortableTrafficDataGatheringToolPage() {
 
           <GlassCard variant="default" className="p-8 md:p-10">
             <h2 className="text-3xl font-semibold">Impact</h2>
-            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
+            <div className="mt-4 h-px w-16 bg-[#C9A84C]/60" />
 
-            <ul className="mt-6 space-y-3 text-[#6B625A] leading-8">
+            <ul className="mt-6 space-y-3 text-[#7A4E46] leading-8">
               <li>
                 • Built a portable computer vision system capable of near
                 real-time traffic signal detection.
@@ -125,9 +125,9 @@ export default function PortableTrafficDataGatheringToolPage() {
         <section className="mt-8 grid gap-6 lg:grid-cols-[1.5fr_0.9fr]">
           <GlassCard variant="default" className="p-8 md:p-10">
             <h2 className="text-3xl font-semibold">What I worked on</h2>
-            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
+            <div className="mt-4 h-px w-16 bg-[#C9A84C]/60" />
 
-            <ul className="mt-6 space-y-4 text-[#6B625A]">
+            <ul className="mt-6 space-y-4 text-[#7A4E46]">
               <li>
                 • Developed a portable traffic data gathering system using
                 transfer learning with MobileNet V2.
@@ -153,23 +153,23 @@ export default function PortableTrafficDataGatheringToolPage() {
 
           <GlassCard variant="warm" className="p-8 md:p-10">
             <h2 className="text-3xl font-semibold">Project frame</h2>
-            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
+            <div className="mt-4 h-px w-16 bg-[#C9A84C]/60" />
 
-            <div className="mt-6 space-y-4 text-[#6B625A]">
+            <div className="mt-6 space-y-4 text-[#7A4E46]">
               <p>
-                <span className="font-medium text-[#2F2A26]">Type:</span> Final
+                <span className="font-medium text-[#1E1410]">Type:</span> Final
                 Year Project
               </p>
               <p>
-                <span className="font-medium text-[#2F2A26]">Award:</span> Gold
+                <span className="font-medium text-[#1E1410]">Award:</span> Gold
                 Medal Award
               </p>
               <p>
-                <span className="font-medium text-[#2F2A26]">Focus:</span>{" "}
+                <span className="font-medium text-[#1E1410]">Focus:</span>{" "}
                 computer vision, transfer learning, edge deployment
               </p>
               <p>
-                <span className="font-medium text-[#2F2A26]">Platform:</span>{" "}
+                <span className="font-medium text-[#1E1410]">Platform:</span>{" "}
                 Raspberry Pi, Jupyter Notebook, Anaconda
               </p>
             </div>
@@ -179,33 +179,33 @@ export default function PortableTrafficDataGatheringToolPage() {
         <section className="mt-8">
           <GlassCard variant="default" className="p-8 md:p-10">
             <h2 className="text-3xl font-semibold">System Architecture</h2>
-            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
+            <div className="mt-4 h-px w-16 bg-[#C9A84C]/60" />
 
-            <p className="mt-6 text-[#6B625A] leading-8">
+            <p className="mt-6 text-[#7A4E46] leading-8">
               The system was designed as a lightweight edge-deployable computer
               vision pipeline, combining real-time image capture, model
               inference, and contextual signal extraction.
             </p>
 
-            <ul className="mt-6 space-y-4 text-[#6B625A]">
+            <ul className="mt-6 space-y-4 text-[#7A4E46]">
               <li>
-                <strong className="text-[#2F2A26]">Input Layer:</strong> Camera
+                <strong className="text-[#1E1410]">Input Layer:</strong> Camera
                 feed capturing real-time traffic scenes.
               </li>
               <li>
-                <strong className="text-[#2F2A26]">Inference Layer:</strong>{" "}
+                <strong className="text-[#1E1410]">Inference Layer:</strong>{" "}
                 MobileNet V2 model for detecting vehicles and pedestrians.
               </li>
               <li>
-                <strong className="text-[#2F2A26]">Processing Layer:</strong>{" "}
+                <strong className="text-[#1E1410]">Processing Layer:</strong>{" "}
                 Image preprocessing and contextual signal extraction.
               </li>
               <li>
-                <strong className="text-[#2F2A26]">Output Layer:</strong>{" "}
+                <strong className="text-[#1E1410]">Output Layer:</strong>{" "}
                 Structured traffic and environmental data.
               </li>
               <li>
-                <strong className="text-[#2F2A26]">Deployment:</strong> Edge-based
+                <strong className="text-[#1E1410]">Deployment:</strong> Edge-based
                 execution using Raspberry Pi.
               </li>
             </ul>
@@ -215,25 +215,25 @@ export default function PortableTrafficDataGatheringToolPage() {
         <section className="mt-8">
           <GlassCard variant="highlight" className="p-8 md:p-10">
             <h2 className="text-3xl font-semibold">Processing Pipeline</h2>
-            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
+            <div className="mt-4 h-px w-16 bg-[#C9A84C]/60" />
 
-            <div className="mt-6 space-y-6 text-[#6B625A]">
+            <div className="mt-6 space-y-6 text-[#7A4E46]">
               <div>
-                <h3 className="font-semibold text-[#2F2A26]">
+                <h3 className="font-semibold text-[#1E1410]">
                   1. Image Capture
                 </h3>
                 <p>Capture real-time traffic frames from camera input.</p>
               </div>
 
               <div>
-                <h3 className="font-semibold text-[#2F2A26]">
+                <h3 className="font-semibold text-[#1E1410]">
                   2. Preprocessing
                 </h3>
                 <p>Resize and normalize frames for efficient inference.</p>
               </div>
 
               <div>
-                <h3 className="font-semibold text-[#2F2A26]">
+                <h3 className="font-semibold text-[#1E1410]">
                   3. Object Detection
                 </h3>
                 <p>
@@ -243,7 +243,7 @@ export default function PortableTrafficDataGatheringToolPage() {
               </div>
 
               <div>
-                <h3 className="font-semibold text-[#2F2A26]">
+                <h3 className="font-semibold text-[#1E1410]">
                   4. Context Extraction
                 </h3>
                 <p>
@@ -253,7 +253,7 @@ export default function PortableTrafficDataGatheringToolPage() {
               </div>
 
               <div>
-                <h3 className="font-semibold text-[#2F2A26]">
+                <h3 className="font-semibold text-[#1E1410]">
                   5. Output Generation
                 </h3>
                 <p>
@@ -268,9 +268,9 @@ export default function PortableTrafficDataGatheringToolPage() {
         <section className="mt-8">
           <GlassCard variant="highlight" className="p-8 md:p-10">
             <h2 className="text-3xl font-semibold">Key Findings</h2>
-            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
+            <div className="mt-4 h-px w-16 bg-[#C9A84C]/60" />
 
-            <ul className="mt-6 space-y-4 text-[#6B625A] leading-8">
+            <ul className="mt-6 space-y-4 text-[#7A4E46] leading-8">
               <li>
                 • Lightweight object detection models such as MobileNetV2 are
                 viable for edge deployment without requiring heavy compute.
@@ -302,9 +302,9 @@ export default function PortableTrafficDataGatheringToolPage() {
         <section className="mt-8">
           <GlassCard variant="highlight" className="p-8 md:p-10">
             <h2 className="text-3xl font-semibold">System Diagram</h2>
-            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
+            <div className="mt-4 h-px w-16 bg-[#C9A84C]/60" />
 
-            <p className="mt-6 text-sm leading-7 text-[#6B625A]">
+            <p className="mt-6 text-sm leading-7 text-[#7A4E46]">
               High-level diagram of the system workflow. Click to open a larger
               view.
             </p>
@@ -338,9 +338,9 @@ export default function PortableTrafficDataGatheringToolPage() {
         <section className="mt-8">
           <GlassCard variant="highlight" className="p-8 md:p-10">
             <h2 className="text-3xl font-semibold">Technical Documentation</h2>
-            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
+            <div className="mt-4 h-px w-16 bg-[#C9A84C]/60" />
 
-            <p className="mt-6 max-w-3xl text-sm leading-7 text-[#6B625A]">
+            <p className="mt-6 max-w-3xl text-sm leading-7 text-[#7A4E46]">
               Full project documentation for the portable traffic data gathering
               tool, including system design, model approach, workflow structure,
               deployment context, and implementation notes.
@@ -381,15 +381,15 @@ export default function PortableTrafficDataGatheringToolPage() {
             <h2 className="text-3xl font-semibold">
               Why this project matters
             </h2>
-            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
+            <div className="mt-4 h-px w-16 bg-[#C9A84C]/60" />
 
-            <p className="mt-6 text-[#6B625A] leading-8">
+            <p className="mt-6 text-[#7A4E46] leading-8">
               This project demonstrates how deep learning models can be adapted
               for edge deployment, balancing performance, portability, and
               real-time constraints.
             </p>
 
-            <p className="mt-4 text-[#6B625A] leading-8">
+            <p className="mt-4 text-[#7A4E46] leading-8">
               It bridges the gap between research-level models and practical
               real-world systems that can operate outside of cloud environments.
             </p>

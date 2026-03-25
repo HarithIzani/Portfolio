@@ -23,7 +23,7 @@ export default function HumanStressAnalysisPage() {
   const researchPaperUrl = "/Stress_Analysis_Research_Paper.pdf";
 
   return (
-    <main className="min-h-screen px-6 py-10 text-[#2F2A26]">
+    <main className="min-h-screen px-6 py-10 text-[#1E1410]">
       <div className="mx-auto max-w-6xl">
         <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
           <Link
@@ -44,7 +44,7 @@ export default function HumanStressAnalysisPage() {
         </div>
 
         <GlassCard variant="highlight" className="p-8 md:p-12">
-          <p className="mb-4 text-xs uppercase tracking-[0.24em] text-[#6B625A]">
+          <p className="mb-4 text-xs uppercase tracking-[0.24em] text-[#7A4E46]">
             University Research
           </p>
 
@@ -53,7 +53,7 @@ export default function HumanStressAnalysisPage() {
             Networks on EEG Signals
           </h1>
 
-          <p className="mt-6 max-w-3xl text-base leading-8 text-[#6B625A]">
+          <p className="mt-6 max-w-3xl text-base leading-8 text-[#7A4E46]">
             Built an end-to-end EEG signal processing and neural network system
             to model emotional and cognitive responses under stress,
             distinguishing behavioral patterns between ADHD and control
@@ -75,13 +75,13 @@ export default function HumanStressAnalysisPage() {
         <section className="mt-8 grid gap-6 md:grid-cols-2">
           <GlassCard variant="warm" className="p-8 md:p-10">
             <h2 className="text-3xl font-semibold">Overview</h2>
-            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
-            <p className="mt-6 leading-8 text-[#6B625A]">
+            <div className="mt-4 h-px w-16 bg-[#C9A84C]/60" />
+            <p className="mt-6 leading-8 text-[#7A4E46]">
               This research investigates how brain activity differs between
               ADHD and normal subjects under controlled emotional and cognitive
               stress conditions using EEG signals.
             </p>
-            <p className="mt-4 leading-8 text-[#6B625A]">
+            <p className="mt-4 leading-8 text-[#7A4E46]">
               EEG signals were collected across multiple stimuli including
               resting state, emotional triggers, and arithmetic stress tests,
               then processed through a full signal processing and neural network
@@ -91,9 +91,9 @@ export default function HumanStressAnalysisPage() {
 
           <GlassCard variant="default" className="p-8 md:p-10">
             <h2 className="text-3xl font-semibold">Impact</h2>
-            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
+            <div className="mt-4 h-px w-16 bg-[#C9A84C]/60" />
 
-            <ul className="mt-6 space-y-3 text-[#6B625A] leading-8">
+            <ul className="mt-6 space-y-3 text-[#7A4E46] leading-8">
               <li>
                 • Built a full EEG → ML pipeline from raw signal acquisition to
                 emotion classification.
@@ -121,9 +121,9 @@ export default function HumanStressAnalysisPage() {
         <section className="mt-8 grid gap-6 lg:grid-cols-[1.5fr_0.9fr]">
           <GlassCard variant="default" className="p-8 md:p-10">
             <h2 className="text-3xl font-semibold">What I worked on</h2>
-            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
+            <div className="mt-4 h-px w-16 bg-[#C9A84C]/60" />
 
-            <ul className="mt-6 space-y-4 text-[#6B625A]">
+            <ul className="mt-6 space-y-4 text-[#7A4E46]">
               <li>
                 • Designed full EEG signal processing pipeline including
                 preprocessing and filtering.
@@ -153,23 +153,23 @@ export default function HumanStressAnalysisPage() {
 
           <GlassCard variant="warm" className="p-8 md:p-10">
             <h2 className="text-3xl font-semibold">Project frame</h2>
-            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
+            <div className="mt-4 h-px w-16 bg-[#C9A84C]/60" />
 
-            <div className="mt-6 space-y-4 text-[#6B625A]">
+            <div className="mt-6 space-y-4 text-[#7A4E46]">
               <p>
-                <span className="font-medium text-[#2F2A26]">Type:</span>{" "}
+                <span className="font-medium text-[#1E1410]">Type:</span>{" "}
                 Research Project
               </p>
               <p>
-                <span className="font-medium text-[#2F2A26]">Domain:</span> EEG
+                <span className="font-medium text-[#1E1410]">Domain:</span> EEG
                 + Machine Learning
               </p>
               <p>
-                <span className="font-medium text-[#2F2A26]">Focus:</span> ADHD
+                <span className="font-medium text-[#1E1410]">Focus:</span> ADHD
                 vs Normal Brain Activity
               </p>
               <p>
-                <span className="font-medium text-[#2F2A26]">Tools:</span>{" "}
+                <span className="font-medium text-[#1E1410]">Tools:</span>{" "}
                 MATLAB, Signal Processing Toolbox
               </p>
             </div>
@@ -179,27 +179,27 @@ export default function HumanStressAnalysisPage() {
         <section className="mt-8">
           <GlassCard variant="default" className="p-8 md:p-10">
             <h2 className="text-3xl font-semibold">System Architecture</h2>
-            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
+            <div className="mt-4 h-px w-16 bg-[#C9A84C]/60" />
 
-            <ul className="mt-6 space-y-4 text-[#6B625A]">
+            <ul className="mt-6 space-y-4 text-[#7A4E46]">
               <li>
-                <strong className="text-[#2F2A26]">Input:</strong> Raw EEG
+                <strong className="text-[#1E1410]">Input:</strong> Raw EEG
                 signals (19 channels, 250Hz sampling)
               </li>
               <li>
-                <strong className="text-[#2F2A26]">Preprocessing:</strong> Noise
+                <strong className="text-[#1E1410]">Preprocessing:</strong> Noise
                 filtering using elliptic filters
               </li>
               <li>
-                <strong className="text-[#2F2A26]">Feature Extraction:</strong>{" "}
+                <strong className="text-[#1E1410]">Feature Extraction:</strong>{" "}
                 MFCC applied across frequency bands
               </li>
               <li>
-                <strong className="text-[#2F2A26]">Model:</strong> MLP neural
+                <strong className="text-[#1E1410]">Model:</strong> MLP neural
                 network (valence-arousal output)
               </li>
               <li>
-                <strong className="text-[#2F2A26]">Output:</strong> Emotion
+                <strong className="text-[#1E1410]">Output:</strong> Emotion
                 classification and patient profiling
               </li>
             </ul>
@@ -209,11 +209,11 @@ export default function HumanStressAnalysisPage() {
         <section className="mt-8">
           <GlassCard variant="highlight" className="p-8 md:p-10">
             <h2 className="text-3xl font-semibold">Processing Pipeline</h2>
-            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
+            <div className="mt-4 h-px w-16 bg-[#C9A84C]/60" />
 
-            <div className="mt-6 space-y-6 text-[#6B625A]">
+            <div className="mt-6 space-y-6 text-[#7A4E46]">
               <div>
-                <h3 className="font-semibold text-[#2F2A26]">
+                <h3 className="font-semibold text-[#1E1410]">
                   1. Data Collection
                 </h3>
                 <p>
@@ -223,14 +223,14 @@ export default function HumanStressAnalysisPage() {
               </div>
 
               <div>
-                <h3 className="font-semibold text-[#2F2A26]">
+                <h3 className="font-semibold text-[#1E1410]">
                   2. Preprocessing
                 </h3>
                 <p>Signal cleaning and noise removal using elliptic filters.</p>
               </div>
 
               <div>
-                <h3 className="font-semibold text-[#2F2A26]">
+                <h3 className="font-semibold text-[#1E1410]">
                   3. Band Decomposition
                 </h3>
                 <p>
@@ -240,28 +240,28 @@ export default function HumanStressAnalysisPage() {
               </div>
 
               <div>
-                <h3 className="font-semibold text-[#2F2A26]">
+                <h3 className="font-semibold text-[#1E1410]">
                   4. Feature Extraction
                 </h3>
                 <p>Extract MFCC features from each band and channel.</p>
               </div>
 
               <div>
-                <h3 className="font-semibold text-[#2F2A26]">
+                <h3 className="font-semibold text-[#1E1410]">
                   5. Label Encoding
                 </h3>
                 <p>Map signals to valence-arousal emotional model.</p>
               </div>
 
               <div>
-                <h3 className="font-semibold text-[#2F2A26]">
+                <h3 className="font-semibold text-[#1E1410]">
                   6. Model Training
                 </h3>
                 <p>Train MLP neural network for classification.</p>
               </div>
 
               <div>
-                <h3 className="font-semibold text-[#2F2A26]">
+                <h3 className="font-semibold text-[#1E1410]">
                   7. Evaluation
                 </h3>
                 <p>
@@ -276,9 +276,9 @@ export default function HumanStressAnalysisPage() {
         <section className="mt-8">
           <GlassCard variant="highlight" className="p-8 md:p-10">
             <h2 className="text-3xl font-semibold">Research Findings</h2>
-            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
+            <div className="mt-4 h-px w-16 bg-[#C9A84C]/60" />
 
-            <ul className="mt-6 space-y-4 text-[#6B625A] leading-8">
+            <ul className="mt-6 space-y-4 text-[#7A4E46] leading-8">
               <li>
                 • ADHD subjects exhibit higher baseline brain activity than
                 control subjects, particularly in resting-state comparisons.
@@ -312,9 +312,9 @@ export default function HumanStressAnalysisPage() {
         <section className="mt-8">
           <GlassCard variant="highlight" className="p-8 md:p-10">
             <h2 className="text-3xl font-semibold">Technical Documentation</h2>
-            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
+            <div className="mt-4 h-px w-16 bg-[#C9A84C]/60" />
 
-            <p className="mt-6 max-w-3xl text-sm leading-7 text-[#6B625A]">
+            <p className="mt-6 max-w-3xl text-sm leading-7 text-[#7A4E46]">
               Full research documentation including experimental protocol,
               signal processing methodology, neural network architecture, and
               results analysis.
@@ -352,16 +352,16 @@ export default function HumanStressAnalysisPage() {
         <section className="mt-8">
           <GlassCard variant="warm" className="p-8 md:p-10">
             <h2 className="text-3xl font-semibold">Why this project matters</h2>
-            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
+            <div className="mt-4 h-px w-16 bg-[#C9A84C]/60" />
 
-            <p className="mt-6 text-[#6B625A] leading-8">
+            <p className="mt-6 text-[#7A4E46] leading-8">
               This project demonstrates how EEG signals can be transformed into
               structured emotional and cognitive indicators through a full ML
               pipeline, making brain-state analysis more interpretable and
               actionable.
             </p>
 
-            <p className="mt-4 text-[#6B625A] leading-8">
+            <p className="mt-4 text-[#7A4E46] leading-8">
               It also shows how experimental design, signal processing, and
               machine learning can work together in neurodevelopmental research.
             </p>

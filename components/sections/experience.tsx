@@ -43,6 +43,37 @@ const experienceItems = [
   },
 ];
 
+/* Small reusable arch accent for experience cards */
+function ArchAccent() {
+  return (
+    <svg
+      aria-hidden="true"
+      className="pointer-events-none absolute -right-8 -top-6 opacity-[0.07]"
+      width="160"
+      height="200"
+      viewBox="0 0 160 200"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M 10 200 L 10 80 Q 10 10 80 10 Q 150 10 150 80 L 150 200"
+        stroke="#1B6B62"
+        strokeWidth="2"
+      />
+      <path
+        d="M 30 200 L 30 90 Q 30 30 80 30 Q 130 30 130 90 L 130 200"
+        stroke="#C9A84C"
+        strokeWidth="1.5"
+      />
+      <path
+        d="M 50 200 L 50 100 Q 50 50 80 50 Q 110 50 110 100 L 110 200"
+        stroke="#1B6B62"
+        strokeWidth="1"
+      />
+    </svg>
+  );
+}
+
 export default function ExperienceSection() {
   return (
     <section id="experience" className="pt-24">
@@ -59,26 +90,32 @@ export default function ExperienceSection() {
           {experienceItems.map((item, index) => (
             <FadeUp key={`${item.role}-${item.company}`} delay={index * 0.08}>
               <GlassCard
-                variant={index % 2 === 0 ? "warm" : "default"}
+                variant={index % 3 === 0 ? "highlight" : index % 3 === 1 ? "warm" : "default"}
                 className="p-8 md:p-10"
               >
-                <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+                {/* Arch accent on every card */}
+                <ArchAccent />
+
+                <div className="relative z-10 flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                   <div>
-                    <h3 className="text-2xl font-semibold text-[#2F2A26]">
+                    <h3 className="text-2xl font-semibold text-[#1E1410]">
                       {item.role}
                     </h3>
-                    <p className="mt-1 text-[#6B625A]">{item.company}</p>
+                    <p className="mt-1 font-medium text-[#1B6B62]">{item.company}</p>
                   </div>
 
-                  <p className="text-sm text-[#7A6B5E]">{item.period}</p>
+                  <span className="inline-flex w-fit items-center rounded-full border border-[#C9A84C]/55 bg-[#C9A84C]/14 px-4 py-1.5 text-xs font-medium text-[#6B4A10]">
+                    {item.period}
+                  </span>
                 </div>
 
-                <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
+                <div className="relative z-10 mt-4 h-px w-16 bg-[#C9A84C]/60" />
 
-                <ul className="mt-6 space-y-3 text-[#6B625A]">
+                <ul className="relative z-10 mt-6 space-y-3 text-[#7A4E46]">
                   {item.points.map((point) => (
-                    <li key={point} className="leading-8">
-                      • {point}
+                    <li key={point} className="flex gap-3 leading-8">
+                      <span className="mt-3 h-1.5 w-1.5 shrink-0 rounded-full bg-[#C9A84C]/80" />
+                      {point}
                     </li>
                   ))}
                 </ul>

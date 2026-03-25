@@ -17,8 +17,8 @@ export default function AboutSection() {
 
         <FadeUp delay={0.08}>
           <GlassCard variant="warm" className="p-8 md:p-10">
-            <p className="max-w-3xl text-base leading-8 text-[#6B625A] md:text-lg">
-              I’m an AI Engineer and Data Scientist with a strong research foundation
+            <p className="max-w-3xl text-base leading-8 text-[#7A4E46] md:text-lg">
+              I&apos;m an AI Engineer and Data Scientist with a strong research foundation
               and hands-on experience building production-ready AI and data systems.
               My work includes large-scale data pipelines, computer vision, natural
               language processing, metadata generation, ETL workflows, and machine

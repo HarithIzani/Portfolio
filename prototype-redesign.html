@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Harith Izani — Portfolio Redesign Prototype</title>
+  <style>
+    /* ─── DESIGN TOKENS ─────────────────────────────── */
+    :root {
+      /* Background */
+      --bg-top:    #F7DDD7;
+      --bg-mid:    #EBC5BC;
+      --bg-bottom: #D4A49A;
+
+      /* Primary palette */
+      --teal:        #1B6B62;
+      --teal-mid:    #235F58;
+      --teal-light:  #2A8A7F;
+      --teal-glass:  rgba(27, 107, 98, 0.14);
+      --teal-glow:   rgba(27, 107, 98, 0.22);
+
+      /* Gold */
+      --gold:        #C9A84C;
+      --gold-light:  rgba(201, 168, 76, 0.55);
+      --gold-faint:  rgba(201, 168, 76, 0.18);
+
+      /* Text */
+      --text-dark:   #1E1410;
+      --text-mid:    #4A2E28;
+      --text-soft:   #7A4E46;
+
+      /* Glass surfaces */
+      --glass-white:     rgba(255, 255, 255, 0.22);
+      --glass-pink:      rgba(249, 224, 218, 0.32);
+      --glass-highlight: linear-gradient(160deg, rgba(255,255,255,0.28), rgba(240,210,200,0.22));
+      --glass-teal:      rgba(27, 107, 98, 0.10);
+
+      --glass-border:        rgba(255, 255, 255, 0.50);
+      --glass-border-soft:   rgba(255, 255, 255, 0.32);
+      --glass-border-gold:   rgba(201, 168, 76, 0.55);
+      --glass-border-teal:   rgba(27, 107, 98, 0.35);
+
+      --shadow-soft: 0 22px 60px rgba(90, 40, 30, 0.10);
+      --shadow-card: 0 28px 72px rgba(90, 40, 30, 0.12);
+      --shadow-hover: 0 30px 90px rgba(90, 40, 30, 0.16), 0 0 0 1px rgba(201,168,76,0.35), 0 0 70px rgba(27,107,98,0.12);
+    }
+
+    /* ─── RESET & BASE ──────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 12% 8%,  rgba(27,107,98,0.06),  transparent 28%),
+        radial-gradient(circle at 82% 15%, rgba(255,255,255,0.18), transparent 24%),
+        radial-gradient(circle at 50% 100%, rgba(130, 60, 45, 0.12), transparent 40%),
+        linear-gradient(to bottom, var(--bg-top) 0%, var(--bg-mid) 50%, var(--bg-bottom) 100%);
+      color: var(--text-dark);
+      font-family: -apple-system, 'Segoe UI', Arial, sans-serif;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Century Gothic', 'Futura', 'Trebuchet MS', Arial, sans-serif;
+      letter-spacing: -0.03em;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    /* ─── LAYOUT ────────────────────────────────────── */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ─── ARCH DECORATION ───────────────────────────── */
+    .arch-bg {
+      position: fixed;
+      top: 0; right: 0;
+      width: 480px; height: 100vh;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+      opacity: 0.13;
+    }
+    .arch-bg svg { width: 100%; height: 100%; }
+
+    /* ─── GLASS CARDS ───────────────────────────────── */
+    .card {
+      border-radius: 24px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass-white);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow: var(--shadow-card);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.24s ease, box-shadow 0.24s ease;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      inset-inline: 32px;
+      top: 0;
+      height: 1px;
+      background: rgba(255,255,255,0.65);
+    }
+
+    .card-warm {
+      background: var(--glass-pink);
+      border-color: rgba(255, 200, 190, 0.45);
+    }
+
+    .card-highlight {
+      background: var(--glass-highlight);
+      border-color: var(--glass-border-gold);
+    }
+
+    .card-teal {
+      background: var(--glass-teal);
+      border-color: var(--glass-border-teal);
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    /* ─── DIVIDER ───────────────────────────────────── */
+    .divider {
+      height: 1px;
+      width: 56px;
+      background: var(--gold-light);
+      margin: 16px 0;
+    }
+
+    /* ─── NAVBAR ────────────────────────────────────── */
+    .navbar-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      padding: 16px 0 0;
+    }
+
+    .navbar {
+      border-radius: 28px;
+      border: 1px solid var(--glass-border);
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      box-shadow: var(--shadow-soft);
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+    .navbar::before {
+      content: '';
+      position: absolute;
+      inset-inline: 32px;
+      top: 0;
+      height: 1px;
+      background: rgba(255,255,255,0.7);
+    }
+
+    .navbar-logo {
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--teal);
+    }
+
+    .navbar-links {
+      display: flex;
+      gap: 24px;
+    }
+    .navbar-links a {
+      font-size: 14px;
+      color: var(--text-mid);
+      transition: color 0.2s;
+    }
+    .navbar-links a:hover { color: var(--teal); }
+
+    /* ─── BUTTONS ───────────────────────────────────── */
+    .btn-primary {
+      display: inline-block;
+      background: var(--teal-glass);
+      color: var(--teal);
+      border: 1px solid var(--glass-border-teal);
+      border-radius: 100px;
+      padding: 10px 22px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      backdrop-filter: blur(10px);
+      cursor: pointer;
+      transition: background 0.22s, transform 0.22s, box-shadow 0.22s, border-color 0.22s;
+    }
+    .btn-primary:hover {
+      background: rgba(27, 107, 98, 0.22);
+      border-color: rgba(27, 107, 98, 0.55);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(27,107,98,0.18);
+    }
+
+    .btn-gold {
+      background: var(--gold-faint);
+      color: #6B4A10;
+      border: 1px solid var(--gold-light);
+      border-radius: 100px;
+      padding: 10px 22px;
+      font-size: 13px;
+      font-weight: 600;
+      backdrop-filter: blur(10px);
+      cursor: pointer;
+      display: inline-block;
+      transition: background 0.22s, transform 0.22s;
+    }
+    .btn-gold:hover {
+      background: rgba(201,168,76,0.28);
+      transform: translateY(-2px);
+    }
+
+    /* ─── TAGS ──────────────────────────────────────── */
+    .tag {
+      display: inline-block;
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.38);
+      background: rgba(255,255,255,0.18);
+      padding: 4px 12px;
+      font-size: 12px;
+      color: var(--text-mid);
+    }
+    .tag-teal {
+      border-color: rgba(27,107,98,0.35);
+      background: rgba(27,107,98,0.10);
+      color: var(--teal);
+    }
+    .tag-gold {
+      border-color: var(--gold-light);
+      background: var(--gold-faint);
+      color: #7A5B10;
+    }
+    .tag-pink {
+      border-color: rgba(200,120,110,0.35);
+      background: rgba(220,140,130,0.12);
+      color: #7A3A30;
+    }
+
+    /* ─── EYEBROW ───────────────────────────────────── */
+    .eyebrow {
+      font-size: 11px;
+      font-family: -apple-system, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.26em;
+      color: var(--teal);
+      font-weight: 600;
+    }
+
+    /* ─── SECTION TITLE ─────────────────────────────── */
+    .section-title { margin-bottom: 40px; }
+    .section-title h2 {
+      font-size: clamp(28px, 3.5vw, 40px);
+      font-weight: 600;
+      color: var(--text-dark);
+      margin: 8px 0 12px;
+      line-height: 1.05;
+    }
+    .section-title p {
+      font-size: 15px;
+      color: var(--text-soft);
+      max-width: 560px;
+      line-height: 1.75;
+    }
+
+    /* ─── HERO ──────────────────────────────────────── */
+    .hero { padding: 40px 0 0; }
+    .hero .card { padding: 56px 52px; }
+
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(72px);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow { color: var(--teal); margin-bottom: 20px; }
+    .hero h1 {
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 600;
+      line-height: 0.96;
+      color: var(--text-dark);
+      max-width: 860px;
+    }
+    .hero-desc {
+      font-size: 16px;
+      line-height: 1.85;
+      color: var(--text-soft);
+      max-width: 680px;
+      margin-top: 24px;
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 14px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+
+    /* ─── SECTIONS ──────────────────────────────────── */
+    section { padding-top: 96px; }
+
+    /* ─── EXPERIENCE ────────────────────────────────── */
+    .exp-grid { display: flex; flex-direction: column; gap: 24px; }
+    .exp-card { padding: 36px 40px; }
+    .exp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .exp-role {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+    .exp-company {
+      font-size: 14px;
+      color: var(--teal);
+      margin-top: 4px;
+      font-weight: 500;
+    }
+    .exp-period {
+      font-size: 12px;
+      color: var(--text-soft);
+      white-space: nowrap;
+      padding: 6px 14px;
+      border-radius: 100px;
+      border: 1px solid var(--glass-border-gold);
+      background: var(--gold-faint);
+      color: #7A5B10;
+    }
+    .exp-bullets {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .exp-bullets li {
+      font-size: 14px;
+      color: var(--text-soft);
+      line-height: 1.8;
+      padding-left: 16px;
+      position: relative;
+    }
+    .exp-bullets li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 11px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    /* ─── PROJECTS ──────────────────────────────────── */
+    .projects-scroll-wrap {
+      position: relative;
+      margin: 0 -24px;
+      padding: 0 24px;
+    }
+    .projects-fade-l {
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 80px;
+      background: linear-gradient(to right, var(--bg-mid), transparent);
+      pointer-events: none;
+      z-index: 2;
+    }
+    .projects-fade-r {
+      position: absolute;
+      right: 0; top: 0; bottom: 0;
+      width: 80px;
+      background: linear-gradient(to left, var(--bg-mid), transparent);
+      pointer-events: none;
+      z-index: 2;
+    }
+    .projects-scroll {
+      display: flex;
+      gap: 28px;
+      overflow-x: auto;
+      padding: 24px 8px 36px;
+      scrollbar-width: none;
+    }
+    .projects-scroll::-webkit-scrollbar { display: none; }
+
+    .project-card {
+      width: 360px;
+      flex-shrink: 0;
+      padding: 32px;
+      cursor: pointer;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+    .project-card:hover {
+      transform: translateY(-12px) scale(1.015);
+      box-shadow: var(--shadow-hover);
+    }
+    .project-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .project-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-top: 20px;
+      line-height: 1.2;
+    }
+    .project-summary {
+      font-size: 13px;
+      color: var(--text-soft);
+      margin-top: 14px;
+      line-height: 1.85;
+    }
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    /* ─── SKILLS ────────────────────────────────────── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .skill-card { padding: 32px; }
+    .skill-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+    .skill-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    /* ─── CONTACT ───────────────────────────────────── */
+    .contact-card { padding: 48px 52px; }
+    .contact-grid {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 32px;
+    }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-radius: 100px;
+      border: 1px solid var(--glass-border-teal);
+      background: var(--glass-teal);
+      padding: 10px 20px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--teal);
+      backdrop-filter: blur(10px);
+      transition: transform 0.2s, background 0.2s;
+    }
+    .contact-link:hover {
+      transform: translateY(-2px);
+      background: rgba(27,107,98,0.18);
+    }
+
+    /* ─── FOOTER ────────────────────────────────────── */
+    footer {
+      margin-top: 80px;
+      padding: 32px 0;
+      border-top: 1px solid rgba(255,255,255,0.30);
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-soft);
+    }
+
+    /* ─── ARCH MOTIF ACCENT ─────────────────────────── */
+    .arch-accent {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0.07;
+      right: -40px;
+      top: -20px;
+    }
+
+    /* ─── COLOR SWATCH LEGEND ───────────────────────── */
+    .swatch-bar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 64px;
+      padding: 20px 24px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.40);
+      backdrop-filter: blur(20px);
+    }
+    .swatch-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--text-soft); margin-right: 4px; }
+    .swatch {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-mid);
+    }
+    .swatch-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid rgba(0,0,0,0.08);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    }
+
+    /* ─── PROTOTYPE BANNER ──────────────────────────── */
+    .proto-banner {
+      text-align: center;
+      padding: 10px;
+      background: rgba(27,107,98,0.12);
+      border-bottom: 1px solid rgba(27,107,98,0.25);
+      font-size: 12px;
+      color: var(--teal);
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Arch decorative background -->
+<div class="arch-bg">
+  <svg viewBox="0 0 480 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Nested arch group 1 -->
+    <g stroke="#1B6B62" stroke-width="1.5">
+      <path d="M 60 900 L 60 320 Q 60 180 200 180 Q 340 180 340 320 L 340 900"/>
+      <path d="M 90 900 L 90 330 Q 90 210 200 210 Q 310 210 310 330 L 310 900"/>
+      <path d="M 120 900 L 120 345 Q 120 240 200 240 Q 280 240 280 345 L 280 900"/>
+    </g>
+    <!-- Nested arch group 2 -->
+    <g stroke="#C9A84C" stroke-width="1">
+      <path d="M 280 900 L 280 500 Q 280 400 380 400 Q 480 400 480 500 L 480 900"/>
+      <path d="M 305 900 L 305 510 Q 305 425 380 425 Q 455 425 455 510 L 455 900"/>
+    </g>
+    <!-- Small top arch -->
+    <g stroke="#1B6B62" stroke-width="1">
+      <path d="M 160 0 L 160 150 Q 160 0 240 0 Q 320 0 320 150 L 320 0"/>
+    </g>
+  </svg>
+</div>
+
+<!-- Prototype banner -->
+<div class="proto-banner">🎨 Visual Prototype — Redesign Preview</div>
+
+<!-- NAVBAR -->
+<div class="navbar-wrap">
+  <div class="container">
+    <nav class="navbar">
+      <span class="navbar-logo">Harith Izani</span>
+      <div class="navbar-links">
+        <a href="#">Experience</a>
+        <a href="#">Projects</a>
+        <a href="#">Skills</a>
+        <a href="#">Contact</a>
+      </div>
+      <a href="#" class="btn-gold">Resume</a>
+    </nav>
+  </div>
+</div>
+
+<!-- ─── MAIN CONTENT ──────────────────────────── -->
+<main style="position:relative; z-index:1;">
+<div class="container">
+
+  <!-- COLOR PALETTE SWATCH -->
+  <div style="padding-top: 40px;">
+    <div class="swatch-bar">
+      <span class="swatch-label">New Palette</span>
+      <div class="swatch"><div class="swatch-dot" style="background:#F7DDD7;"></div> Blush Pink</div>
+      <div class="swatch"><div class="swatch-dot" style="background:#1B6B62;"></div> Deep Teal</div>
+      <div class="swatch"><div class="swatch-dot" style="background:#C9A84C;"></div> Brass Gold</div>
+      <div class="swatch"><div class="swatch-dot" style="background:#EBC5BC;"></div> Mid Rose</div>
+      <div class="swatch"><div class="swatch-dot" style="background:#D4A49A;"></div> Dusty Rose</div>
+      <div class="swatch"><div class="swatch-dot" style="background:#1E1410;"></div> Dark Text</div>
+    </div>
+  </div>
+
+  <!-- ─── HERO ─── -->
+  <section class="hero" style="padding-top:0;">
+    <div class="card card-highlight" style="padding: 52px 48px; position:relative; overflow:hidden;">
+      <!-- Orbs -->
+      <div class="hero-orb" style="width:220px;height:220px;background:rgba(27,107,98,0.10);left:-40px;top:-40px;"></div>
+      <div class="hero-orb" style="width:180px;height:180px;background:rgba(201,168,76,0.12);right:-20px;top:20px;"></div>
+      <div class="hero-orb" style="width:160px;height:160px;background:rgba(255,255,255,0.14);bottom:-30px;left:38%;"></div>
+
+      <!-- Arch accent in hero -->
+      <svg class="arch-accent" width="220" height="260" viewBox="0 0 220 260" fill="none">
+        <path d="M 20 260 L 20 100 Q 20 10 110 10 Q 200 10 200 100 L 200 260" stroke="#1B6B62" stroke-width="2"/>
+        <path d="M 45 260 L 45 112 Q 45 36 110 36 Q 175 36 175 112 L 175 260" stroke="#C9A84C" stroke-width="1.5"/>
+        <path d="M 70 260 L 70 124 Q 70 62 110 62 Q 150 62 150 124 L 150 260" stroke="#1B6B62" stroke-width="1"/>
+      </svg>
+
+      <div style="position:relative; z-index:2;">
+        <p class="eyebrow hero-eyebrow">Harith Izani</p>
+        <h1>AI Engineer building production computer vision, NLP, and large-scale data systems.</h1>
+        <p class="hero-desc">
+          AI Engineer and Data Scientist with a strong research foundation and experience building
+          production-ready AI and data systems. Developed end-to-end pipelines transforming
+          large-scale raw data into actionable insights. Gold Medallist Computer Science graduate.
+        </p>
+        <div class="hero-ctas">
+          <a href="#" class="btn-primary">View Projects</a>
+          <a href="#" class="btn-gold">Download Resume</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── ABOUT ─── -->
+  <section>
+    <div class="section-title">
+      <p class="eyebrow">About</p>
+      <div class="divider"></div>
+      <h2>Building AI systems that move from raw data to usable outcomes.</h2>
+      <p>I work at the intersection of machine learning, data engineering, and deployment.</p>
+    </div>
+
+    <div class="card card-warm" style="padding: 36px 40px; max-width: 780px;">
+      <p style="font-size:15px; line-height:1.85; color:var(--text-soft);">
+        I'm an AI Engineer and Data Scientist with a strong research foundation and hands-on
+        experience building production-ready AI and data systems. My work includes large-scale
+        data pipelines, computer vision, natural language processing, metadata generation,
+        ETL workflows, and machine learning solutions for real operational use cases.
+      </p>
+    </div>
+  </section>
+
+  <!-- ─── EXPERIENCE ─── -->
+  <section>
+    <div class="section-title">
+      <p class="eyebrow">Experience</p>
+      <div class="divider"></div>
+      <h2>Professional experience</h2>
+      <p>Roles across AI engineering, data pipelines, and applied machine learning.</p>
+    </div>
+
+    <div class="exp-grid">
+      <!-- Role 1 -->
+      <div class="card card-highlight exp-card" style="position:relative;overflow:hidden;">
+        <svg class="arch-accent" style="right:-30px;top:-10px;opacity:0.06;" width="160" height="200" viewBox="0 0 160 200" fill="none">
+          <path d="M 10 200 L 10 80 Q 10 10 80 10 Q 150 10 150 80 L 150 200" stroke="#1B6B62" stroke-width="1.5"/>
+          <path d="M 30 200 L 30 90 Q 30 30 80 30 Q 130 30 130 90 L 130 200" stroke="#C9A84C" stroke-width="1"/>
+        </svg>
+        <div class="exp-header">
+          <div>
+            <div class="exp-role">AI Engineer</div>
+            <div class="exp-company">Lifewood Data Technology</div>
+          </div>
+          <span class="exp-period">Feb 2025 — Present</span>
+        </div>
+        <div class="divider"></div>
+        <ul class="exp-bullets">
+          <li>Led development of end-to-end AI-powered data pipelines across computer vision, text extraction, NLP, data enrichment, and metadata generation.</li>
+          <li>Built automated workflows that processed 100,000 high-fidelity images in under 5 hours, significantly improving operational throughput.</li>
+          <li>Delivered production-ready AI solutions for clients including Apple, South African Department of Defence, iSoftStone, and FamilySearch.</li>
+          <li>Developed and deployed models using Python, TensorFlow, PyTorch, OpenCV, Hugging Face, and AWS.</li>
+        </ul>
+      </div>
+
+      <!-- Role 2 -->
+      <div class="card card-warm exp-card">
+        <div class="exp-header">
+          <div>
+            <div class="exp-role">Associate Data Engineer</div>
+            <div class="exp-company">Sunway Digital Technology Solutions</div>
+          </div>
+          <span class="exp-period">Apr 2024 — Dec 2024</span>
+        </div>
+        <div class="divider"></div>
+        <ul class="exp-bullets">
+          <li>Maintained and enhanced the Customer 360 Profile data pipeline, centralizing customer data across multiple Sunway business units.</li>
+          <li>Worked with distributed data systems using Python, PySpark, AWS, and Huawei Cloud to support large-scale data processing.</li>
+          <li>Supported downstream analytics and reporting workflows by ensuring clean, structured, and accessible data.</li>
+        </ul>
+      </div>
+
+      <!-- Role 3 -->
+      <div class="card exp-card">
+        <div class="exp-header">
+          <div>
+            <div class="exp-role">Data Science Intern</div>
+            <div class="exp-company">Setel Ventures</div>
+          </div>
+          <span class="exp-period">Aug 2023 — Jan 2024</span>
+        </div>
+        <div class="divider"></div>
+        <ul class="exp-bullets">
+          <li>Developed a deep learning solution for churn prediction and fuelling pattern analysis across Petronas stations nationwide.</li>
+          <li>Researched, trained, and fine-tuned machine learning models including Random Forest, Linear Regression, and statistical models.</li>
+          <li>Conducted customer behavior analysis and A/B testing to evaluate campaign performance and optimize business decisions.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── PROJECTS ─── -->
+  <section>
+    <div class="section-title">
+      <p class="eyebrow">Projects</p>
+      <div class="divider"></div>
+      <h2>Featured Works</h2>
+      <p>A unified showcase of production AI systems, data platforms, and applied ML work.</p>
+    </div>
+    <p style="font-size:13px; color:var(--text-soft); margin-bottom:8px;">Scroll → Explore featured works</p>
+  </section>
+
+</div><!-- /container -->
+
+<!-- Projects scroll (full bleed) -->
+<div class="projects-scroll-wrap" style="padding: 0 24px; position:relative;">
+  <div class="projects-fade-l"></div>
+  <div class="projects-fade-r"></div>
+  <div class="projects-scroll">
+
+    <!-- Project 1 -->
+    <div class="card card-highlight project-card">
+      <div class="project-top">
+        <span class="tag tag-teal">Production</span>
+        <span style="font-size:12px; color:var(--teal);">View Details →</span>
+      </div>
+      <div style="margin-top:12px;"><span class="tag tag-gold">Live App</span></div>
+      <h3 class="project-title">Archival AI Pipeline</h3>
+      <p class="project-summary">
+        Processed ~100k archival images in ~5 hours using an orchestrated AI pipeline combining
+        GPU-based inference, multi-core CPU processing, and config-driven workflow automation.
+      </p>
+      <div class="project-tags">
+        <span class="tag">Python</span>
+        <span class="tag">PyTorch</span>
+        <span class="tag">OpenCV</span>
+        <span class="tag">AWS</span>
+        <span class="tag">Docker</span>
+        <span class="tag">Triton</span>
+      </div>
+    </div>
+
+    <!-- Project 2 -->
+    <div class="card card-warm project-card">
+      <div class="project-top">
+        <span class="tag tag-pink">Research</span>
+        <span style="font-size:12px; color:var(--text-soft);">View Details →</span>
+      </div>
+      <div style="margin-top:12px;"><span class="tag">Case Study</span></div>
+      <h3 class="project-title">Portable Traffic Data Gathering Tool</h3>
+      <p class="project-summary">
+        Built a portable computer vision system for near real-time traffic monitoring on edge
+        hardware, detecting vehicles, pedestrians, and environmental conditions via transfer learning.
+      </p>
+      <div class="project-tags">
+        <span class="tag">Python</span>
+        <span class="tag">MobileNet V2</span>
+        <span class="tag">Raspberry Pi</span>
+        <span class="tag">Computer Vision</span>
+      </div>
+    </div>
+
+    <!-- Project 3 -->
+    <div class="card project-card">
+      <div class="project-top">
+        <span class="tag tag-pink">Research</span>
+        <span style="font-size:12px; color:var(--text-soft);">View Details →</span>
+      </div>
+      <div style="margin-top:12px;"><span class="tag">Case Study</span></div>
+      <h3 class="project-title">EEG-Based Stress Profiling (ADHD vs Normal)</h3>
+      <p class="project-summary">
+        Developed neural network models to classify stress and cognitive response patterns from
+        EEG signals, distinguishing between ADHD and normal patient groups.
+      </p>
+      <div class="project-tags">
+        <span class="tag">Neural Network</span>
+        <span class="tag">EEG Signals</span>
+        <span class="tag">MATLAB</span>
+        <span class="tag">Signal Processing</span>
+      </div>
+    </div>
+
+    <!-- Project 4 -->
+    <div class="card card-teal project-card">
+      <div class="project-top">
+        <span class="tag tag-pink">Research</span>
+        <span style="font-size:12px; color:var(--text-soft);">View Details →</span>
+      </div>
+      <div style="margin-top:12px;"><span class="tag">Case Study</span></div>
+      <h3 class="project-title">EEG-Based Attention Span Modeling</h3>
+      <p class="project-summary">
+        Modeled attention-span degradation from EEG signals under prolonged short-form content
+        exposure using neural networks and controlled stimuli.
+      </p>
+      <div class="project-tags">
+        <span class="tag">Neural Network</span>
+        <span class="tag">EEG Signals</span>
+        <span class="tag">MATLAB</span>
+        <span class="tag">Brain Imaging</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ─── SKILLS ─── -->
+  <section>
+    <div class="section-title">
+      <p class="eyebrow">Skills</p>
+      <div class="divider"></div>
+      <h2>Tools and technologies</h2>
+      <p>Core technologies I use across AI engineering, machine learning, and data workflows.</p>
+    </div>
+
+    <div class="skills-grid">
+      <div class="card card-highlight skill-card">
+        <div class="skill-title">Languages</div>
+        <div class="divider"></div>
+        <div class="skill-items">
+          <span class="tag">Python</span>
+          <span class="tag">SQL</span>
+          <span class="tag">Java</span>
+          <span class="tag">C++</span>
+        </div>
+      </div>
+
+      <div class="card card-warm skill-card">
+        <div class="skill-title">AI / ML</div>
+        <div class="divider"></div>
+        <div class="skill-items">
+          <span class="tag">TensorFlow</span>
+          <span class="tag">PyTorch</span>
+          <span class="tag">OpenCV</span>
+          <span class="tag">NLTK</span>
+          <span class="tag">Hugging Face</span>
+        </div>
+      </div>
+
+      <div class="card skill-card">
+        <div class="skill-title">Data & Pipelines</div>
+        <div class="divider"></div>
+        <div class="skill-items">
+          <span class="tag">Apache Spark</span>
+          <span class="tag">Airflow</span>
+          <span class="tag">REST APIs</span>
+          <span class="tag">ETL</span>
+        </div>
+      </div>
+
+      <div class="card card-warm skill-card">
+        <div class="skill-title">Cloud & Tools</div>
+        <div class="divider"></div>
+        <div class="skill-items">
+          <span class="tag">AWS</span>
+          <span class="tag">GCP</span>
+          <span class="tag">Huawei Cloud</span>
+          <span class="tag">Docker</span>
+          <span class="tag">WSL</span>
+        </div>
+      </div>
+
+      <div class="card skill-card">
+        <div class="skill-title">Domains</div>
+        <div class="divider"></div>
+        <div class="skill-items">
+          <span class="tag">Computer Vision</span>
+          <span class="tag">NLP</span>
+          <span class="tag">Reporting</span>
+          <span class="tag">Data Cleaning</span>
+          <span class="tag">QC</span>
+        </div>
+      </div>
+
+      <!-- Empty 6th grid spot — architectural accent card -->
+      <div class="card card-teal skill-card" style="display:flex;align-items:center;justify-content:center;">
+        <svg width="120" height="130" viewBox="0 0 120 130" fill="none" opacity="0.5">
+          <path d="M 10 130 L 10 48 Q 10 8 60 8 Q 110 8 110 48 L 110 130" stroke="#1B6B62" stroke-width="2"/>
+          <path d="M 26 130 L 26 56 Q 26 24 60 24 Q 94 24 94 56 L 94 130" stroke="#C9A84C" stroke-width="1.5"/>
+          <path d="M 42 130 L 42 64 Q 42 40 60 40 Q 78 40 78 64 L 78 130" stroke="#1B6B62" stroke-width="1"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CONTACT ─── -->
+  <section>
+    <div class="card card-highlight contact-card" style="position:relative;overflow:hidden;">
+      <svg class="arch-accent" style="right:20px;top:-10px;opacity:0.08;width:200px;height:240px;" viewBox="0 0 200 240" fill="none">
+        <path d="M 20 240 L 20 88 Q 20 12 100 12 Q 180 12 180 88 L 180 240" stroke="#1B6B62" stroke-width="2"/>
+        <path d="M 44 240 L 44 98 Q 44 36 100 36 Q 156 36 156 98 L 156 240" stroke="#C9A84C" stroke-width="1.5"/>
+        <path d="M 68 240 L 68 110 Q 68 60 100 60 Q 132 60 132 110 L 132 240" stroke="#1B6B62" stroke-width="1"/>
+      </svg>
+
+      <div style="position:relative; z-index:2;">
+        <p class="eyebrow">Contact</p>
+        <div class="divider"></div>
+        <h2 style="font-size:clamp(24px,3vw,38px); color:var(--text-dark); max-width:520px; line-height:1.1;">
+          Let's build something that matters.
+        </h2>
+        <p style="font-size:14px; color:var(--text-soft); margin-top:14px; max-width:440px; line-height:1.75;">
+          Open to AI engineering roles, research collaborations, and interesting data problems.
+        </p>
+
+        <div class="contact-grid">
+          <a href="mailto:harithizani@gmail.com" class="contact-link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            harithizani@gmail.com
+          </a>
+          <a href="#" class="contact-link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            LinkedIn
+          </a>
+          <a href="#" class="contact-link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.2c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /container -->
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <p style="color:var(--text-soft);">© 2025 Harith Izani — Built with Next.js &amp; Tailwind CSS</p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -97,31 +97,31 @@ const projects: Project[] = [
 function getTypeStyles(type: Project["type"]) {
   switch (type) {
     case "Live App":
-      return "border-[#a8d5a2]/60 bg-[#a8d5a2]/28 text-[#2F2A26]";
+      return "border-[rgba(27,107,98,0.45)] bg-[rgba(27,107,98,0.13)] text-[#1B6B62]";
 
     case "GitHub":
-      return "border-[#a0b8d0]/60 bg-[#a0b8d0]/28 text-[#2F2A26]";
+      return "border-[rgba(27,107,98,0.35)] bg-[rgba(27,107,98,0.10)] text-[#1B6B62]";
 
     case "Demo":
-      return "border-[#d4c070]/60 bg-[#d4c070]/22 text-[#2F2A26]";
+      return "border-[#C9A84C]/55 bg-[#C9A84C]/14 text-[#6B4A10]";
 
     case "Case Study":
     default:
-      return "border-white/40 bg-[#aed1d6]/32 text-[#2F2A26]";
+      return "border-[rgba(200,120,110,0.40)] bg-[rgba(220,140,130,0.14)] text-[#7A3A30]";
   }
 }
 
 function getStatusStyles(status?: Project["status"]) {
   switch (status) {
     case "Production":
-      return "border-[#a8d5a2]/50 bg-[#a8d5a2]/20 text-slate-700";
+      return "border-[rgba(27,107,98,0.45)] bg-[rgba(27,107,98,0.13)] text-[#1B5C55]";
     case "Internal":
-      return "border-[#d4c070]/50 bg-[#d4c070]/18 text-slate-700";
+      return "border-[#C9A84C]/50 bg-[#C9A84C]/14 text-[#6B4A10]";
     case "Prototype":
-      return "border-[#d4a870]/50 bg-[#d4a870]/18 text-slate-700";
+      return "border-[rgba(200,140,80,0.50)] bg-[rgba(200,140,80,0.14)] text-[#7A4A10]";
     case "Research":
     default:
-      return "border-white/35 bg-[#cfb0cd]/25 text-slate-700";
+      return "border-[rgba(200,120,110,0.38)] bg-[rgba(220,140,130,0.12)] text-[#7A3A30]";
   }
 }
 
@@ -167,13 +167,13 @@ export default function ProjectsSection() {
 
         <FadeUp delay={0.06}>
           <div className="mb-4 flex items-center justify-between">
-            <p className="text-sm text-[#6B625A]">Scroll → Explore featured works</p>
+            <p className="text-sm text-[#7A4E46]">Scroll → Explore featured works</p>
           </div>
         </FadeUp>
 
         <div className="relative -mx-6 px-6 pt-8">
-          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-gradient-to-r from-[#E2CFBA]/90 to-transparent" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-gradient-to-l from-[#E2CFBA]/90 to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-gradient-to-r from-[#EBC5BC]/90 to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-gradient-to-l from-[#EBC5BC]/90 to-transparent" />
 
           <div className="no-scrollbar overflow-x-auto overflow-y-hidden px-2 pt-6 pb-10">
             <div className="flex w-max gap-8 snap-x snap-mandatory touch-pan-x items-stretch">
@@ -191,21 +191,23 @@ export default function ProjectsSection() {
                   >
                     <GlassCard
                       variant={
-                        index % 3 === 0
+                        index === 0
                           ? "highlight"
-                          : index % 3 === 1
+                          : index === 1
                           ? "warm"
+                          : index === 3
+                          ? "teal"
                           : "default"
                       }
                       interactive
-                      className="group relative h-full p-8 hover:bg-[rgba(210,224,211,0.34)] focus-within:bg-[rgba(210,224,211,0.34)]"
+                      className="group relative h-full p-8 hover:bg-[rgba(27,107,98,0.08)] focus-within:bg-[rgba(27,107,98,0.08)]"
                     >
                       <div className="absolute inset-x-0 top-0 h-px bg-white/40 transition duration-300 group-hover:bg-white/70" />
 
                       <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100">
-                        <div className="absolute -right-10 -top-10 h-36 w-36 rounded-full bg-[#D2E0D3]/30 blur-3xl" />
-                        <div className="absolute bottom-0 left-0 h-32 w-32 rounded-full bg-[#D2E0D3]/22 blur-3xl" />
-                        <div className="absolute right-1/3 top-1/2 h-24 w-24 rounded-full bg-[#D2E0D3]/18 blur-2xl" />
+                        <div className="absolute -right-10 -top-10 h-36 w-36 rounded-full bg-[rgba(27,107,98,0.12)] blur-3xl" />
+                        <div className="absolute bottom-0 left-0 h-32 w-32 rounded-full bg-[rgba(201,168,76,0.10)] blur-3xl" />
+                        <div className="absolute right-1/3 top-1/2 h-24 w-24 rounded-full bg-[rgba(27,107,98,0.08)] blur-2xl" />
                       </div>
 
                       <div className="relative z-10 flex items-start justify-between gap-4">
@@ -217,7 +219,7 @@ export default function ProjectsSection() {
                           {project.type}
                         </span>
 
-                        <span className="text-sm text-[#6B625A]">
+                        <span className="text-sm text-[#7A4E46]">
                           {project.action}
                         </span>
                       </div>
@@ -234,11 +236,11 @@ export default function ProjectsSection() {
                         ) : null}
                       </div>
 
-                      <h3 className="relative z-10 mt-6 text-2xl font-semibold tracking-tight text-[#2F2A26]">
+                      <h3 className="relative z-10 mt-6 text-2xl font-semibold tracking-tight text-[#1E1410]">
                         {project.title}
                       </h3>
 
-                      <p className="relative z-10 mt-4 text-sm leading-8 text-[#6B625A]">
+                      <p className="relative z-10 mt-4 text-sm leading-8 text-[#7A4E46]">
                         {project.summary}
                       </p>
 
@@ -246,7 +248,7 @@ export default function ProjectsSection() {
                         {project.tech.map((item) => (
                           <span
                             key={item}
-                            className="rounded-full border border-white/30 bg-white/18 px-3 py-1 text-xs text-[#4F4842]"
+                            className="rounded-full border border-white/30 bg-white/18 px-3 py-1 text-xs text-[#7A4E46]"
                           >
                             {item}
                           </span>
@@ -260,7 +262,7 @@ export default function ProjectsSection() {
                               key={secondary.label}
                               href={secondary.url}
                               onClick={(e) => e.stopPropagation()}
-                              className="rounded-full border border-white/35 bg-white/14 px-3 py-2 text-xs text-[#4F4842] transition hover:bg-white/24"
+                              className="rounded-full border border-white/35 bg-white/14 px-3 py-2 text-xs text-[#7A4E46] transition hover:bg-white/24"
                             >
                               {secondary.label}
                             </a>

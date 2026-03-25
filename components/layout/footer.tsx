@@ -8,13 +8,13 @@ export default function Footer() {
         <GlassCard variant="warm" className="px-6 py-6">
           <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
             <div>
-              <p className="font-medium text-[#2F2A26]">Harith Izani</p>
-              <p className="mt-1 text-sm text-[#6B625A]">
+              <p className="font-medium text-[#1B6B62]">Harith Izani</p>
+              <p className="mt-1 text-sm text-[#7A4E46]">
                 AI Engineer & Data Scientist
               </p>
             </div>
 
-            <p className="text-sm text-[#7A6B5E]">
+            <p className="text-sm text-[#8A5E56]">
               Built with Next.js, glassmorphism, and a refined Art Deco-inspired palette.
             </p>
           </div>

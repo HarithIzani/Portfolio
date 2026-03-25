@@ -1,35 +1,35 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ede4d8;
-  --foreground: #2f2a26;
+  --background: #F0CFC8;
+  --foreground: #1E1410;
 
-  --bg-top: #f4ede5;
-  --bg-mid: #e7d9ca;
-  --bg-bottom: #ccb194;
+  --bg-top: #F7DDD7;
+  --bg-mid: #EBC5BC;
+  --bg-bottom: #D4A49A;
 
-  --accent: #d2e0d3;
-  --accent-strong: #bfd7c1;
-  --accent-text: #294031;
+  --accent: rgba(27, 107, 98, 0.18);
+  --accent-strong: rgba(27, 107, 98, 0.32);
+  --accent-text: #1B6B62;
 
-  --glass-bg: rgba(255, 255, 255, 0.18);
-  --glass-bg-warm: rgba(246, 239, 231, 0.28);
+  --glass-bg: rgba(255, 255, 255, 0.20);
+  --glass-bg-warm: rgba(249, 224, 218, 0.32);
   --glass-bg-highlight: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.24),
-    rgba(239, 231, 221, 0.22)
+    160deg,
+    rgba(255, 255, 255, 0.28),
+    rgba(240, 210, 200, 0.22)
   );
 
-  --glass-border: rgba(255, 255, 255, 0.42);
-  --glass-border-soft: rgba(255, 255, 255, 0.32);
-  --glass-border-accent: rgba(191, 215, 193, 0.9);
+  --glass-border: rgba(255, 255, 255, 0.45);
+  --glass-border-soft: rgba(255, 255, 255, 0.30);
+  --glass-border-accent: rgba(27, 107, 98, 0.55);
 
-  --shadow-soft: 0 22px 60px rgba(92, 68, 46, 0.10);
-  --shadow-card: 0 28px 72px rgba(92, 68, 46, 0.12);
+  --shadow-soft: 0 22px 60px rgba(90, 40, 30, 0.10);
+  --shadow-card: 0 28px 72px rgba(90, 40, 30, 0.12);
   --shadow-hover:
-    0 30px 90px rgba(92, 68, 46, 0.14),
-    0 0 0 1px rgba(191, 215, 193, 0.45),
-    0 0 70px rgba(210, 224, 211, 0.30);
+    0 30px 90px rgba(90, 40, 30, 0.14),
+    0 0 0 1px rgba(27, 107, 98, 0.35),
+    0 0 70px rgba(27, 107, 98, 0.18);
 
   --radius-lg: 24px;
   --radius-xl: 30px;
@@ -42,9 +42,9 @@ html {
 body {
   min-height: 100vh;
   background:
-    radial-gradient(circle at 15% 10%, rgba(210, 224, 211, 0.08), transparent 26%),
-    radial-gradient(circle at 80% 18%, rgba(255, 255, 255, 0.16), transparent 24%),
-    radial-gradient(circle at 50% 100%, rgba(164, 126, 89, 0.10), transparent 42%),
+    radial-gradient(circle at 12% 8%,  rgba(27, 107, 98, 0.06),  transparent 26%),
+    radial-gradient(circle at 82% 15%, rgba(255, 255, 255, 0.18), transparent 24%),
+    radial-gradient(circle at 50% 100%, rgba(130, 60, 45, 0.10), transparent 42%),
     linear-gradient(
       to bottom,
       var(--bg-top) 0%,
@@ -70,7 +70,7 @@ h3,
 }
 
 ::selection {
-  background: rgba(198, 162, 122, 0.35);
+  background: rgba(27, 107, 98, 0.22);
 }
 
 .no-scrollbar::-webkit-scrollbar {
@@ -90,9 +90,9 @@ h3,
 }
 
 .btn-primary {
-  background-color: rgba(210, 224, 211, 0.36);
-  color: #2f2a26;
-  border: 1px solid rgba(191, 215, 193, 0.55);
+  background-color: rgba(27, 107, 98, 0.13);
+  color: #1B6B62;
+  border: 1px solid rgba(27, 107, 98, 0.38);
   backdrop-filter: blur(10px);
   transition:
     transform 0.22s ease,
@@ -102,15 +102,15 @@ h3,
 }
 
 .btn-primary:hover {
-  background-color: var(--accent);
-  border-color: var(--glass-border-accent);
+  background-color: rgba(27, 107, 98, 0.22);
+  border-color: rgba(27, 107, 98, 0.60);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-hover);
+  box-shadow: 0 12px 32px rgba(27, 107, 98, 0.18);
 }
 
 .btn-secondary {
   background: rgba(255, 255, 255, 0.16);
-  color: #2f2a26;
+  color: #1E1410;
   border: 1px solid var(--glass-border-soft);
   backdrop-filter: blur(12px);
   transition:

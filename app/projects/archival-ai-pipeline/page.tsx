@@ -24,7 +24,7 @@ export default function ArchivalAIPipelinePage() {
   const documentationSrc = "/ImageProcessing_Auto_Documentation.html";
 
   return (
-    <main className="min-h-screen px-6 py-10 text-[#2F2A26]">
+    <main className="min-h-screen px-6 py-10 text-[#1E1410]">
       <div className="mx-auto max-w-6xl">
         <div className="mb-8">
           <Link
@@ -37,13 +37,13 @@ export default function ArchivalAIPipelinePage() {
 
         <GlassCard variant="highlight" className="p-8 md:p-12">
           <div className="pointer-events-none absolute inset-0">
-            <div className="absolute left-10 top-10 h-32 w-32 rounded-full bg-[#D7B893]/18 blur-3xl" />
-            <div className="absolute right-12 top-14 h-40 w-40 rounded-full bg-[#E7D8C7]/22 blur-3xl" />
+            <div className="absolute left-10 top-10 h-32 w-32 rounded-full bg-[rgba(27,107,98,0.10)] blur-3xl" />
+            <div className="absolute right-12 top-14 h-40 w-40 rounded-full bg-[rgba(201,168,76,0.12)] blur-3xl" />
             <div className="absolute bottom-8 left-1/3 h-28 w-28 rounded-full bg-white/10 blur-2xl" />
           </div>
 
           <div className="relative z-10">
-            <p className="mb-4 text-xs uppercase tracking-[0.24em] text-[#6B625A]">
+            <p className="mb-4 text-xs uppercase tracking-[0.24em] text-[#7A4E46]">
               Case Study
             </p>
 
@@ -51,7 +51,7 @@ export default function ArchivalAIPipelinePage() {
               Archival AI Pipeline
             </h1>
 
-            <p className="mt-6 max-w-3xl text-base leading-8 text-[#6B625A] md:text-lg">
+            <p className="mt-6 max-w-3xl text-base leading-8 text-[#7A4E46] md:text-lg">
               End-to-end AI-powered workflows for computer vision, text extraction,
               NLP, data enrichment, and metadata generation across archival and
               enterprise-scale datasets.
@@ -61,7 +61,7 @@ export default function ArchivalAIPipelinePage() {
               {tech.map((tag) => (
                 <span
                   key={tag}
-                  className="rounded-full border border-white/45 bg-white/16 px-3 py-1 text-sm text-[#4F4842]"
+                  className="rounded-full border border-white/45 bg-white/16 px-3 py-1 text-sm text-[#7A4E46]"
                 >
                   {tag}
                 </span>
@@ -73,8 +73,8 @@ export default function ArchivalAIPipelinePage() {
         <section className="mt-8 grid gap-6 md:grid-cols-2">
           <GlassCard variant="warm" className="p-8 md:p-10">
             <h2 className="text-2xl font-semibold">Overview</h2>
-            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
-            <p className="mt-6 leading-8 text-[#6B625A]">
+            <div className="mt-4 h-px w-16 bg-[#C9A84C]/60" />
+            <p className="mt-6 leading-8 text-[#7A4E46]">
               This project focused on building production-ready AI workflows for
               large-scale archival and data processing use cases. The work combined
               computer vision, text extraction, NLP, metadata enrichment, and
@@ -85,8 +85,8 @@ export default function ArchivalAIPipelinePage() {
 
           <GlassCard variant="default" className="p-8 md:p-10">
             <h2 className="text-2xl font-semibold">Impact</h2>
-            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
-            <p className="mt-6 leading-8 text-[#6B625A]">
+            <div className="mt-4 h-px w-16 bg-[#C9A84C]/60" />
+            <p className="mt-6 leading-8 text-[#7A4E46]">
               One of the strongest outcomes from this work was processing
               100,000 high-fidelity images in 5 hours through automated pipelines,
               helping demonstrate both scalability and practical deployment value.
@@ -97,9 +97,9 @@ export default function ArchivalAIPipelinePage() {
         <section className="mt-8 grid gap-6 lg:grid-cols-[1.5fr_0.9fr]">
           <GlassCard variant="default" className="p-8 md:p-10">
             <h2 className="text-2xl font-semibold">What I worked on</h2>
-            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
+            <div className="mt-4 h-px w-16 bg-[#C9A84C]/60" />
 
-            <ul className="mt-6 space-y-4 text-[#6B625A]">
+            <ul className="mt-6 space-y-4 text-[#7A4E46]">
               <li>• Built end-to-end AI pipelines for image and document workflows.</li>
               <li>• Combined CV, OCR-adjacent extraction, NLP, and metadata generation.</li>
               <li>• Developed Python-based automation and model-serving workflows.</li>
@@ -110,19 +110,19 @@ export default function ArchivalAIPipelinePage() {
 
           <GlassCard variant="warm" className="p-8 md:p-10">
             <h2 className="text-2xl font-semibold">Project frame</h2>
-            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
+            <div className="mt-4 h-px w-16 bg-[#C9A84C]/60" />
 
-            <div className="mt-6 space-y-4 text-[#6B625A]">
+            <div className="mt-6 space-y-4 text-[#7A4E46]">
               <p>
-                <span className="font-medium text-[#2F2A26]">Focus:</span>{" "}
+                <span className="font-medium text-[#1E1410]">Focus:</span>{" "}
                 computer vision, extraction, enrichment, metadata
               </p>
               <p>
-                <span className="font-medium text-[#2F2A26]">Scale:</span>{" "}
+                <span className="font-medium text-[#1E1410]">Scale:</span>{" "}
                 high-volume enterprise and archival workflows
               </p>
               <p>
-                <span className="font-medium text-[#2F2A26]">Environment:</span>{" "}
+                <span className="font-medium text-[#1E1410]">Environment:</span>{" "}
                 production-oriented automation and deployment
               </p>
             </div>
@@ -132,9 +132,9 @@ export default function ArchivalAIPipelinePage() {
         <section className="mt-8">
           <GlassCard variant="highlight" className="p-8 md:p-10">
             <h2 className="text-2xl font-semibold">Notes</h2>
-            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
+            <div className="mt-4 h-px w-16 bg-[#C9A84C]/60" />
 
-            <p className="mt-6 leading-8 text-[#6B625A]">
+            <p className="mt-6 leading-8 text-[#7A4E46]">
               Some implementation details, datasets, and client-specific deliverables
               are confidential, so this page presents the project at a portfolio-safe,
               case-study level rather than exposing private source material.
@@ -145,9 +145,9 @@ export default function ArchivalAIPipelinePage() {
         <section className="mt-8">
           <GlassCard variant="highlight" className="p-8 md:p-10">
             <h2 className="text-2xl font-semibold">Pipeline Overview</h2>
-            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
+            <div className="mt-4 h-px w-16 bg-[#C9A84C]/60" />
 
-            <p className="mt-6 text-sm text-[#6B625A]">
+            <p className="mt-6 text-sm text-[#7A4E46]">
               High-level view of input, processing stages, and output structure.
             </p>
 
@@ -172,9 +172,9 @@ export default function ArchivalAIPipelinePage() {
         <section className="mt-8">
           <GlassCard variant="highlight" className="p-8 md:p-10">
             <h2 className="text-2xl font-semibold">Technical Documentation</h2>
-            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
+            <div className="mt-4 h-px w-16 bg-[#C9A84C]/60" />
 
-            <p className="mt-6 max-w-3xl text-sm leading-7 text-[#6B625A]">
+            <p className="mt-6 max-w-3xl text-sm leading-7 text-[#7A4E46]">
               Full technical documentation for the ImageProcessing Auto system,
               including architecture, directory structure, configuration, Triton
               integration, models, and detailed step-by-step pipeline documentation.
