@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import GlassCard from "@/components/ui/glass-card";
+import ScrollToTopButton from "@/components/ui/scroll-to-top";
 
 export default function ArchivalAIPipelinePage() {
   const [isImageOpen, setIsImageOpen] = useState(false);
@@ -192,7 +193,7 @@ export default function ArchivalAIPipelinePage() {
               <button
                 type="button"
                 onClick={() => setIsDocOpen(true)}
-                className="rounded-full border border-white/40 bg-white/16 px-6 py-3 text-sm font-medium text-[#2F2A26] transition hover:bg-white/24"
+                className="btn-primary rounded-full px-6 py-3 text-sm font-medium"
               >
                 Preview Inside Page
               </button>
@@ -252,6 +253,9 @@ export default function ArchivalAIPipelinePage() {
           </div>
         </div>
       )}
+
+      <ScrollToTopButton />
+
     </main>
   );
 }

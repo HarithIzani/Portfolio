@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import GlassCard from "@/components/ui/glass-card";
+import ScrollToTopButton from "@/components/ui/scroll-to-top";
 
 export default function AttentionSpanAnalysisPage() {
   const tech = [
@@ -73,6 +74,9 @@ export default function AttentionSpanAnalysisPage() {
           </GlassCard>
         </section>
       </div>
+
+      <ScrollToTopButton />
+      
     </main>
   );
 }

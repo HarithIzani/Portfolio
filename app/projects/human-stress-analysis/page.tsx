@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import GlassCard from "@/components/ui/glass-card";
+import ScrollToTopButton from "@/components/ui/scroll-to-top";
 
 export default function HumanStressAnalysisPage() {
   const tech = [
@@ -73,6 +74,9 @@ export default function HumanStressAnalysisPage() {
           </GlassCard>
         </section>
       </div>
+      
+      <ScrollToTopButton />
+
     </main>
   );
 }

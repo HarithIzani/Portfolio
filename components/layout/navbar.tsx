@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Container from "../ui/container";
+import { usePathname } from "next/navigation";
 
 const navItems = [
   { label: "Experience", href: "#experience" },
@@ -12,6 +13,11 @@ const navItems = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+
+  if (pathname.startsWith("/projects")) {
+    return null;
+  }
 
   return (
     <header className="sticky top-0 z-50 pt-4">

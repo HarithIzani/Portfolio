@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portable Traffic Data Gathering Tool — Complete Technical Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Source+Sans+3:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f0e8;
+    --bg-warm: #efe9dd;
+    --bg-card: rgba(255, 252, 245, 0.65);
+    --bg-card-solid: #fffcf5;
+    --fg: #2c2418;
+    --fg-muted: #6b5d4d;
+    --fg-light: #9a8b78;
+    --accent: #3d6b5e;
+    --accent-light: #5a9a87;
+    --accent-dark: #2a4a3f;
+    --accent-warm: #c4956a;
+    --accent-warm-light: #dbb896;
+    --gold: #b8923e;
+    --gold-light: #d4b06a;
+    --border: rgba(107, 93, 77, 0.15);
+    --border-strong: rgba(107, 93, 77, 0.3);
+    --glass: rgba(255, 252, 245, 0.55);
+    --glass-border: rgba(255, 255, 255, 0.35);
+    --code-bg: #2c2418;
+    --code-fg: #e8dcc8;
+    --red: #a83232;
+    --red-bg: rgba(168, 50, 50, 0.08);
+    --orange: #b07328;
+    --orange-bg: rgba(176, 115, 40, 0.08);
+    --blue-bg: rgba(61, 107, 94, 0.08);
+    --green-bg: rgba(90, 154, 135, 0.08);
+    --shadow-sm: 0 1px 3px rgba(44, 36, 24, 0.06);
+    --shadow-md: 0 4px 16px rgba(44, 36, 24, 0.08);
+    --shadow-lg: 0 8px 32px rgba(44, 36, 24, 0.1);
+    --radius: 12px;
+    --radius-lg: 20px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Source Sans 3', system-ui, sans-serif;
+    line-height: 1.75;
+    color: var(--fg);
+    background: var(--bg);
+    background-image:
+      radial-gradient(ellipse at 20% 0%, rgba(212, 176, 106, 0.12) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 100%, rgba(61, 107, 94, 0.08) 0%, transparent 50%);
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 30px 40px 80px;
+  }
+
+  @media print {
+    body { background: #fff; }
+    .container { max-width: 100%; padding: 10px 20px; font-size: 11px; line-height: 1.5; }
+    .no-print { display: none !important; }
+    h1, h2, h3 { page-break-after: avoid; }
+    pre, table, .step-card { page-break-inside: avoid; }
+    .glass-card { background: #fff; border: 1px solid #ddd; backdrop-filter: none; }
+  }
+
+  @media (max-width: 800px) { .container { padding: 15px; } }
+
+  /* ─── Glass Card ─── */
+  .glass-card {
+    background: var(--glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 28px 32px;
+    margin: 20px 0;
+  }
+
+  /* ─── Typography ─── */
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2em;
+    font-weight: 700;
+    color: var(--accent-dark);
+    margin: 50px 0 8px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--border-strong);
+    letter-spacing: -0.02em;
+  }
+  h1:first-of-type { margin-top: 30px; }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5em;
+    font-weight: 600;
+    color: var(--fg);
+    margin: 35px 0 12px;
+  }
+
+  h3 {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 1.15em;
+    font-weight: 600;
+    color: var(--accent-dark);
+    margin: 25px 0 8px;
+  }
+
+  h4 {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 1.02em;
+    font-weight: 600;
+    color: var(--fg-muted);
+    margin: 16px 0 6px;
+  }
+
+  p { margin: 8px 0; color: var(--fg); }
+  a { color: var(--accent); text-decoration: none; font-weight: 500; }
+  a:hover { text-decoration: underline; color: var(--accent-light); }
+  ul, ol { margin: 8px 0 8px 24px; }
+  li { margin: 4px 0; color: var(--fg); }
+  hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 40px 0;
+  }
+  strong { color: var(--fg); font-weight: 600; }
+
+  /* ─── Code ─── */
+  code {
+    background: rgba(44, 36, 24, 0.06);
+    padding: 2px 7px;
+    border-radius: 5px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.88em;
+    color: var(--accent-dark);
+  }
+
+  pre {
+    background: var(--code-bg);
+    color: var(--code-fg);
+    padding: 18px 22px;
+    border-radius: var(--radius);
+    overflow-x: auto;
+    font-size: 0.85em;
+    line-height: 1.6;
+    margin: 14px 0;
+    font-family: 'JetBrains Mono', monospace;
+    box-shadow: var(--shadow-sm);
+  }
+  pre code { background: none; padding: 0; color: inherit; font-size: 1em; }
+
+  /* ─── Tables ─── */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 14px 0;
+    font-size: 0.92em;
+    background: var(--bg-card-solid);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+  th, td {
+    border: 1px solid var(--border);
+    padding: 10px 14px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th {
+    background: rgba(61, 107, 94, 0.08);
+    font-weight: 600;
+    color: var(--accent-dark);
+    font-size: 0.93em;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  tr:nth-child(even) td { background: rgba(245, 240, 232, 0.5); }
+  tr:hover td { background: rgba(61, 107, 94, 0.04); }
+
+  /* ─── Callouts ─── */
+  .callout {
+    padding: 16px 20px;
+    border-radius: var(--radius);
+    margin: 14px 0;
+    border-left: 4px solid;
+    font-size: 0.95em;
+  }
+  .callout-info {
+    background: var(--blue-bg);
+    border-color: var(--accent);
+  }
+  .callout-warn {
+    background: var(--orange-bg);
+    border-color: var(--orange);
+  }
+  .callout-error {
+    background: var(--red-bg);
+    border-color: var(--red);
+  }
+  .callout-label {
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .callout-info .callout-label { color: var(--accent-dark); }
+  .callout-warn .callout-label { color: var(--orange); }
+  .callout-error .callout-label { color: var(--red); }
+
+  /* ─── Step Cards ─── */
+  .step-card {
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: 24px 28px;
+    margin: 20px 0;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+  }
+  .step-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-warm));
+  }
+  .step-card h4:first-child {
+    color: var(--accent-dark);
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2em;
+    font-weight: 700;
+    margin-top: 4px;
+  }
+  .step-meta {
+    font-size: 0.85em;
+    color: var(--fg-muted);
+    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+  .step-meta span { margin-right: 4px; }
+
+  /* ─── Badges ─── */
+  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 0.75em;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #fff;
+  }
+  .badge-active { background: var(--accent); }
+  .badge-legacy { background: var(--orange); }
+  .badge-unused { background: var(--fg-light); }
+  .badge-day { background: #c49a1e; }
+  .badge-night { background: #4a5580; }
+  .badge-edge { background: #7a5195; }
+  .badge-gold { background: linear-gradient(90deg, #b8923e, #d4b06a); }
+
+  /* ─── TOC ─── */
+  .toc {
+    columns: 2;
+    column-gap: 40px;
+  }
+  .toc ol {
+    margin-left: 18px;
+    break-inside: avoid;
+  }
+  .toc > ol > li {
+    margin: 6px 0;
+    break-inside: avoid;
+  }
+  .toc a {
+    font-weight: 500;
+    color: var(--fg);
+    transition: color 0.2s;
+  }
+  .toc a:hover { color: var(--accent); }
+  @media (max-width: 700px) {
+    .toc { columns: 1; }
+  }
+
+  /* ─── Cover ─── */
+  .cover {
+    text-align: center;
+    padding: 70px 20px 50px;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .cover h1 {
+    border: none;
+    font-size: 2.8em;
+    margin: 0;
+    color: var(--fg);
+    letter-spacing: -0.03em;
+  }
+  .cover .subtitle {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 1.2em;
+    color: var(--fg-muted);
+    margin: 10px 0 5px;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .cover .version {
+    font-size: 0.95em;
+    color: var(--fg-light);
+    font-weight: 400;
+  }
+  .cover .award {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 5px 18px;
+    background: linear-gradient(90deg, rgba(184,146,62,0.15), rgba(212,176,106,0.15));
+    border: 1px solid rgba(184,146,62,0.4);
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 0.04em;
+  }
+  .cover .date {
+    font-size: 0.9em;
+    color: var(--fg-light);
+    margin-top: 16px;
+  }
+  .cover .divider {
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--gold));
+    margin: 20px auto;
+    border-radius: 1px;
+  }
+
+  /* ─── Print Button ─── */
+  .print-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    background: var(--accent-dark);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    padding: 10px 22px;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: 600;
+    font-family: 'Source Sans 3', sans-serif;
+    box-shadow: var(--shadow-md);
+    transition: all 0.2s;
+  }
+  .print-btn:hover {
+    background: var(--accent);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* ─── SVG Diagram Styles ─── */
+  .diagram-container {
+    margin: 24px 0;
+    overflow-x: auto;
+    padding: 10px 0;
+  }
+  .diagram-container svg {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* ─── Data Flow ─── */
+  .data-flow-step {
+    display: flex;
+    align-items: stretch;
+    margin: 0;
+    position: relative;
+  }
+  .data-flow-number {
+    width: 52px;
+    min-width: 52px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+  .data-flow-number .num {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.85em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 2px 8px rgba(61, 107, 94, 0.3);
+  }
+  .data-flow-number .line {
+    flex: 1;
+    width: 2px;
+    background: var(--border-strong);
+  }
+  .data-flow-content {
+    flex: 1;
+    padding: 0 0 20px 18px;
+  }
+  .data-flow-content .df-title {
+    font-weight: 700;
+    color: var(--accent-dark);
+    font-size: 0.95em;
+    margin-bottom: 2px;
+  }
+  .data-flow-content .df-desc {
+    font-size: 0.88em;
+    color: var(--fg-muted);
+    line-height: 1.6;
+  }
+  .data-flow-content .df-tag {
+    display: inline-block;
+    font-size: 0.75em;
+    font-weight: 600;
+    padding: 1px 8px;
+    border-radius: 10px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .df-tag-day { background: rgba(196, 154, 30, 0.15); color: #8a6a10; }
+  .df-tag-night { background: rgba(74, 85, 128, 0.15); color: #4a5580; }
+  .df-tag-cpu { background: rgba(61, 107, 94, 0.15); color: var(--accent-dark); }
+  .df-tag-edge { background: rgba(122, 81, 149, 0.15); color: #7a5195; }
+
+  /* ─── Footer ─── */
+  .footer {
+    text-align: center;
+    color: var(--fg-light);
+    margin-top: 50px;
+    padding: 30px 20px;
+    font-size: 0.9em;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ─── Two-column grid for model cards ─── */
+  .model-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 20px 0;
+  }
+  @media (max-width: 700px) { .model-grid { grid-template-columns: 1fr; } }
+
+  .model-card {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: 22px 26px;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+  }
+  .model-card.day::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, #c49a1e, #e8c84a);
+  }
+  .model-card.night::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, #4a5580, #7a8aaa);
+  }
+  .model-card h4 {
+    color: var(--accent-dark);
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1em;
+    font-weight: 700;
+    margin-top: 4px;
+  }
+</style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">Print / Save PDF</button>
+
+<div class="container">
+
+<!-- ═══════════════════ COVER ═══════════════════ -->
+<div class="cover">
+  <h1>Portable Traffic Data Gathering Tool</h1>
+  <div class="divider"></div>
+  <div class="subtitle">Complete Technical Documentation</div>
+  <div class="version">Final Year Project &nbsp;·&nbsp; Python · TensorFlow · TFLite · Raspberry Pi</div>
+  <div class="award">🏅 Gold Medal Award — Best Final Year Project</div>
+  <div class="date">Authored by: Harith Izani &amp; Hariz &nbsp;</div>
+</div>
+
+<!-- ═══════════════════ TABLE OF CONTENTS ═══════════════════ -->
+<div class="glass-card">
+  <h3 style="margin-top:0; font-family:'Playfair Display',serif; font-size:1.3em; color:var(--accent-dark);">Table of Contents</h3>
+  <div class="toc">
+    <ol>
+      <li><a href="#overview">Project Overview</a></li>
+      <li><a href="#architecture">Architecture &amp; System Flowchart</a></li>
+      <li><a href="#directory">Directory Structure &amp; File Inventory</a></li>
+      <li><a href="#models">Dual-Model Framework</a>
+        <ol type="a">
+          <li><a href="#model-day">Day Model</a></li>
+          <li><a href="#model-night">Night Model</a></li>
+          <li><a href="#luminance">Luminance-Based Switching</a></li>
+        </ol>
+      </li>
+      <li><a href="#pipeline">Detection Pipeline (Detailed)</a>
+        <ol type="a">
+          <li><a href="#step1">Step 1 — Initialization &amp; Model Loading</a></li>
+          <li><a href="#step2">Step 2 — Video Capture</a></li>
+          <li><a href="#step3">Step 3 — Luminance Calculation</a></li>
+          <li><a href="#step4">Step 4 — Model Inference</a></li>
+          <li><a href="#step5">Step 5 — Result Filtering &amp; Recording</a></li>
+          <li><a href="#step6">Step 6 — Bounding Box Rendering</a></li>
+          <li><a href="#step7">Step 7 — CSV Export</a></li>
+        </ol>
+      </li>
+      <li><a href="#training">Transfer Learning &amp; Training Pipeline</a></li>
+      <li><a href="#data-flow">Data Flow Diagram</a></li>
+      <li><a href="#detection-classes">Detection Classes</a></li>
+      <li><a href="#config-ref">Configuration Reference</a></li>
+      <li><a href="#api-ref">API Reference — fyp.py</a></li>
+      <li><a href="#utilities">Utility Scripts</a></li>
+      <li><a href="#output">Output &amp; Data Schema</a></li>
+      <li><a href="#dependencies">Dependencies</a></li>
+      <li><a href="#deployment">Deployment Notes</a></li>
+    </ol>
+  </div>
+</div>
+
+<!-- ═══════════════════ 1. OVERVIEW ═══════════════════ -->
+<h1 id="overview">1. Project Overview</h1>
+
+<p><strong>Portable Traffic Data Gathering Tool</strong> is an edge-deployed computer vision system for near real-time traffic monitoring under all environmental lighting conditions. Built as a Final Year Project and awarded the <strong>Gold Medal</strong>, the system uses a dual-model framework trained via transfer learning on the Berkeley DeepDrive dataset (BDD100K), deployed on a Raspberry Pi for portable field use.</p>
+
+<p>The core innovation is automatic luminance-based model switching: a custom relative luminance function (based on the WCAG standard) determines whether the incoming video frame is a "day" or "night" scene, and routes it to the appropriate specialized TFLite model. This allows robust detection across bright daylight, dim dusk, and low-light nighttime conditions without manual intervention.</p>
+
+<h3>Key Capabilities</h3>
+<ul>
+  <li><strong>Dual-Model Switching</strong> — Automatic day/night model selection per frame using WCAG relative luminance</li>
+  <li><strong>11-Class Detection</strong> — Detects bicycle, bus, car, motorcycle, pedestrian, rider, train, truck, other vehicle, other person, trailer</li>
+  <li><strong>Edge Deployment</strong> — Runs entirely on Raspberry Pi using TFLite runtime (no cloud dependency)</li>
+  <li><strong>Near Real-Time Processing</strong> — TFLite quantized models optimized for ARM CPU inference</li>
+  <li><strong>Automated Data Recording</strong> — Per-frame master record exported to CSV with timestamps, luminance, model used, and per-class counts</li>
+  <li><strong>Transfer Learning</strong> — Fine-tuned from SSD MobileNet V2 FPNLite 640 pretrained checkpoint</li>
+  <li><strong>Adaptive Confidence Thresholds</strong> — Day model uses 0.5 threshold; night model uses 0.3 for greater sensitivity in low light</li>
+</ul>
+
+<h3>Project Metrics</h3>
+<table>
+  <tr><th>Metric</th><th>Value</th></tr>
+  <tr><td>Primary Source File</td><td><code>fyp.py</code> (242 lines)</td></tr>
+  <tr><td>Total Scripts</td><td>4 (1 main + 1 notebook + 2 utilities)</td></tr>
+  <tr><td>TFLite Models</td><td>2 (Day + Night)</td></tr>
+  <tr><td>Detection Classes</td><td>11</td></tr>
+  <tr><td>Base Architecture</td><td>SSD MobileNet V2 FPNLite 640</td></tr>
+  <tr><td>Dataset</td><td>Berkeley DeepDrive (BDD100K)</td></tr>
+  <tr><td>Target Platform</td><td>Raspberry Pi (ARM)</td></tr>
+  <tr><td>Luminance Threshold (Day/Night)</td><td>≥84 → Day Model, &lt;84 → Night Model</td></tr>
+  <tr><td>Confidence Threshold — Day</td><td>0.50</td></tr>
+  <tr><td>Confidence Threshold — Night</td><td>0.30</td></tr>
+  <tr><td>Output Screen Resolution</td><td>800 × 470 px (Raspberry Pi display)</td></tr>
+  <tr><td>Award</td><td>🏅 Gold Medal — Best Final Year Project</td></tr>
+</table>
+
+<!-- ═══════════════════ 2. ARCHITECTURE ═══════════════════ -->
+<h1 id="architecture">2. Architecture &amp; System Flowchart</h1>
+
+<p>The system follows a linear yet branching architecture: a single video source is read frame-by-frame, with each frame independently evaluated for luminance and routed to either the Day or Night TFLite model. Both paths converge back into a shared recording and display loop. On exit, all accumulated data is flushed to a CSV file.</p>
+
+<div class="diagram-container">
+<svg viewBox="0 0 900 820" xmlns="http://www.w3.org/2000/svg" font-family="'Source Sans 3', system-ui, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="10" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,3.5 L0,7 z" fill="#6b5d4d"/>
+    </marker>
+    <marker id="arrow-accent" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="10" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,3.5 L0,7 z" fill="#3d6b5e"/>
+    </marker>
+    <marker id="arrow-day" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="10" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,3.5 L0,7 z" fill="#c49a1e"/>
+    </marker>
+    <marker id="arrow-night" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="10" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,3.5 L0,7 z" fill="#4a5580"/>
+    </marker>
+    <filter id="shadow" x="-4%" y="-4%" width="108%" height="108%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="rgba(44,36,24,0.1)"/>
+    </filter>
+  </defs>
+
+  <!-- ── Input Sources Group ── -->
+  <rect x="30" y="20" width="840" height="110" rx="16" fill="rgba(61,107,94,0.06)" stroke="rgba(61,107,94,0.25)" stroke-width="1.5"/>
+  <text x="50" y="46" font-size="12" font-weight="600" fill="#3d6b5e" letter-spacing="0.08em">INPUT SOURCES</text>
+
+  <rect x="55" y="58" width="190" height="52" rx="8" fill="#fffcf5" stroke="rgba(61,107,94,0.3)" stroke-width="1.2" filter="url(#shadow)"/>
+  <text x="150" y="80" text-anchor="middle" font-size="13" font-weight="600" fill="#2a4a3f">Video File (.mp4)</text>
+  <text x="150" y="97" text-anchor="middle" font-size="11" fill="#6b5d4d">showcase9min10f.mp4</text>
+
+  <rect x="280" y="58" width="190" height="52" rx="8" fill="#fffcf5" stroke="rgba(107,93,77,0.25)" stroke-width="1.2" filter="url(#shadow)"/>
+  <text x="375" y="80" text-anchor="middle" font-size="13" font-weight="600" fill="#2a4a3f">Camera Feed</text>
+  <text x="375" y="97" text-anchor="middle" font-size="11" fill="#6b5d4d">cv2.VideoCapture(0)</text>
+
+  <rect x="505" y="58" width="200" height="52" rx="8" fill="rgba(184,146,62,0.07)" stroke="rgba(184,146,62,0.3)" stroke-width="1.2" filter="url(#shadow)"/>
+  <text x="605" y="80" text-anchor="middle" font-size="13" font-weight="600" fill="#2a4a3f">Labels &amp; Models</text>
+  <text x="605" y="97" text-anchor="middle" font-size="11" fill="#6b5d4d">labels.txt · detect_day.tflite · detect_night.tflite</text>
+
+  <!-- ── Arrow: Input → Frame Read ── -->
+  <line x1="450" y1="130" x2="450" y2="172" stroke="#6b5d4d" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- ── Frame Read ── -->
+  <rect x="300" y="172" width="300" height="48" rx="8" fill="#fffcf5" stroke="rgba(61,107,94,0.3)" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="450" y="198" text-anchor="middle" font-size="13" font-weight="600" fill="#2a4a3f">Read Frame</text>
+  <text x="450" y="213" text-anchor="middle" font-size="11" fill="#6b5d4d">video.read() → BGR→RGB → resize to model input</text>
+
+  <!-- ── Arrow: Frame Read → Luminance ── -->
+  <line x1="450" y1="220" x2="450" y2="262" stroke="#6b5d4d" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- ── Luminance ── -->
+  <rect x="300" y="262" width="300" height="48" rx="8" fill="rgba(184,146,62,0.08)" stroke="rgba(184,146,62,0.35)" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="450" y="288" text-anchor="middle" font-size="13" font-weight="600" fill="#2a4a3f">Luminance Calculation</text>
+  <text x="450" y="303" text-anchor="middle" font-size="11" fill="#6b5d4d">WCAG relative luminance formula → lumen score</text>
+
+  <!-- ── Decision: Day or Night ── -->
+  <polygon points="450,340 560,380 450,420 340,380" fill="rgba(255,252,245,0.85)" stroke="rgba(107,93,77,0.4)" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="450" y="376" text-anchor="middle" font-size="12" font-weight="700" fill="#2a4a3f">lumen ≥ 84?</text>
+  <text x="450" y="393" text-anchor="middle" font-size="10" fill="#6b5d4d">Day / Night</text>
+
+  <!-- Arrow: Lum → Decision -->
+  <line x1="450" y1="310" x2="450" y2="340" stroke="#6b5d4d" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- ── YES branch (left) ── -->
+  <line x1="340" y1="380" x2="200" y2="380" stroke="#c49a1e" stroke-width="1.5" marker-end="url(#arrow-day)"/>
+  <text x="265" y="373" text-anchor="middle" font-size="11" fill="#8a6a10" font-weight="600">YES (Day)</text>
+
+  <!-- Day Model box -->
+  <rect x="60" y="440" width="220" height="70" rx="10" fill="rgba(196,154,30,0.08)" stroke="rgba(196,154,30,0.4)" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="170" y="464" text-anchor="middle" font-size="13" font-weight="700" fill="#2a4a3f">Day Model</text>
+  <text x="170" y="480" text-anchor="middle" font-size="11" fill="#6b5d4d">detect_day.tflite</text>
+  <text x="170" y="497" text-anchor="middle" font-size="11" fill="#6b5d4d">Threshold: 0.50 · Normalize: (x−127.5)/127.5</text>
+  <!-- Arrow: left branch down -->
+  <line x1="200" y1="380" x2="170" y2="440" stroke="#c49a1e" stroke-width="1.5" marker-end="url(#arrow-day)"/>
+
+  <!-- ── NO branch (right) ── -->
+  <line x1="560" y1="380" x2="700" y2="380" stroke="#4a5580" stroke-width="1.5" marker-end="url(#arrow-night)"/>
+  <text x="625" y="373" text-anchor="middle" font-size="11" fill="#4a5580" font-weight="600">NO (Night)</text>
+
+  <!-- Night Model box -->
+  <rect x="620" y="440" width="220" height="70" rx="10" fill="rgba(74,85,128,0.08)" stroke="rgba(74,85,128,0.4)" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="730" y="464" text-anchor="middle" font-size="13" font-weight="700" fill="#2a4a3f">Night Model</text>
+  <text x="730" y="480" text-anchor="middle" font-size="11" fill="#6b5d4d">detect_night.tflite</text>
+  <text x="730" y="497" text-anchor="middle" font-size="11" fill="#6b5d4d">Threshold: 0.30 · Normalize: (x−127.5)/127.5</text>
+  <!-- Arrow: right branch down -->
+  <line x1="700" y1="380" x2="730" y2="440" stroke="#4a5580" stroke-width="1.5" marker-end="url(#arrow-night)"/>
+
+  <!-- ── Converge arrows to Filter+Record ── -->
+  <line x1="170" y1="510" x2="170" y2="570" stroke="#c49a1e" stroke-width="1.5"/>
+  <line x1="170" y1="570" x2="380" y2="570" stroke="#c49a1e" stroke-width="1.5" marker-end="url(#arrow-accent)"/>
+
+  <line x1="730" y1="510" x2="730" y2="570" stroke="#4a5580" stroke-width="1.5"/>
+  <line x1="730" y1="570" x2="520" y2="570" stroke="#4a5580" stroke-width="1.5" marker-end="url(#arrow-accent)"/>
+
+  <!-- ── Filter & Record ── -->
+  <rect x="300" y="546" width="300" height="48" rx="8" fill="#fffcf5" stroke="rgba(61,107,94,0.3)" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="450" y="571" text-anchor="middle" font-size="13" font-weight="600" fill="#2a4a3f">Filter by Confidence &amp; Record</text>
+  <text x="450" y="586" text-anchor="middle" font-size="11" fill="#6b5d4d">Update master_record dict · append DateTime, Lumin, Model, class counts</text>
+
+  <!-- Arrow: Record → Draw -->
+  <line x1="450" y1="594" x2="450" y2="636" stroke="#6b5d4d" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- ── Draw Bounding Boxes ── -->
+  <rect x="300" y="636" width="300" height="48" rx="8" fill="#fffcf5" stroke="rgba(107,93,77,0.25)" stroke-width="1.2" filter="url(#shadow)"/>
+  <text x="450" y="661" text-anchor="middle" font-size="13" font-weight="600" fill="#2a4a3f">Draw Bounding Boxes &amp; Labels</text>
+  <text x="450" y="676" text-anchor="middle" font-size="11" fill="#6b5d4d">cv2.rectangle · cv2.putText · imshow('RaspPi Detector')</text>
+
+  <!-- Arrow: Draw → Decision loop/exit -->
+  <line x1="450" y1="684" x2="450" y2="726" stroke="#6b5d4d" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- ── Exit/Loop Decision ── -->
+  <polygon points="450,726 560,754 450,782 340,754" fill="rgba(255,252,245,0.85)" stroke="rgba(107,93,77,0.4)" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="450" y="750" text-anchor="middle" font-size="12" font-weight="700" fill="#2a4a3f">q pressed</text>
+  <text x="450" y="766" text-anchor="middle" font-size="10" fill="#6b5d4d">or source ended?</text>
+
+  <!-- Loop back arrow (right side, NO = continue) -->
+  <line x1="560" y1="754" x2="840" y2="754" stroke="#6b5d4d" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <line x1="840" y1="754" x2="840" y2="196" stroke="#6b5d4d" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <line x1="840" y1="196" x2="600" y2="196" stroke="#6b5d4d" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrow)"/>
+  <text x="855" y="490" font-size="11" fill="#9a8b78" font-style="italic">next frame</text>
+
+  <!-- YES → CSV Export -->
+  <line x1="340" y1="754" x2="150" y2="754" stroke="#6b5d4d" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="240" y="747" text-anchor="middle" font-size="11" fill="#2a4a3f" font-weight="600">YES (exit)</text>
+
+  <!-- CSV Export Box -->
+  <rect x="30" y="728" width="120" height="52" rx="8" fill="rgba(184,146,62,0.08)" stroke="rgba(184,146,62,0.35)" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="90" y="753" text-anchor="middle" font-size="12" font-weight="700" fill="#2a4a3f">CSV Export</text>
+  <text x="90" y="769" text-anchor="middle" font-size="10" fill="#6b5d4d">Master_Record.csv</text>
+
+</svg>
+</div>
+
+<!-- ═══════════════════ 3. DIRECTORY STRUCTURE ═══════════════════ -->
+<h1 id="directory">3. Directory Structure &amp; File Inventory</h1>
+
+<pre><code>FYP-Portable-Traffic-Data-Gathering-Tool-Tensorflow-main/
+│
+├── RaspberryPi Build/                  ← Production deployment
+│   ├── fyp.py                          ← Main inference + data recording script (242 lines)
+│   ├── labels.txt                      ← 11 detection class labels
+│   ├── TFLite_Model.zip                ← Compressed TFLite models (detect_day.tflite, detect_night.tflite)
+│   └── README.txt                      ← Deployment note on video path configuration
+│
+├── Experimental Build/                 ← Training & prototyping environment
+│   └── Framework - Copy.ipynb          ← Jupyter notebook: training config, checkpoint loading,
+│                                          luminance testing, framework validation
+│
+├── Models (TFLite)/                    ← Model checkpoints & binaries
+│   ├── day model checkpoint.zip        ← Day model training checkpoint (ckpt-11)
+│   ├── night model checkpoint.zip      ← Night model training checkpoint
+│   └── models(github cant process).zip ← Full model binaries (too large for raw GitHub hosting)
+│
+├── Useful Scripts/                     ← Training data preparation utilities
+│   ├── generate_tfrecord.py            ← Converts LabelImg XML annotations → TFRecord format
+│   └── xml_edit.py                     ← Batch XML annotation cleaner (removes unwanted classes,
+│                                          normalizes filenames)
+│
+├── README.md                           ← Project overview and path configuration notes
+└── LICENSE                             ← License file</code></pre>
+
+<h3>File Inventory</h3>
+<table>
+  <tr><th>File</th><th>Location</th><th>Lines</th><th>Role</th></tr>
+  <tr><td><code>fyp.py</code></td><td>RaspberryPi Build/</td><td>242</td><td>Main production inference script — dual-model detection, luminance switching, recording, display</td></tr>
+  <tr><td><code>labels.txt</code></td><td>RaspberryPi Build/</td><td>11</td><td>Class label definitions, one per line, index-mapped to model outputs</td></tr>
+  <tr><td><code>Framework - Copy.ipynb</code></td><td>Experimental Build/</td><td>~350</td><td>Experimental training notebook — model config, checkpoint loading, luminance range testing, framework validation</td></tr>
+  <tr><td><code>generate_tfrecord.py</code></td><td>Useful Scripts/</td><td>169</td><td>XML-to-TFRecord converter for TF Object Detection API training pipeline</td></tr>
+  <tr><td><code>xml_edit.py</code></td><td>Useful Scripts/</td><td>36</td><td>Batch utility to clean LabelImg XML annotations — removes <code>traffic sign</code>, <code>traffic light</code>, <code>none</code> objects, and normalizes filename fields</td></tr>
+</table>
+
+<!-- ═══════════════════ 4. DUAL-MODEL FRAMEWORK ═══════════════════ -->
+<h1 id="models">4. Dual-Model Framework</h1>
+
+<p>The project's central technical contribution is a dual-model framework that maintains separate specialized TFLite models for daytime and nighttime conditions, automatically selecting between them on a per-frame basis using a luminance score derived from the WCAG relative luminance formula.</p>
+
+<div class="model-grid">
+  <div class="model-card day" id="model-day">
+    <h4>☀️ Day Model</h4>
+    <div class="step-meta">
+      <span class="badge badge-day">Day</span>
+      <span>ssd_mobilenet_v2_fpnlite_640_day</span>
+    </div>
+    <table>
+      <tr><th>Parameter</th><th>Value</th></tr>
+      <tr><td>Model file</td><td><code>detect_day.tflite</code></td></tr>
+      <tr><td>Checkpoint</td><td><code>ckpt-11</code></td></tr>
+      <tr><td>Activation threshold</td><td>lumen ≥ 84</td></tr>
+      <tr><td>Confidence threshold</td><td>0.50</td></tr>
+      <tr><td>Input normalization</td><td>(pixel − 127.5) / 127.5</td></tr>
+      <tr><td>Floating point model</td><td>Yes (float32)</td></tr>
+      <tr><td>Architecture</td><td>SSD MobileNet V2 FPNLite 640</td></tr>
+    </table>
+    <p style="margin-top:10px; font-size:0.9em; color:var(--fg-muted);">Optimized for well-lit scenes. Higher confidence threshold of 0.5 reduces false positives in rich visual environments.</p>
+  </div>
+
+  <div class="model-card night" id="model-night">
+    <h4>🌙 Night Model</h4>
+    <div class="step-meta">
+      <span class="badge badge-night">Night</span>
+      <span>ssd_mobilenet_v2_fpnlite_640_night</span>
+    </div>
+    <table>
+      <tr><th>Parameter</th><th>Value</th></tr>
+      <tr><td>Model file</td><td><code>detect_night.tflite</code></td></tr>
+      <tr><td>Checkpoint</td><td>Final training checkpoint</td></tr>
+      <tr><td>Activation threshold</td><td>lumen &lt; 84</td></tr>
+      <tr><td>Confidence threshold</td><td>0.30</td></tr>
+      <tr><td>Input normalization</td><td>(pixel − 127.5) / 127.5</td></tr>
+      <tr><td>Floating point model</td><td>Yes (float32)</td></tr>
+      <tr><td>Architecture</td><td>SSD MobileNet V2 FPNLite 640</td></tr>
+    </table>
+    <p style="margin-top:10px; font-size:0.9em; color:var(--fg-muted);">Optimized for low-light scenes. Lowered confidence threshold of 0.3 maximizes recall in dark, noisy environments.</p>
+  </div>
+</div>
+
+<h3 id="luminance">Luminance-Based Model Switching</h3>
+<p>The luminance function is derived from the WCAG 2.1 relative luminance standard, which weights the RGB channels by their perceptual contributions to human brightness perception:</p>
+
+<pre><code>def luminance(img):
+    avg_color_per_row = np.average(img, axis=0)
+    BGR = np.average(avg_color_per_row, axis=0)
+    return (0.2126 * BGR[2]) + (0.7152 * BGR[1]) + (0.0722 * BGR[0])</code></pre>
+
+<p>This is applied to the resized input frame (already in BGR format from OpenCV). The result is compared against the empirically calibrated threshold of <strong>84</strong>, determined by sampling the Berkeley DeepDrive test set:</p>
+
+<table>
+  <tr><th>Condition</th><th>Measured Lumen Range</th><th>Example Values</th></tr>
+  <tr><td>Bright daytime</td><td>~91–134</td><td>91, 98, 92, 134, 92, 116, 116, 116, 111, 102 → avg 107</td></tr>
+  <tr><td>Dim / dusk</td><td>~67–107</td><td>91, 85, 72, 78, 107, 90, 96, 80, 67, 75 → avg 84</td></tr>
+  <tr><td>Dark / nighttime</td><td>~13–74</td><td>16, 13, 74, 22, 16, 44, 31, 56, 50, 53 → avg 37</td></tr>
+</table>
+
+<div class="callout callout-info">
+  <div class="callout-label">Design Decision</div>
+  The threshold of 84 corresponds to the average luminance of "dim" conditions — the boundary between scenes where the day model starts degrading and the night model begins to outperform it. This was calibrated empirically from the BDD100K test subset.
+</div>
+
+<!-- ═══════════════════ 5. PIPELINE (DETAILED) ═══════════════════ -->
+<h1 id="pipeline">5. Detection Pipeline (Detailed)</h1>
+
+<p>The pipeline executes inside a <code>while(video.isOpened())</code> loop. Each iteration processes one frame through 7 logical steps. Both the Day and Night branches are structurally identical — only the model interpreter and confidence threshold differ.</p>
+
+<!-- Step 1 -->
+<div class="step-card" id="step1">
+  <h4>Step 1 — Initialization &amp; Model Loading</h4>
+  <div class="step-meta">
+    <span>fyp.py lines 1–51</span>
+    <span class="badge badge-edge">Startup</span>
+  </div>
+  <p>All static resources are loaded once at startup before the main loop begins. Two separate TFLite interpreters are instantiated and their tensors pre-allocated, eliminating per-frame allocation overhead.</p>
+  <pre><code># Both models loaded at startup
+interpreter_day = Interpreter(MODEL_DAY)
+interpreter_day.allocate_tensors()
+interpreter_night = Interpreter(MODEL_NIGHT)
+interpreter_night.allocate_tensors()
+
+# Input tensor dimensions extracted from day model
+# (both models share the same 640×640 input shape)
+height = input_details_day[0]['shape'][1]   # 640
+width  = input_details_day[0]['shape'][2]   # 640</code></pre>
+  <p>The <code>boxes_idx</code>, <code>classes_idx</code>, <code>scores_idx</code> offsets are set to <code>1, 3, 0</code> to match the TF2 model output ordering used during export.</p>
+</div>
+
+<!-- Step 2 -->
+<div class="step-card" id="step2">
+  <h4>Step 2 — Video Capture &amp; Frame Preprocessing</h4>
+  <div class="step-meta">
+    <span>fyp.py lines 53–103</span>
+    <span class="badge badge-edge">Per Frame</span>
+  </div>
+  <p>Each frame is read via <code>video.read()</code>. If the source is exhausted, the loop exits cleanly. The frame undergoes two transformations: one for inference (resized to model input, BGR→RGB), and one for display (resized to 800×470 for the Raspberry Pi screen).</p>
+  <pre><code>ret, frame = video.read()
+if not ret: break
+
+# For inference: RGB + resize to model input (640×640)
+frame_rgb     = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+frame_resized = cv2.resize(frame_rgb, (width, height))
+input_frame   = np.expand_dims(frame_resized, axis=0)
+
+# For display: resize to RPi screen (800×470)
+frame_show = cv2.resize(frame, (800, 470))</code></pre>
+  <div class="callout callout-warn">
+    <div class="callout-label">Configuration Note</div>
+    The source path <code>SOURCE</code> must be updated before deployment. The default value is <code>showcase9min10f.mp4</code>. For live camera input, replace with <code>cv2.VideoCapture(0)</code>.
+  </div>
+</div>
+
+<!-- Step 3 -->
+<div class="step-card" id="step3">
+  <h4>Step 3 — Luminance Calculation &amp; Model Selection</h4>
+  <div class="step-meta">
+    <span>fyp.py lines 105–107</span>
+    <span class="badge badge-active">Core Logic</span>
+  </div>
+  <p>The WCAG relative luminance function is applied to <code>frame_resized</code> (the 640×640 inference input). This produces a single float <code>lumen</code> that determines which model branch executes for this frame.</p>
+  <pre><code>lumen = luminance(frame_resized)
+
+if lumen >= 84:
+    # → Day model branch (lines 108–167)
+if lumen < 84:
+    # → Night model branch (lines 169–229)</code></pre>
+  <div class="callout callout-info">
+    <div class="callout-label">Note on Branch Logic</div>
+    Both branches are evaluated using separate <code>if</code> statements (not <code>if/elif</code>). Since the conditions are mutually exclusive (≥84 vs &lt;84), only one executes per frame. This is functionally equivalent to an if/else structure.
+  </div>
+</div>
+
+<!-- Step 4 -->
+<div class="step-card" id="step4">
+  <h4>Step 4 — Model Inference</h4>
+  <div class="step-meta">
+    <span>fyp.py lines 108–118 (Day) / 170–180 (Night)</span>
+    <span class="badge badge-day">Day</span>
+    <span class="badge badge-night">Night</span>
+  </div>
+  <p>The selected frame is normalized and fed to the appropriate TFLite interpreter. Normalization scales pixel values from [0, 255] to approximately [−1, 1] using the standard MobileNet normalization parameters.</p>
+  <pre><code># Normalize pixel values (both models are floating point, non-quantized)
+input_frame = (np.float32(input_frame) - 127.5) / 127.5
+
+# Run inference on selected model
+interpreter_day.set_tensor(input_details_day[0]['index'], input_frame)
+interpreter_day.invoke()
+
+# Retrieve outputs
+boxes   = interpreter_day.get_tensor(output_details_day[boxes_idx]['index'])[0]
+classes = interpreter_day.get_tensor(output_details_day[classes_idx]['index'])[0]
+scores  = interpreter_day.get_tensor(output_details_day[scores_idx]['index'])[0]</code></pre>
+  <p>The three output tensors are: <strong>boxes</strong> (normalized [ymin, xmin, ymax, xmax] coordinates), <strong>classes</strong> (integer class indices), and <strong>scores</strong> (confidence values 0–1).</p>
+</div>
+
+<!-- Step 5 -->
+<div class="step-card" id="step5">
+  <h4>Step 5 — Result Filtering &amp; Master Record Update</h4>
+  <div class="step-meta">
+    <span>fyp.py lines 120–144 (Day) / 182–206 (Night)</span>
+    <span class="badge badge-active">Data Recording</span>
+  </div>
+  <p>Detections above the confidence threshold are counted per class. A temporary <code>classes_dictionary</code> is built for this frame, then appended to the <code>master_record</code> dict along with timestamp, luminance value, and model name.</p>
+  <pre><code>classes_dictionary = {cls: 0 for cls in labels}  # reset per frame
+
+for i, score in enumerate(scores):
+    if scores[i] >= 0.5:   # (0.3 for night)
+        classes_dictionary[labels[int(classes[i])]] += 1
+
+# Record this frame's results
+master_record['DateTime'].append(datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
+master_record['Lumin'].append(lumen)
+master_record['Model'].append('Day')   # or 'Night'
+for category in classes_dictionary:
+    master_record[category].append(classes_dictionary[category])</code></pre>
+</div>
+
+<!-- Step 6 -->
+<div class="step-card" id="step6">
+  <h4>Step 6 — Bounding Box Rendering &amp; Display</h4>
+  <div class="step-meta">
+    <span>fyp.py lines 146–167 (Day) / 208–229 (Night)</span>
+    <span class="badge badge-edge">Display</span>
+  </div>
+  <p>All detections above the confidence threshold are drawn on <code>frame_show</code> (the 800×470 display frame). Normalized bounding box coordinates are remapped to display pixel coordinates using <code>imH</code> and <code>imW</code>, with <code>max()</code> and <code>min()</code> clamping to prevent out-of-bounds draws. Each box is labelled with the class name and confidence percentage.</p>
+  <pre><code>for i in range(len(scores)):
+    if 0.5 <= scores[i] <= 1.0:
+        ymin = int(max(1, boxes[i][0] * imH))
+        xmin = int(max(1, boxes[i][1] * imW))
+        ymax = int(min(imH, boxes[i][2] * imH))
+        xmax = int(min(imW, boxes[i][3] * imW))
+
+        cv2.rectangle(frame_show, (xmin, ymin), (xmax, ymax), (10, 255, 0), 4)
+
+        label = '%s: %d%%' % (labels[int(classes[i])], int(scores[i]*100))
+        cv2.putText(frame_show, label, (xmin, label_ymin-7),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)
+
+# HUD overlay showing active model and luminance
+cv2.putText(frame_show, 'Model: Day  Lumen: {:.2f}'.format(lumen), (10, 50),
+            cv2.FONT_HERSHEY_SIMPLEX, 0.7, (10, 255, 0), 2)
+
+cv2.imshow('RaspPi Detector', frame_show)</code></pre>
+</div>
+
+<!-- Step 7 -->
+<div class="step-card" id="step7">
+  <h4>Step 7 — CSV Export on Exit</h4>
+  <div class="step-meta">
+    <span>fyp.py lines 237–243</span>
+    <span class="badge badge-active">Output</span>
+  </div>
+  <p>After the main loop exits (source exhausted or user presses <kbd>q</kbd>), the video capture is released and the <code>master_record</code> dictionary is converted to a Pandas DataFrame and exported to a CSV file at a hardcoded path on the Raspberry Pi desktop.</p>
+  <pre><code>video.release()
+cv2.destroyAllWindows()
+
+master_record_conv = pd.DataFrame.from_dict(master_record)
+master_record_conv.to_csv('/home/fyp/Desktop/Master_Record.csv')</code></pre>
+  <div class="callout callout-warn">
+    <div class="callout-label">Deployment Note</div>
+    The CSV output path <code>/home/fyp/Desktop/Master_Record.csv</code> is hardcoded for the Raspberry Pi deployment user <code>fyp</code>. This must be changed if deploying under a different username or on a non-Linux system.
+  </div>
+</div>
+
+<!-- ═══════════════════ 6. TRAINING PIPELINE ═══════════════════ -->
+<h1 id="training">6. Transfer Learning &amp; Training Pipeline</h1>
+
+<p>Both models were produced by fine-tuning the <strong>SSD MobileNet V2 FPNLite 640</strong> pretrained checkpoint from the TensorFlow Model Zoo using the TF Object Detection API. The training pipeline processed annotated frames sourced from the <strong>Berkeley DeepDrive (BDD100K)</strong> dataset.</p>
+
+<h3>Training Workflow</h3>
+
+<div class="data-flow-step">
+  <div class="data-flow-number">
+    <div class="num">1</div>
+    <div class="line"></div>
+  </div>
+  <div class="data-flow-content">
+    <div class="df-title">Dataset Acquisition <span class="df-tag df-tag-cpu">BDD100K</span></div>
+    <div class="df-desc">Berkeley DeepDrive (BDD100K) video frames covering diverse traffic scenarios under varied weather, time-of-day, and road conditions. Frames relevant to 11 target classes were extracted and prepared as JPG images.</div>
+  </div>
+</div>
+
+<div class="data-flow-step">
+  <div class="data-flow-number">
+    <div class="num">2</div>
+    <div class="line"></div>
+  </div>
+  <div class="data-flow-content">
+    <div class="df-title">Annotation with LabelImg <span class="df-tag df-tag-cpu">XML</span></div>
+    <div class="df-desc">Each image was annotated using LabelImg, producing Pascal VOC XML files with bounding boxes for each of the 11 target classes. The <code>xml_edit.py</code> utility then cleaned annotations by removing <code>traffic sign</code>, <code>traffic light</code>, and <code>none</code> classes that were outside the project scope, and normalized filename fields across the dataset.</div>
+  </div>
+</div>
+
+<div class="data-flow-step">
+  <div class="data-flow-number">
+    <div class="num">3</div>
+    <div class="line"></div>
+  </div>
+  <div class="data-flow-content">
+    <div class="df-title">TFRecord Generation <span class="df-tag df-tag-cpu">TFRecord</span></div>
+    <div class="df-desc">The <code>generate_tfrecord.py</code> script converts the XML + JPG pairs into binary TFRecord files, the native format for the TF Object Detection API training pipeline. A label map (<code>label_map.pbtxt</code>) defines the integer-to-class-name mapping used during training.</div>
+  </div>
+</div>
+
+<div class="data-flow-step">
+  <div class="data-flow-number">
+    <div class="num">4</div>
+    <div class="line"></div>
+  </div>
+  <div class="data-flow-content">
+    <div class="df-title">Transfer Learning — Two Models <span class="df-tag df-tag-day">Day</span> <span class="df-tag df-tag-night">Night</span></div>
+    <div class="df-desc">Two separate models were trained: one on day-condition frames and one on night-condition frames. Both were fine-tuned from the SSD MobileNet V2 FPNLite 640 pretrained weights. The day model converged at <code>ckpt-11</code>. Training was managed through the TF Object Detection API pipeline config (<code>pipeline.config</code>).</div>
+  </div>
+</div>
+
+<div class="data-flow-step">
+  <div class="data-flow-number">
+    <div class="num">5</div>
+    <div class="line"></div>
+  </div>
+  <div class="data-flow-content">
+    <div class="df-title">TFLite Conversion &amp; Quantization <span class="df-tag df-tag-edge">Edge</span></div>
+    <div class="df-desc">The trained SavedModel checkpoints were exported and converted to TFLite format for edge deployment. The resulting <code>.tflite</code> files are float32 (non-quantized), preserving maximum accuracy on the Raspberry Pi ARM CPU while remaining lightweight enough for real-time inference.</div>
+  </div>
+</div>
+
+<div class="data-flow-step">
+  <div class="data-flow-number">
+    <div class="num">6</div>
+  </div>
+  <div class="data-flow-content">
+    <div class="df-title">Luminance Calibration <span class="df-tag df-tag-cpu">Validation</span></div>
+    <div class="df-desc">The experimental notebook tested 1,000+ frames from the BDD100K test split to determine the luminance range boundaries. The threshold of 84 was selected as the inflection point where day and night model performance crossed over, based on measured average luminance values across "dim" condition images.</div>
+  </div>
+</div>
+
+<h3>Training Configuration Paths</h3>
+<pre><code># Day model paths (from experimental notebook)
+CUSTOM_MODEL_NAME1 = 'ssd_mobilenet_v2_fpnlite_640_day'
+paths1 = {
+    'WORKSPACE_PATH':   'Tensorflow/workspace',
+    'ANNOTATION_PATH':  'Tensorflow/workspace/annotations',
+    'IMAGE_PATH':       'Tensorflow/workspace/images',
+    'CHECKPOINT_PATH':  'Tensorflow/workspace/models/ssd_mobilenet_v2_fpnlite_640_day'
+}
+files1 = {
+    'PIPELINE_CONFIG': 'Tensorflow/workspace/models/ssd_mobilenet_v2_fpnlite_640_day/pipeline.config',
+    'LABELMAP':        'Tensorflow/workspace/annotations/label_map.pbtxt'
+}</code></pre>
+
+<!-- ═══════════════════ 7. DATA FLOW DIAGRAM ═══════════════════ -->
+<h1 id="data-flow">7. Data Flow Diagram</h1>
+
+<p>This diagram traces how a single video frame moves through the system, from raw pixel data to a recorded CSV row.</p>
+
+<div class="glass-card">
+  <div class="data-flow-step">
+    <div class="data-flow-number">
+      <div class="num">①</div>
+      <div class="line"></div>
+    </div>
+    <div class="data-flow-content">
+      <div class="df-title">Raw Video Frame <span class="df-tag df-tag-cpu">BGR uint8 [H×W×3]</span></div>
+      <div class="df-desc">OpenCV reads a frame from the video file or camera. Output is a BGR uint8 NumPy array at source resolution.</div>
+    </div>
+  </div>
+  <div class="data-flow-step">
+    <div class="data-flow-number">
+      <div class="num">②</div>
+      <div class="line"></div>
+    </div>
+    <div class="data-flow-content">
+      <div class="df-title">Dual-Format Conversion <span class="df-tag df-tag-cpu">2 arrays</span></div>
+      <div class="df-desc"><strong>Inference copy:</strong> BGR→RGB, resize to 640×640, expand dims → shape [1, 640, 640, 3]. <strong>Display copy:</strong> resize BGR to 800×470 only.</div>
+    </div>
+  </div>
+  <div class="data-flow-step">
+    <div class="data-flow-number">
+      <div class="num">③</div>
+      <div class="line"></div>
+    </div>
+    <div class="data-flow-content">
+      <div class="df-title">Luminance Score <span class="df-tag df-tag-cpu">float32 scalar</span></div>
+      <div class="df-desc">WCAG relative luminance computed on inference copy. Produces single float (e.g. 91.3). Compared to threshold 84 to select model.</div>
+    </div>
+  </div>
+  <div class="data-flow-step">
+    <div class="data-flow-number">
+      <div class="num">④</div>
+      <div class="line"></div>
+    </div>
+    <div class="data-flow-content">
+      <div class="df-title">Normalized Tensor <span class="df-tag df-tag-day">Day</span> <span class="df-tag df-tag-night">Night</span></div>
+      <div class="df-desc">Input frame cast to float32 and normalized: <code>(x − 127.5) / 127.5</code> → range approximately [−1.0, 1.0]. Set into selected interpreter's input tensor.</div>
+    </div>
+  </div>
+  <div class="data-flow-step">
+    <div class="data-flow-number">
+      <div class="num">⑤</div>
+      <div class="line"></div>
+    </div>
+    <div class="data-flow-content">
+      <div class="df-title">TFLite Inference Output <span class="df-tag df-tag-cpu">3 tensors</span></div>
+      <div class="df-desc"><code>boxes[N×4]</code> — normalized bounding boxes [ymin, xmin, ymax, xmax] per detection. <code>classes[N]</code> — integer class indices. <code>scores[N]</code> — confidence floats 0–1. N is fixed at model capacity (typically 100).</div>
+    </div>
+  </div>
+  <div class="data-flow-step">
+    <div class="data-flow-number">
+      <div class="num">⑥</div>
+      <div class="line"></div>
+    </div>
+    <div class="data-flow-content">
+      <div class="df-title">Per-Class Count Dictionary <span class="df-tag df-tag-cpu">11 keys</span></div>
+      <div class="df-desc">All scores above the confidence threshold (0.5 day / 0.3 night) are tallied by class. Result: <code>{'car': 3, 'pedestrian': 1, 'bus': 0, ...}</code>.</div>
+    </div>
+  </div>
+  <div class="data-flow-step">
+    <div class="data-flow-number">
+      <div class="num">⑦</div>
+      <div class="line"></div>
+    </div>
+    <div class="data-flow-content">
+      <div class="df-title">Master Record Row <span class="df-tag df-tag-cpu">13 columns</span></div>
+      <div class="df-desc">One row appended to <code>master_record</code> dict: <code>DateTime</code>, <code>Lumin</code>, <code>Model</code>, plus 11 class count columns. On exit → Pandas DataFrame → <code>Master_Record.csv</code>.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ 8. DETECTION CLASSES ═══════════════════ -->
+<h1 id="detection-classes">8. Detection Classes</h1>
+
+<p>The system detects 11 traffic object classes derived from the Berkeley DeepDrive (BDD100K) taxonomy. These classes cover the full spectrum of common road users and vehicles encountered in urban traffic monitoring scenarios.</p>
+
+<table>
+  <tr><th>ID</th><th>Class Name</th><th>Label File Index</th><th>Description</th></tr>
+  <tr><td>1</td><td><code>bicycle</code></td><td>0</td><td>Non-motorized two-wheeled vehicle</td></tr>
+  <tr><td>2</td><td><code>bus</code></td><td>1</td><td>Large passenger transit vehicle</td></tr>
+  <tr><td>3</td><td><code>car</code></td><td>2</td><td>Standard passenger automobile</td></tr>
+  <tr><td>4</td><td><code>motorcycle</code></td><td>3</td><td>Motorized two-wheeled vehicle</td></tr>
+  <tr><td>5</td><td><code>pedestrian</code></td><td>4</td><td>Person on foot</td></tr>
+  <tr><td>6</td><td><code>rider</code></td><td>5</td><td>Person riding a bicycle or motorcycle</td></tr>
+  <tr><td>7</td><td><code>train</code></td><td>6</td><td>Rail vehicle</td></tr>
+  <tr><td>8</td><td><code>truck</code></td><td>7</td><td>Large cargo or freight vehicle</td></tr>
+  <tr><td>9</td><td><code>other vehicle</code></td><td>8</td><td>Vehicles not fitting other categories (e.g. ATV, construction vehicle)</td></tr>
+  <tr><td>10</td><td><code>other person</code></td><td>9</td><td>Persons in non-pedestrian context (e.g. directing traffic)</td></tr>
+  <tr><td>11</td><td><code>trailer</code></td><td>10</td><td>Towed trailer unit</td></tr>
+</table>
+
+<div class="callout callout-info">
+  <div class="callout-label">Excluded Classes</div>
+  During data preparation, <code>traffic sign</code>, <code>traffic light</code>, and <code>none</code> annotations were removed by <code>xml_edit.py</code> before training, focusing the model exclusively on road users and vehicles.
+</div>
+
+<!-- ═══════════════════ 9. CONFIG REFERENCE ═══════════════════ -->
+<h1 id="config-ref">9. Configuration Reference</h1>
+
+<p>All configuration in the production script (<code>fyp.py</code>) is done via top-level constants. There is no external config file — all values must be edited directly in the source before deployment.</p>
+
+<table>
+  <tr><th>Constant</th><th>Default Value</th><th>Description</th></tr>
+  <tr><td><code>CWD</code></td><td><code>os.getcwd()</code></td><td>Working directory — all relative paths resolved from here</td></tr>
+  <tr><td><code>SOURCE</code></td><td><code>'showcase9min10f.mp4'</code></td><td>Video source path. Replace with <code>0</code> for live camera input</td></tr>
+  <tr><td><code>MODEL_DAY</code></td><td><code>'TFLite_Model/detect_day.tflite'</code></td><td>Path to day TFLite model, relative to CWD</td></tr>
+  <tr><td><code>MODEL_NIGHT</code></td><td><code>'TFLite_Model/detect_night.tflite'</code></td><td>Path to night TFLite model, relative to CWD</td></tr>
+  <tr><td><code>LABELS</code></td><td><code>'labels.txt'</code></td><td>Path to class label file, one label per line</td></tr>
+  <tr><td><code>imW</code></td><td><code>800</code></td><td>Display frame width (Raspberry Pi screen resolution)</td></tr>
+  <tr><td><code>imH</code></td><td><code>470</code></td><td>Display frame height (Raspberry Pi screen resolution)</td></tr>
+  <tr><td><code>input_mean</code></td><td><code>127.5</code></td><td>Input normalization mean (standard MobileNet)</td></tr>
+  <tr><td><code>input_std</code></td><td><code>127.5</code></td><td>Input normalization std deviation (standard MobileNet)</td></tr>
+  <tr><td><code>boxes_idx</code></td><td><code>1</code></td><td>Output tensor index for bounding boxes (TF2 model output order)</td></tr>
+  <tr><td><code>classes_idx</code></td><td><code>3</code></td><td>Output tensor index for class predictions</td></tr>
+  <tr><td><code>scores_idx</code></td><td><code>0</code></td><td>Output tensor index for confidence scores</td></tr>
+  <tr><td>Day confidence threshold</td><td><code>0.5</code></td><td>Minimum confidence for day model detections (recording and drawing)</td></tr>
+  <tr><td>Night confidence threshold</td><td><code>0.3</code></td><td>Minimum confidence for night model detections</td></tr>
+  <tr><td>Luminance threshold</td><td><code>84</code></td><td>Lumen value above which the day model is used</td></tr>
+  <tr><td>CSV output path</td><td><code>/home/fyp/Desktop/Master_Record.csv</code></td><td>Hardcoded output path for the master record CSV file</td></tr>
+</table>
+
+<div class="callout callout-warn">
+  <div class="callout-label">Network Transfer (Optional)</div>
+  The README mentions a local network file transfer feature (sending the CSV over LAN). This requires setting a network IP address in the script before use. If not configured, comment out the relevant line — the system will still function and save the CSV locally.
+</div>
+
+<!-- ═══════════════════ 10. API REFERENCE ═══════════════════ -->
+<h1 id="api-ref">10. API Reference — fyp.py</h1>
+
+<h3>Functions</h3>
+
+<div class="glass-card">
+  <h4 style="font-family:'Playfair Display',serif; color:var(--accent-dark); margin-top:0;">luminance(img)</h4>
+  <p><strong>Location:</strong> <code>fyp.py</code>, lines 64–67</p>
+  <p>Computes the WCAG 2.1 relative luminance of an image frame. Used to determine whether each frame should be processed by the Day or Night model.</p>
+  <table>
+    <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+    <tr><td><code>img</code></td><td><code>np.ndarray</code></td><td>BGR image array, shape [H, W, 3], as returned by OpenCV. Typically the 640×640 resized inference frame.</td></tr>
+  </table>
+  <table style="margin-top:12px;">
+    <tr><th>Returns</th><th>Type</th><th>Description</th></tr>
+    <tr><td>luminance score</td><td><code>float</code></td><td>Weighted average luminance value. Compares to threshold 84: ≥84 → Day, &lt;84 → Night.</td></tr>
+  </table>
+  <pre><code>def luminance(img):
+    avg_color_per_row = np.average(img, axis=0)   # average across rows → [W, 3]
+    BGR = np.average(avg_color_per_row, axis=0)   # average across cols → [3]
+    # WCAG relative luminance: R=0.2126, G=0.7152, B=0.0722
+    # Note: OpenCV uses BGR order, so BGR[2]=R, BGR[1]=G, BGR[0]=B
+    return (0.2126 * BGR[2]) + (0.7152 * BGR[1]) + (0.0722 * BGR[0])</code></pre>
+  <div class="callout callout-info">
+    <div class="callout-label">Implementation Note</div>
+    This function operates on the raw pixel mean (not linearized gamma-corrected values as in the strict WCAG standard), which is intentional. The threshold was calibrated empirically to this simplified version. The comment in the code notes that <code>img.mean()</code> was also tested as a fallback.
+  </div>
+</div>
+
+<h3>Global State</h3>
+
+<table>
+  <tr><th>Variable</th><th>Type</th><th>Scope</th><th>Description</th></tr>
+  <tr><td><code>interpreter_day</code></td><td><code>Interpreter</code></td><td>Global</td><td>TFLite interpreter instance for the day model, with tensors pre-allocated</td></tr>
+  <tr><td><code>interpreter_night</code></td><td><code>Interpreter</code></td><td>Global</td><td>TFLite interpreter instance for the night model, with tensors pre-allocated</td></tr>
+  <tr><td><code>labels</code></td><td><code>list[str]</code></td><td>Global</td><td>11-element list of class names loaded from <code>labels.txt</code></td></tr>
+  <tr><td><code>master_record</code></td><td><code>dict[str, list]</code></td><td>Global</td><td>Accumulator for all frame-level detection results. Keys: <code>DateTime, Lumin, Model, bicycle, bus, car, ...</code></td></tr>
+  <tr><td><code>video</code></td><td><code>cv2.VideoCapture</code></td><td>Global</td><td>Video source handle, opened at startup and released on exit</td></tr>
+</table>
+
+<!-- ═══════════════════ 11. UTILITY SCRIPTS ═══════════════════ -->
+<h1 id="utilities">11. Utility Scripts</h1>
+
+<h3>generate_tfrecord.py</h3>
+<p>Converts LabelImg Pascal VOC XML annotation files into TFRecord binary format for the TensorFlow Object Detection API. This script is used once during training data preparation.</p>
+
+<pre><code>python generate_tfrecord.py \
+  --xml_dir   /path/to/xml_annotations \
+  --labels_path /path/to/label_map.pbtxt \
+  --output_path /path/to/output.record \
+  --image_dir  /path/to/images \
+  --csv_path   /path/to/output.csv   # optional</code></pre>
+
+<table>
+  <tr><th>Argument</th><th>Required</th><th>Description</th></tr>
+  <tr><td><code>-x / --xml_dir</code></td><td>Yes</td><td>Directory containing LabelImg-generated .xml annotation files</td></tr>
+  <tr><td><code>-l / --labels_path</code></td><td>Yes</td><td>Path to the .pbtxt label map file</td></tr>
+  <tr><td><code>-o / --output_path</code></td><td>Yes</td><td>Output path for the generated .record TFRecord file</td></tr>
+  <tr><td><code>-i / --image_dir</code></td><td>No</td><td>Directory containing source .jpg images. Defaults to xml_dir if omitted</td></tr>
+  <tr><td><code>-c / --csv_path</code></td><td>No</td><td>If provided, also exports a .csv summary of all annotations</td></tr>
+</table>
+
+<h3>xml_edit.py</h3>
+<p>Batch utility to clean and normalize LabelImg XML annotation files before TFRecord conversion. Performs two operations on every <code>.xml</code> file in a directory:</p>
+<ul>
+  <li><strong>xmlNameUpdater</strong> — Normalizes the <code>&lt;filename&gt;</code> tag in each XML to match the actual file name with a <code>.jpg</code> extension</li>
+  <li><strong>xmlDeleteObject</strong> — Removes all <code>&lt;object&gt;</code> entries where the class name is <code>traffic sign</code>, <code>traffic light</code>, or <code>none</code></li>
+</ul>
+
+<div class="callout callout-warn">
+  <div class="callout-label">Path Configuration Required</div>
+  The <code>train_path</code> variable at the top of <code>xml_edit.py</code> is hardcoded to the developer's local filesystem. Update this path before running.
+</div>
+
+<!-- ═══════════════════ 12. OUTPUT SCHEMA ═══════════════════ -->
+<h1 id="output">12. Output &amp; Data Schema</h1>
+
+<p>The primary output of the system is <code>Master_Record.csv</code> — a tabular record of every processed video frame, capturing the timestamp, environmental condition, model used, and per-class object counts.</p>
+
+<h3>CSV Schema</h3>
+<table>
+  <tr><th>Column</th><th>Type</th><th>Example</th><th>Description</th></tr>
+  <tr><td><code>DateTime</code></td><td>string</td><td><code>25/03/2024 14:32:01</code></td><td>Timestamp of frame processing in <code>DD/MM/YYYY HH:MM:SS</code> format</td></tr>
+  <tr><td><code>Lumin</code></td><td>float</td><td><code>97.43</code></td><td>Computed relative luminance score for this frame</td></tr>
+  <tr><td><code>Model</code></td><td>string</td><td><code>Day</code></td><td>Which model was used: <code>Day</code> or <code>Night</code></td></tr>
+  <tr><td><code>bicycle</code></td><td>int</td><td><code>0</code></td><td>Count of bicycle detections above threshold in this frame</td></tr>
+  <tr><td><code>bus</code></td><td>int</td><td><code>1</code></td><td>Count of bus detections</td></tr>
+  <tr><td><code>car</code></td><td>int</td><td><code>4</code></td><td>Count of car detections</td></tr>
+  <tr><td><code>motorcycle</code></td><td>int</td><td><code>0</code></td><td>Count of motorcycle detections</td></tr>
+  <tr><td><code>pedestrian</code></td><td>int</td><td><code>2</code></td><td>Count of pedestrian detections</td></tr>
+  <tr><td><code>rider</code></td><td>int</td><td><code>0</code></td><td>Count of rider detections</td></tr>
+  <tr><td><code>train</code></td><td>int</td><td><code>0</code></td><td>Count of train detections</td></tr>
+  <tr><td><code>truck</code></td><td>int</td><td><code>1</code></td><td>Count of truck detections</td></tr>
+  <tr><td><code>other_vehicle</code></td><td>int</td><td><code>0</code></td><td>Count of other vehicle detections</td></tr>
+  <tr><td><code>other_person</code></td><td>int</td><td><code>0</code></td><td>Count of other person detections</td></tr>
+  <tr><td><code>trailer</code></td><td>int</td><td><code>0</code></td><td>Count of trailer detections</td></tr>
+</table>
+
+<p>One row is appended per frame, regardless of whether any objects were detected. This ensures a consistent time-series structure suitable for traffic volume analysis, temporal pattern detection, and statistical reporting.</p>
+
+<!-- ═══════════════════ 13. DEPENDENCIES ═══════════════════ -->
+<h1 id="dependencies">13. Dependencies</h1>
+
+<h3>Runtime Dependencies (fyp.py — Raspberry Pi)</h3>
+<table>
+  <tr><th>Package</th><th>Version / Notes</th><th>Usage</th></tr>
+  <tr><td><code>tflite-runtime</code></td><td>ARM build for Raspberry Pi</td><td>TFLite model loading and inference (<code>Interpreter</code>)</td></tr>
+  <tr><td><code>opencv-python</code> (cv2)</td><td>≥4.x</td><td>Video capture, frame resize, BGR/RGB conversion, bounding box drawing, display window</td></tr>
+  <tr><td><code>numpy</code></td><td>≥1.21</td><td>Array operations, tensor manipulation, luminance calculation</td></tr>
+  <tr><td><code>pandas</code></td><td>≥1.3</td><td>Master record accumulation and CSV export</td></tr>
+  <tr><td><code>datetime</code></td><td>stdlib</td><td>Timestamp generation per frame</td></tr>
+  <tr><td><code>os</code></td><td>stdlib</td><td>Path construction</td></tr>
+</table>
+
+<h3>Training Dependencies (Experimental Notebook)</h3>
+<table>
+  <tr><th>Package</th><th>Notes</th><th>Usage</th></tr>
+  <tr><td><code>tensorflow</code></td><td>TF2 (≥2.x)</td><td>Model training, checkpoint loading, detection inference</td></tr>
+  <tr><td><code>object_detection</code></td><td>TF Object Detection API</td><td>SSD model builder, config utilities, visualization, label map utils</td></tr>
+  <tr><td><code>opencv-python</code></td><td>≥4.x</td><td>Image loading, luminance testing</td></tr>
+  <tr><td><code>numpy</code></td><td>≥1.21</td><td>Array manipulation</td></tr>
+  <tr><td><code>matplotlib</code></td><td>≥3.x</td><td>Inline visualization in Jupyter (<code>%matplotlib inline</code>)</td></tr>
+  <tr><td><code>pillow</code></td><td>—</td><td>Image loading in TFRecord generation</td></tr>
+  <tr><td><code>pandas</code></td><td>—</td><td>Annotation CSV handling in TFRecord script</td></tr>
+</table>
+
+<h3>Training Utility Dependencies (generate_tfrecord.py)</h3>
+<table>
+  <tr><th>Package</th><th>Notes</th><th>Usage</th></tr>
+  <tr><td><code>tensorflow.compat.v1</code></td><td>TF1 compat layer</td><td>TFRecordWriter, tf.app.run()</td></tr>
+  <tr><td><code>object_detection.utils</code></td><td>TF OD API</td><td>dataset_util, label_map_util</td></tr>
+  <tr><td><code>pillow</code></td><td>—</td><td>Image reading for JPEG encoding</td></tr>
+  <tr><td><code>pandas</code></td><td>—</td><td>XML data aggregation and optional CSV export</td></tr>
+  <tr><td><code>xml.etree.ElementTree</code></td><td>stdlib</td><td>Pascal VOC XML parsing</td></tr>
+  <tr><td><code>glob</code></td><td>stdlib</td><td>XML file discovery</td></tr>
+</table>
+
+<!-- ═══════════════════ 14. DEPLOYMENT ═══════════════════ -->
+<h1 id="deployment">14. Deployment Notes</h1>
+
+<h3>Raspberry Pi Setup</h3>
+<ol>
+  <li>Install dependencies: <code>pip install tflite-runtime opencv-python numpy pandas</code></li>
+  <li>Copy the <code>RaspberryPi Build/</code> directory to the Raspberry Pi (e.g. <code>/home/fyp/fyp_project/</code>)</li>
+  <li>Extract <code>TFLite_Model.zip</code> into the same directory to produce <code>TFLite_Model/detect_day.tflite</code> and <code>TFLite_Model/detect_night.tflite</code></li>
+  <li>Update <code>SOURCE</code> in <code>fyp.py</code> to point to your video file, or change to <code>cv2.VideoCapture(0)</code> for live camera</li>
+  <li>Optionally update the CSV output path at the bottom of the script</li>
+  <li>Run: <code>python3 fyp.py</code></li>
+  <li>Press <kbd>q</kbd> to stop the session and export the CSV</li>
+</ol>
+
+<div class="callout callout-info">
+  <div class="callout-label">Display Resolution</div>
+  The script hardcodes an 800×470 display resolution optimized for the official Raspberry Pi 7" touchscreen. If using a different display, update <code>imW</code> and <code>imH</code> accordingly. The bounding box coordinate remapping uses these values, so incorrect dimensions will shift box positions.
+</div>
+
+<div class="callout callout-warn">
+  <div class="callout-label">Camera Input vs. Video File</div>
+  Live camera input (<code>cv2.VideoCapture(0)</code>) gives true real-time monitoring but requires the commented-out lines for <code>imW</code>/<code>imH</code> to be re-enabled so that actual capture dimensions are used instead of the hardcoded 800×470 values. When using a video file, the hardcoded display dimensions work correctly for the Raspberry Pi screen.
+</div>
+
+<h3>Known Limitations</h3>
+<ul>
+  <li>The luminance threshold (84) was calibrated on BDD100K test data. Performance under unusual lighting conditions (e.g. fog, tunnel lighting, infrared cameras) may require recalibration</li>
+  <li>Both models are float32 (non-quantized). Integer quantization could improve inference speed on Raspberry Pi at the cost of some accuracy</li>
+  <li>The master record dict grows unbounded in memory during a session. For very long deployments (multi-hour recordings), periodic CSV flush intervals should be considered</li>
+  <li>The <code>traffic sign</code> and <code>traffic light</code> classes were explicitly excluded from training — the system will not detect these objects even if present</li>
+</ul>
+
+<hr>
+
+<div class="footer">
+  <p><strong>Portable Traffic Data Gathering Tool</strong> — Final Year Project Technical Documentation</p>
+  <p>Harith Izani &amp; Hariz &nbsp;·&nbsp; Computer Engineering / AI Engineering</p>
+  <p style="margin-top:8px; font-size:0.85em;">🏅 Gold Medal Award &nbsp;·&nbsp; Berkeley DeepDrive Dataset &nbsp;·&nbsp; SSD MobileNet V2 FPNLite 640 &nbsp;·&nbsp; TFLite · Raspberry Pi</p>
+</div>
+
+</div>
+</body>
+</html>

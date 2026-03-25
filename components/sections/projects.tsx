@@ -25,7 +25,7 @@ const projects: Project[] = [
   {
     title: "Archival AI Pipeline",
     summary:
-      "End-to-end AI-powered pipeline for computer vision, text extraction, NLP, data enrichment, and metadata generation. Built for large-scale archival and enterprise data workflows, including processing 100k high-fidelity images in 5 hours.",
+      "Processed ~100k archival images in ~5 hours using an orchestrated AI pipeline combining GPU-based inference, multi-core CPU processing, and config-driven workflow automation.",
     type: "Live App",
     action: "View Details",
     link: "/projects/archival-ai-pipeline",
@@ -45,7 +45,7 @@ const projects: Project[] = [
   {
     title: "Portable Traffic Data Gathering Tool",
     summary:
-      "Gold Medal Award final year project using transfer learning with MobileNet V2 640 for near real-time traffic data gathering, including cars, pedestrians, weather condition, and brightness monitoring.",
+      "Built a portable computer vision system for near real-time traffic monitoring on edge hardware, detecting vehicles, pedestrians, and environmental conditions using transfer learning.",
     type: "Case Study",
     action: "View Details",
     link: "/projects/portable-traffic-data-gathering-tool",
@@ -62,7 +62,7 @@ const projects: Project[] = [
   {
     title: "Human Stress Analysis Between Normal and ADHD Patients by Using Neural Network Based on EEG Signals",
     summary:
-      "University research using EEG signals and neural networks to study stress and control response between normal and ADHD patients through controlled stimuli and patient profiling.",
+      "Developed neural network models to classify stress and cognitive response patterns from EEG signals, distinguishing between ADHD and normal patient groups.",
     type: "Case Study",
     action: "View Details",
     link: "/projects/human-stress-analysis",
@@ -79,7 +79,7 @@ const projects: Project[] = [
   {
     title: "Analysis of Attention-Span on Prolonged Short-Form Online Content Consumption Using Neural Network Based on EEG Signals",
     summary:
-      "University research using EEG signals and neural networks to analyze attention-span response under prolonged short-form content consumption with controlled stimuli.",
+      "Modeled attention-span degradation from EEG signals under prolonged short-form content exposure using neural networks and controlled stimuli.",
     type: "Case Study",
     action: "View Details",
     link: "/projects/attention-span-analysis",
@@ -198,7 +198,8 @@ export default function ProjectsSection() {
                           ? "warm"
                           : "default"
                       }
-                      className="group relative h-full overflow-hidden border border-white/32 p-8 transition duration-300 hover:!bg-[#D2E0D3] hover:!backdrop-blur-none hover:!bg-opacity-100 hover:border-[#BFDDBF] hover:shadow-[0_34px_90px_rgba(120,88,56,0.18),0_0_0_1px_rgba(210,224,211,0.9),0_0_100px_rgba(210,224,211,0.8)] focus-within:border-[#D2E0D3]"
+                      interactive
+                      className="group relative h-full p-8 hover:bg-[rgba(210,224,211,0.34)] focus-within:bg-[rgba(210,224,211,0.34)]"
                     >
                       <div className="absolute inset-x-0 top-0 h-px bg-white/40 transition duration-300 group-hover:bg-white/70" />
 

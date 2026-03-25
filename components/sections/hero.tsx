@@ -21,8 +21,8 @@ export default function HeroSection() {
                 Harith Izani
               </p>
 
-              <h1 className="max-w-5xl text-4xl font-semibold leading-[0.95] tracking-tight text-[#2F2A26] md:text-7xl">
-                Welcome to my Portfolio.
+              <h1 className="max-w-5xl text-4xl font-semibold leading-[0.95] tracking-tight text-[#2F2A26] md:text-5xl">
+                AI Engineer building production computer vision, NLP, and large-scale data systems.
               </h1>
 
               <p className="mt-6 max-w-3xl text-base leading-8 text-[#6B625A] md:text-lg">
