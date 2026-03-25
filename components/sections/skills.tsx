@@ -40,7 +40,7 @@ export default function SkillsSection() {
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {skillGroups.map((group, index) => (
-            <FadeUp key={group.title} delay={index * 0.08}>
+            <FadeUp key={group.title} delay={index * 0.08} className={index === 4 ? "xl:col-start-3" : ""}>
               <GlassCard
                 variant={index % 3 === 0 ? "highlight" : index % 3 === 1 ? "warm" : "default"}
                 className="h-full p-8"

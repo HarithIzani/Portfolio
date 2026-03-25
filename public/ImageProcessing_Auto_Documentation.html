@@ -1,0 +1,1644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ImageProcessing Auto v1.0 — Complete Technical Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Source+Sans+3:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f0e8;
+    --bg-warm: #efe9dd;
+    --bg-card: rgba(255, 252, 245, 0.65);
+    --bg-card-solid: #fffcf5;
+    --fg: #2c2418;
+    --fg-muted: #6b5d4d;
+    --fg-light: #9a8b78;
+    --accent: #3d6b5e;
+    --accent-light: #5a9a87;
+    --accent-dark: #2a4a3f;
+    --accent-warm: #c4956a;
+    --accent-warm-light: #dbb896;
+    --gold: #b8923e;
+    --gold-light: #d4b06a;
+    --border: rgba(107, 93, 77, 0.15);
+    --border-strong: rgba(107, 93, 77, 0.3);
+    --glass: rgba(255, 252, 245, 0.55);
+    --glass-border: rgba(255, 255, 255, 0.35);
+    --code-bg: #2c2418;
+    --code-fg: #e8dcc8;
+    --red: #a83232;
+    --red-bg: rgba(168, 50, 50, 0.08);
+    --orange: #b07328;
+    --orange-bg: rgba(176, 115, 40, 0.08);
+    --blue-bg: rgba(61, 107, 94, 0.08);
+    --green-bg: rgba(90, 154, 135, 0.08);
+    --gpu-purple: #7a5195;
+    --cpu-blue: #3d6b5e;
+    --shadow-sm: 0 1px 3px rgba(44, 36, 24, 0.06);
+    --shadow-md: 0 4px 16px rgba(44, 36, 24, 0.08);
+    --shadow-lg: 0 8px 32px rgba(44, 36, 24, 0.1);
+    --radius: 12px;
+    --radius-lg: 20px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Source Sans 3', system-ui, sans-serif;
+    line-height: 1.75;
+    color: var(--fg);
+    background: var(--bg);
+    background-image:
+      radial-gradient(ellipse at 20% 0%, rgba(212, 176, 106, 0.12) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 100%, rgba(61, 107, 94, 0.08) 0%, transparent 50%);
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 30px 40px 80px;
+  }
+
+  @media print {
+    body { background: #fff; }
+    .container { max-width: 100%; padding: 10px 20px; font-size: 11px; line-height: 1.5; }
+    .no-print { display: none !important; }
+    h1, h2, h3 { page-break-after: avoid; }
+    pre, table, .step-card { page-break-inside: avoid; }
+    .glass-card { background: #fff; border: 1px solid #ddd; backdrop-filter: none; }
+  }
+
+  @media (max-width: 800px) { .container { padding: 15px; } }
+
+  /* ─── Glass Card ─── */
+  .glass-card {
+    background: var(--glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 28px 32px;
+    margin: 20px 0;
+  }
+
+  /* ─── Typography ─── */
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2em;
+    font-weight: 700;
+    color: var(--accent-dark);
+    margin: 50px 0 8px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--border-strong);
+    letter-spacing: -0.02em;
+  }
+  h1:first-of-type { margin-top: 30px; }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5em;
+    font-weight: 600;
+    color: var(--fg);
+    margin: 35px 0 12px;
+  }
+
+  h3 {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 1.15em;
+    font-weight: 600;
+    color: var(--accent-dark);
+    margin: 25px 0 8px;
+  }
+
+  h4 {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 1.02em;
+    font-weight: 600;
+    color: var(--fg-muted);
+    margin: 16px 0 6px;
+  }
+
+  p { margin: 8px 0; color: var(--fg); }
+  a { color: var(--accent); text-decoration: none; font-weight: 500; }
+  a:hover { text-decoration: underline; color: var(--accent-light); }
+  ul, ol { margin: 8px 0 8px 24px; }
+  li { margin: 4px 0; color: var(--fg); }
+  hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 40px 0;
+  }
+  strong { color: var(--fg); font-weight: 600; }
+
+  /* ─── Code ─── */
+  code {
+    background: rgba(44, 36, 24, 0.06);
+    padding: 2px 7px;
+    border-radius: 5px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.88em;
+    color: var(--accent-dark);
+  }
+
+  pre {
+    background: var(--code-bg);
+    color: var(--code-fg);
+    padding: 18px 22px;
+    border-radius: var(--radius);
+    overflow-x: auto;
+    font-size: 0.85em;
+    line-height: 1.6;
+    margin: 14px 0;
+    font-family: 'JetBrains Mono', monospace;
+    box-shadow: var(--shadow-sm);
+  }
+  pre code { background: none; padding: 0; color: inherit; font-size: 1em; }
+
+  /* ─── Tables ─── */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 14px 0;
+    font-size: 0.92em;
+    background: var(--bg-card-solid);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+  th, td {
+    border: 1px solid var(--border);
+    padding: 10px 14px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th {
+    background: rgba(61, 107, 94, 0.08);
+    font-weight: 600;
+    color: var(--accent-dark);
+    font-size: 0.93em;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  tr:nth-child(even) td { background: rgba(245, 240, 232, 0.5); }
+  tr:hover td { background: rgba(61, 107, 94, 0.04); }
+
+  /* ─── Callouts ─── */
+  .callout {
+    padding: 16px 20px;
+    border-radius: var(--radius);
+    margin: 14px 0;
+    border-left: 4px solid;
+    font-size: 0.95em;
+  }
+  .callout-info {
+    background: var(--blue-bg);
+    border-color: var(--accent);
+  }
+  .callout-warn {
+    background: var(--orange-bg);
+    border-color: var(--orange);
+  }
+  .callout-error {
+    background: var(--red-bg);
+    border-color: var(--red);
+  }
+  .callout-label {
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .callout-info .callout-label { color: var(--accent-dark); }
+  .callout-warn .callout-label { color: var(--orange); }
+  .callout-error .callout-label { color: var(--red); }
+
+  /* ─── Step Cards ─── */
+  .step-card {
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: 24px 28px;
+    margin: 20px 0;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+  }
+  .step-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-warm));
+  }
+  .step-card h4:first-child {
+    color: var(--accent-dark);
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2em;
+    font-weight: 700;
+    margin-top: 4px;
+  }
+  .step-meta {
+    font-size: 0.85em;
+    color: var(--fg-muted);
+    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+  .step-meta span { margin-right: 4px; }
+
+  /* ─── Badges ─── */
+  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 0.75em;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #fff;
+  }
+  .badge-active { background: var(--accent); }
+  .badge-legacy { background: var(--orange); }
+  .badge-unused { background: var(--fg-light); }
+  .badge-gpu { background: var(--gpu-purple); }
+  .badge-cpu { background: var(--cpu-blue); }
+
+  /* ─── TOC ─── */
+  .toc {
+    columns: 2;
+    column-gap: 40px;
+  }
+  .toc ol {
+    margin-left: 18px;
+    break-inside: avoid;
+  }
+  .toc > ol > li {
+    margin: 6px 0;
+    break-inside: avoid;
+  }
+  .toc a {
+    font-weight: 500;
+    color: var(--fg);
+    transition: color 0.2s;
+  }
+  .toc a:hover { color: var(--accent); }
+  @media (max-width: 700px) {
+    .toc { columns: 1; }
+  }
+
+  /* ─── Cover ─── */
+  .cover {
+    text-align: center;
+    padding: 70px 20px 50px;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .cover h1 {
+    border: none;
+    font-size: 2.8em;
+    margin: 0;
+    color: var(--fg);
+    letter-spacing: -0.03em;
+  }
+  .cover .subtitle {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 1.2em;
+    color: var(--fg-muted);
+    margin: 10px 0 5px;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .cover .version {
+    font-size: 0.95em;
+    color: var(--fg-light);
+    font-weight: 400;
+  }
+  .cover .date {
+    font-size: 0.9em;
+    color: var(--fg-light);
+    margin-top: 16px;
+  }
+  .cover .divider {
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--gold));
+    margin: 20px auto;
+    border-radius: 1px;
+  }
+
+  /* ─── Print Button ─── */
+  .print-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    background: var(--accent-dark);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    padding: 10px 22px;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: 600;
+    font-family: 'Source Sans 3', sans-serif;
+    box-shadow: var(--shadow-md);
+    transition: all 0.2s;
+  }
+  .print-btn:hover {
+    background: var(--accent);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* ─── SVG Diagram Styles ─── */
+  .diagram-container {
+    margin: 24px 0;
+    overflow-x: auto;
+    padding: 10px 0;
+  }
+  .diagram-container svg {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* ─── Data Flow ─── */
+  .data-flow-step {
+    display: flex;
+    align-items: stretch;
+    margin: 0;
+    position: relative;
+  }
+  .data-flow-number {
+    width: 52px;
+    min-width: 52px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+  .data-flow-number .num {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.85em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 2px 8px rgba(61, 107, 94, 0.3);
+  }
+  .data-flow-number .line {
+    flex: 1;
+    width: 2px;
+    background: var(--border-strong);
+  }
+  .data-flow-content {
+    flex: 1;
+    padding: 0 0 20px 18px;
+  }
+  .data-flow-content .df-title {
+    font-weight: 700;
+    color: var(--accent-dark);
+    font-size: 0.95em;
+    margin-bottom: 2px;
+  }
+  .data-flow-content .df-desc {
+    font-size: 0.88em;
+    color: var(--fg-muted);
+    line-height: 1.6;
+  }
+  .data-flow-content .df-tag {
+    display: inline-block;
+    font-size: 0.75em;
+    font-weight: 600;
+    padding: 1px 8px;
+    border-radius: 10px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .df-tag-gpu { background: rgba(122, 81, 149, 0.15); color: var(--gpu-purple); }
+  .df-tag-cpu { background: rgba(61, 107, 94, 0.15); color: var(--accent-dark); }
+
+  /* ─── Footer ─── */
+  .footer {
+    text-align: center;
+    color: var(--fg-light);
+    margin-top: 50px;
+    padding: 30px 20px;
+    font-size: 0.9em;
+    border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">Print / Save PDF</button>
+
+<div class="container">
+
+<!-- ═══════════════════ COVER ═══════════════════ -->
+<div class="cover">
+  <h1>ImageProcessing Auto</h1>
+  <div class="divider"></div>
+  <div class="subtitle">Complete Technical Documentation</div>
+  <div class="version">Version 1.0.0 &nbsp;·&nbsp; Python 3.11+ &nbsp;·&nbsp; Triton + ONNX + OpenCV</div>
+  <div class="date">Generated: March 25, 2026</div>
+</div>
+
+<!-- ═══════════════════ TABLE OF CONTENTS ═══════════════════ -->
+<div class="glass-card">
+  <h3 style="margin-top:0; font-family:'Playfair Display',serif; font-size:1.3em; color:var(--accent-dark);">Table of Contents</h3>
+  <div class="toc">
+    <ol>
+      <li><a href="#overview">Project Overview</a></li>
+      <li><a href="#architecture">Architecture & Flowchart</a></li>
+      <li><a href="#directory">Directory Structure & File Inventory</a></li>
+      <li><a href="#entry">Entry Points</a></li>
+      <li><a href="#config">Configuration System</a></li>
+      <li><a href="#core">Core Modules</a></li>
+      <li><a href="#pipeline">Pipeline Steps (Detailed)</a>
+        <ol type="a">
+          <li><a href="#step01">Step 01 — Ingestion</a></li>
+          <li><a href="#step02">Step 02 — Generate Data</a></li>
+          <li><a href="#step03">Step 03 — Orientation Predict</a></li>
+          <li><a href="#step04">Step 04 — Orientation Rotate</a></li>
+          <li><a href="#step05">Step 05 — Deskew</a></li>
+          <li><a href="#step06">Step 06 — Crop</a></li>
+          <li><a href="#step07">Step 07 — Separator Detect</a></li>
+          <li><a href="#step08">Step 08 — Batch Separation</a></li>
+        </ol>
+      </li>
+      <li><a href="#workers">Worker Modules</a></li>
+      <li><a href="#triton">Triton Integration</a></li>
+      <li><a href="#models">ONNX Models</a></li>
+      <li><a href="#ui">UI Layer</a></li>
+      <li><a href="#tracking">Tracking & State System</a></li>
+      <li><a href="#data-flow">Data Flow Diagram</a></li>
+      <li><a href="#api-ref">Full API Reference</a></li>
+      <li><a href="#config-ref">Configuration Reference</a></li>
+      <li><a href="#dependencies">Dependencies</a></li>
+    </ol>
+  </div>
+</div>
+
+<!-- ═══════════════════ 1. OVERVIEW ═══════════════════ -->
+<h1 id="overview">1. Project Overview</h1>
+
+<p><strong>ImageProcessing Auto</strong> is a modular, automated document image processing pipeline built for high-volume camera-captured document digitization. It processes raw JPG images through up to 8 sequential steps — from ingestion and metadata extraction through AI-powered orientation correction, deskewing, cropping, separator detection, and batch organization.</p>
+
+<h3>Key Capabilities</h3>
+<ul>
+  <li><strong>GPU-Accelerated AI Inference</strong> — Orientation detection via NVIDIA Triton Inference Server with ONNX models</li>
+  <li><strong>Multi-Core CPU Processing</strong> — Parallel deskewing, cropping, and separator detection using all available CPU cores</li>
+  <li><strong>Tkinter GUI</strong> — Simple Start/Stop interface with real-time color-coded console output</li>
+  <li><strong>Headless CLI Mode</strong> — Run the full pipeline without UI via <code>run_orchestrator.py</code></li>
+  <li><strong>Per-Image Tracking</strong> — Every image tracked through all stages via JSON files</li>
+  <li><strong>Configurable Pipeline</strong> — Enable/disable individual steps, tune Triton parameters, set folder paths</li>
+  <li><strong>GPU Auto-Tuning</strong> — Detects GPU memory and automatically optimizes batch sizes and Triton instances</li>
+</ul>
+
+<h3>Project Metrics</h3>
+<table>
+  <tr><th>Metric</th><th>Value</th></tr>
+  <tr><td>Total Python Files</td><td>34</td></tr>
+  <tr><td>Total Lines of Code</td><td>~8,430</td></tr>
+  <tr><td>Active Pipeline Steps</td><td>8</td></tr>
+  <tr><td>ONNX Models</td><td>3 (1 actively used)</td></tr>
+  <tr><td>Python Version</td><td>≥3.11, &lt;3.14</td></tr>
+  <tr><td>Conda Environment</td><td><code>camera-capture</code></td></tr>
+</table>
+
+<!-- ═══════════════════ 2. ARCHITECTURE ═══════════════════ -->
+<h1 id="architecture">2. Architecture & Flowchart</h1>
+
+<p>The system follows a layered architecture: <strong>Entry Points → Core Layer → Orchestrator → Pipeline Steps</strong>, with Triton Inference Server as an external GPU service and a Tkinter GUI for operator control.</p>
+
+<div class="diagram-container">
+<svg viewBox="0 0 960 920" xmlns="http://www.w3.org/2000/svg" font-family="'Source Sans 3', system-ui, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="10" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,3.5 L0,7 z" fill="#6b5d4d"/>
+    </marker>
+    <marker id="arrow-accent" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="10" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,3.5 L0,7 z" fill="#3d6b5e"/>
+    </marker>
+    <filter id="shadow" x="-4%" y="-4%" width="108%" height="108%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="rgba(44,36,24,0.1)"/>
+    </filter>
+  </defs>
+
+  <!-- Entry Points Group -->
+  <rect x="30" y="20" width="570" height="150" rx="16" fill="rgba(61,107,94,0.06)" stroke="rgba(61,107,94,0.25)" stroke-width="1.5"/>
+  <text x="50" y="48" font-size="13" font-weight="600" fill="#3d6b5e" letter-spacing="0.08em" text-transform="uppercase">ENTRY POINTS</text>
+
+  <rect x="50" y="62" width="160" height="42" rx="8" fill="#fffcf5" stroke="rgba(61,107,94,0.3)" stroke-width="1.2" filter="url(#shadow)"/>
+  <text x="130" y="88" text-anchor="middle" font-size="13" font-weight="600" fill="#2a4a3f">START_APP.bat</text>
+
+  <rect x="50" y="118" width="190" height="42" rx="8" fill="#fffcf5" stroke="rgba(61,107,94,0.3)" stroke-width="1.2" filter="url(#shadow)"/>
+  <text x="145" y="144" text-anchor="middle" font-size="13" font-weight="600" fill="#2a4a3f">run_app.py — GUI</text>
+
+  <rect x="380" y="118" width="200" height="42" rx="8" fill="#fffcf5" stroke="rgba(61,107,94,0.3)" stroke-width="1.2" filter="url(#shadow)"/>
+  <text x="480" y="144" text-anchor="middle" font-size="13" font-weight="600" fill="#2a4a3f">run_orchestrator.py — CLI</text>
+
+  <!-- Arrow: BAT → run_app -->
+  <line x1="130" y1="104" x2="130" y2="118" stroke="#6b5d4d" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- UI Layer Group -->
+  <rect x="70" y="200" width="230" height="60" rx="12" fill="rgba(122,81,149,0.06)" stroke="rgba(122,81,149,0.25)" stroke-width="1.5"/>
+  <text x="90" y="221" font-size="11" font-weight="600" fill="#7a5195" letter-spacing="0.08em">UI LAYER</text>
+  <text x="185" y="244" text-anchor="middle" font-size="13" font-weight="600" fill="#5a3d7a">MainWindow — Tkinter</text>
+
+  <!-- Arrow: run_app → UI -->
+  <line x1="145" y1="160" x2="175" y2="200" stroke="#6b5d4d" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Core Layer Group -->
+  <rect x="30" y="310" width="570" height="150" rx="16" fill="rgba(196,149,106,0.08)" stroke="rgba(196,149,106,0.3)" stroke-width="1.5"/>
+  <text x="50" y="338" font-size="13" font-weight="600" fill="#b07328" letter-spacing="0.08em">CORE LAYER</text>
+
+  <rect x="50" y="352" width="160" height="42" rx="8" fill="#fffcf5" stroke="rgba(196,149,106,0.35)" stroke-width="1.2" filter="url(#shadow)"/>
+  <text x="130" y="378" text-anchor="middle" font-size="13" font-weight="600" fill="#8a5a1e">ConfigManager</text>
+
+  <rect x="240" y="352" width="150" height="42" rx="8" fill="#fffcf5" stroke="rgba(196,149,106,0.35)" stroke-width="1.2" filter="url(#shadow)"/>
+  <text x="315" y="378" text-anchor="middle" font-size="13" font-weight="600" fill="#8a5a1e">auto_tune.py</text>
+
+  <rect x="50" y="408" width="170" height="38" rx="8" fill="#fffcf5" stroke="rgba(196,149,106,0.25)" stroke-width="1"/>
+  <text x="135" y="432" text-anchor="middle" font-size="12" fill="#8a5a1e">startup_report.py</text>
+
+  <rect x="250" y="408" width="210" height="38" rx="8" fill="#fffcf5" stroke="rgba(196,149,106,0.25)" stroke-width="1"/>
+  <text x="355" y="432" text-anchor="middle" font-size="12" fill="#8a5a1e">triton_config_generator.py</text>
+
+  <!-- Arrows: UI → Core connections -->
+  <path d="M185,260 L185,290 L130,290 L130,352" fill="none" stroke="#6b5d4d" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="160" y="283" font-size="10" fill="#6b5d4d" font-weight="500">START</text>
+
+  <!-- Arrow: ConfigManager → startup_report -->
+  <line x1="130" y1="394" x2="130" y2="408" stroke="#6b5d4d" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- Arrow: auto_tune → triton_config_generator -->
+  <line x1="315" y1="394" x2="340" y2="408" stroke="#6b5d4d" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- Arrow: run_orchestrator → ConfigManager -->
+  <path d="M480,160 L480,290 L200,290 L200,352" fill="none" stroke="#6b5d4d" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Orchestrator Group -->
+  <rect x="640" y="310" width="280" height="75" rx="16" fill="rgba(61,107,94,0.08)" stroke="rgba(61,107,94,0.3)" stroke-width="1.5"/>
+  <text x="660" y="338" font-size="13" font-weight="600" fill="#3d6b5e" letter-spacing="0.08em">ORCHESTRATOR</text>
+  <text x="780" y="362" text-anchor="middle" font-size="13" font-weight="600" fill="#2a4a3f">PipelineOrchestrator</text>
+
+  <!-- Arrow: run_orchestrator → Orchestrator -->
+  <path d="M580,139 L620,139 L620,340 L640,340" fill="none" stroke="#6b5d4d" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Arrow: auto_tune → Orchestrator -->
+  <path d="M390,373 L620,373 L640,360" fill="none" stroke="#6b5d4d" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- Pipeline Steps -->
+  <rect x="640" y="420" width="280" height="480" rx="16" fill="rgba(90,154,135,0.05)" stroke="rgba(61,107,94,0.2)" stroke-width="1"/>
+  <text x="660" y="448" font-size="13" font-weight="600" fill="#3d6b5e" letter-spacing="0.08em">PIPELINE</text>
+
+  <!-- Arrow: Orchestrator → Pipeline -->
+  <line x1="780" y1="385" x2="780" y2="420" stroke="#3d6b5e" stroke-width="1.5" marker-end="url(#arrow-accent)"/>
+
+  <!-- Step boxes -->
+  <rect x="665" y="460" width="230" height="36" rx="7" fill="#fffcf5" stroke="rgba(61,107,94,0.3)" stroke-width="1.2"/>
+  <text x="780" y="483" text-anchor="middle" font-size="12" font-weight="600" fill="#2a4a3f">01 Ingestion</text>
+
+  <rect x="665" y="506" width="230" height="36" rx="7" fill="#fffcf5" stroke="rgba(61,107,94,0.3)" stroke-width="1.2"/>
+  <text x="780" y="529" text-anchor="middle" font-size="12" font-weight="600" fill="#2a4a3f">02 Generate Data</text>
+
+  <rect x="665" y="552" width="230" height="36" rx="7" fill="rgba(122,81,149,0.08)" stroke="rgba(122,81,149,0.3)" stroke-width="1.2"/>
+  <text x="780" y="575" text-anchor="middle" font-size="12" font-weight="600" fill="#5a3d7a">03 Orientation Predict</text>
+  <text x="895" y="555" font-size="9" font-weight="600" fill="#7a5195">GPU</text>
+
+  <rect x="665" y="598" width="230" height="36" rx="7" fill="#fffcf5" stroke="rgba(61,107,94,0.3)" stroke-width="1.2"/>
+  <text x="780" y="621" text-anchor="middle" font-size="12" font-weight="600" fill="#2a4a3f">04 Orientation Rotate</text>
+
+  <rect x="665" y="644" width="230" height="36" rx="7" fill="#fffcf5" stroke="rgba(61,107,94,0.3)" stroke-width="1.2"/>
+  <text x="780" y="667" text-anchor="middle" font-size="12" font-weight="600" fill="#2a4a3f">05 Deskew</text>
+
+  <rect x="665" y="690" width="230" height="36" rx="7" fill="#fffcf5" stroke="rgba(61,107,94,0.3)" stroke-width="1.2"/>
+  <text x="780" y="713" text-anchor="middle" font-size="12" font-weight="600" fill="#2a4a3f">06 Crop</text>
+
+  <rect x="665" y="736" width="230" height="36" rx="7" fill="#fffcf5" stroke="rgba(61,107,94,0.3)" stroke-width="1.2"/>
+  <text x="780" y="759" text-anchor="middle" font-size="12" font-weight="600" fill="#2a4a3f">07 Separator Detect</text>
+
+  <rect x="665" y="782" width="230" height="36" rx="7" fill="#fffcf5" stroke="rgba(61,107,94,0.3)" stroke-width="1.2"/>
+  <text x="780" y="805" text-anchor="middle" font-size="12" font-weight="600" fill="#2a4a3f">08 Batch Separation</text>
+
+  <!-- Vertical arrows between steps -->
+  <line x1="780" y1="496" x2="780" y2="506" stroke="#3d6b5e" stroke-width="1.2" marker-end="url(#arrow-accent)"/>
+  <line x1="780" y1="542" x2="780" y2="552" stroke="#3d6b5e" stroke-width="1.2" marker-end="url(#arrow-accent)"/>
+  <line x1="780" y1="588" x2="780" y2="598" stroke="#3d6b5e" stroke-width="1.2" marker-end="url(#arrow-accent)"/>
+  <line x1="780" y1="634" x2="780" y2="644" stroke="#3d6b5e" stroke-width="1.2" marker-end="url(#arrow-accent)"/>
+  <line x1="780" y1="680" x2="780" y2="690" stroke="#3d6b5e" stroke-width="1.2" marker-end="url(#arrow-accent)"/>
+  <line x1="780" y1="726" x2="780" y2="736" stroke="#3d6b5e" stroke-width="1.2" marker-end="url(#arrow-accent)"/>
+  <line x1="780" y1="772" x2="780" y2="782" stroke="#3d6b5e" stroke-width="1.2" marker-end="url(#arrow-accent)"/>
+
+  <!-- Triton Server (external) -->
+  <rect x="340" y="540" width="240" height="60" rx="12" fill="rgba(122,81,149,0.08)" stroke="rgba(122,81,149,0.3)" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="460" y="565" text-anchor="middle" font-size="13" font-weight="700" fill="#5a3d7a">Triton Inference Server</text>
+  <text x="460" y="583" text-anchor="middle" font-size="11" fill="#7a5195">doc_ori model — gRPC</text>
+
+  <!-- Arrow: Step 03 → Triton (gRPC) -->
+  <path d="M665,570 L580,570" fill="none" stroke="#7a5195" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrow)"/>
+  <text x="622" y="562" font-size="10" fill="#7a5195" font-weight="500">gRPC</text>
+
+  <!-- Output -->
+  <rect x="665" y="840" width="230" height="50" rx="10" fill="rgba(184,146,62,0.1)" stroke="rgba(184,146,62,0.35)" stroke-width="1.5"/>
+  <text x="780" y="860" text-anchor="middle" font-size="12" font-weight="700" fill="#8a6a1e">Batch Folders</text>
+  <text x="780" y="878" text-anchor="middle" font-size="11" fill="#b8923e">+ Separated Separators</text>
+
+  <!-- Arrow: Step 08 → Output -->
+  <line x1="780" y1="818" x2="780" y2="840" stroke="#b8923e" stroke-width="1.5" marker-end="url(#arrow)"/>
+</svg>
+</div>
+
+<!-- ═══════════════════ 3. DIRECTORY STRUCTURE ═══════════════════ -->
+<h1 id="directory">3. Directory Structure & File Inventory</h1>
+
+<pre><code>ImageProcessing_Auto/
+├── .git/                          # Git repository
+├── .gitignore                     # Python, IDE, app ignores
+├── config/
+│   └── config.json                # Main configuration (user-specific paths)
+├── core/
+│   ├── __init__.py                (1 line)
+│   ├── auto_tune.py               (149 lines)  GPU memory detect → tier selection
+│   ├── config_manager.py          (409 lines)  JSON config load/save/merge
+│   ├── startup_report.py          (61 lines)   Terminal hardware summary
+│   └── triton_config_generator.py (227 lines)  Rewrite model config.pbtxt files
+├── docs/                          # Empty (documentation placeholder)
+├── logs/                          # Runtime log output
+├── models/
+│   ├── __init__.py                (1 line)
+│   ├── README.md                  Model setup instructions
+│   ├── doc_ori/                   Orientation classifier (4-class)
+│   │   ├── 1/model.onnx          ONNX model file
+│   │   ├── config.pbtxt           Triton serving config
+│   │   ├── preprocess.json        Preprocessing spec
+│   │   └── README.md              Setup instructions
+│   ├── document_classifier/       Normal/Dark classifier (2-class)
+│   │   ├── 1/model.onnx
+│   │   └── config.pbtxt
+│   └── separator_detector/        Separator/Normal classifier (2-class)
+│       ├── 1/model.onnx
+│       └── config.pbtxt
+├── pipelines/
+│   ├── __init__.py                (1 line)
+│   ├── 01_ingestion.py            (368 lines)  ← ACTIVE Step 01
+│   ├── 02_generate_data.py        (614 lines)  ← ACTIVE Step 02
+│   ├── 03_orientation_predict.py  (448 lines)  ← ACTIVE Step 03
+│   ├── 04_orientation_rotate.py   (296 lines)  ← ACTIVE Step 04
+│   ├── 05_deskew.py               (332 lines)  ← ACTIVE Step 05
+│   ├── 06_crop.py                 (215 lines)  ← ACTIVE Step 06
+│   ├── 07_separator_detect.py     (423 lines)  ← ACTIVE Step 07
+│   ├── 08_batch_separation.py     (525 lines)  ← ACTIVE Step 08
+│   ├── crop_worker.py             (177 lines)  Worker for Step 06
+│   ├── deskew_worker.py           (144 lines)  Worker for Step 05
+│   ├── separator_detect_worker.py (70 lines)   Worker for Step 07
+│   ├── 03_orientation.py          (404 lines)  ← LEGACY
+│   ├── 04_deskew.py               (332 lines)  ← LEGACY
+│   ├── 05_crop.py                 (215 lines)  ← LEGACY
+│   ├── 06_separator_detect.py     (428 lines)  ← LEGACY
+│   └── 07_batch_separation.py     (525 lines)  ← LEGACY
+├── state/                         # Runtime state/manifests
+├── triton/
+│   ├── __init__.py                (5 lines)
+│   ├── triton_api.py              (251 lines)  Sync gRPC client wrapper
+│   ├── triton_classifier_client.py(387 lines)  Async gRPC client (unused)
+│   ├── serve_models.py            (234 lines)  Docker Triton launcher
+│   └── test_triton_startup.py     (263 lines)  Diagnostic tool
+├── ui/
+│   ├── __init__.py                (1 line)
+│   └── main_window.py             (887 lines)  Tkinter GUI
+├── orchestrator.py                (252 lines)  Pipeline orchestrator
+├── run_app.py                     (21 lines)   GUI entry point
+├── run_orchestrator.py            (23 lines)   CLI entry point
+├── verify_setup.py                (100 lines)  Setup verification
+├── requirements.txt               Python dependencies
+├── START_APP.bat                  Windows launcher
+├── README.md                      Project README
+└── triton_config_document_classifier.pbtxt  Reference Triton config
+</code></pre>
+
+<!-- ═══════════════════ 4. ENTRY POINTS ═══════════════════ -->
+<h1 id="entry">4. Entry Points</h1>
+
+<h3>4.1 <code>START_APP.bat</code> — Windows Launcher</h3>
+<p>Batch file that launches the GUI app using the hardcoded conda environment <code>camera-capture</code>.</p>
+<pre><code>SET CONDA_ENV_PATH=C:\Users\Work\anaconda3\envs\camera-capture
+SET PYTHON_EXE=%CONDA_ENV_PATH%\python.exe
+%PYTHON_EXE% run_app.py</code></pre>
+<p>Verifies the Python executable exists before launching. Returns error code on failure.</p>
+
+<h3>4.2 <code>run_app.py</code> — GUI Entry</h3>
+<p>Main entry point (21 lines). Initializes <code>ConfigManager</code>, prints the startup report, then creates and runs the Tkinter <code>MainWindow</code>.</p>
+
+<h3>4.3 <code>run_orchestrator.py</code> — CLI / Headless Entry</h3>
+<p>Runs the full pipeline without UI (23 lines). Useful for automated/scripted runs. Creates a <code>PipelineOrchestrator</code> and calls <code>.run()</code>, printing SUCCESS or FAILED at the end.</p>
+
+<h3>4.4 <code>verify_setup.py</code> — Pre-flight Checks</h3>
+<p>Diagnostic script (100 lines) that verifies:</p>
+<ol>
+  <li>ONNX models exist in <code>models/</code></li>
+  <li>Docker is installed and running</li>
+  <li>Triton Docker image is available</li>
+  <li>Required application files exist</li>
+  <li>Whether Triton is currently running on <code>localhost:8000</code></li>
+</ol>
+
+<!-- ═══════════════════ 5. CONFIGURATION ═══════════════════ -->
+<h1 id="config">5. Configuration System</h1>
+
+<h3>5.1 ConfigManager (<code>core/config_manager.py</code>, 409 lines)</h3>
+<p>Central configuration handler. Loads from <code>config/config.json</code>, supports dot-notation access (<code>config.get("triton.batch_size")</code>), and provides:</p>
+
+<ul>
+  <li><strong>Deep merge</strong> — Loaded config merged with defaults so new keys are always present</li>
+  <li><strong>Path normalization</strong> — Verifies runtime folders (tracking, state, logs) are writable; falls back to project-local defaults</li>
+  <li><strong>Metadata key sync</strong> — Keeps legacy <code>paths.*</code> keys in sync with UI-backed <code>metadata.*</code> keys</li>
+  <li><strong>Frozen executable support</strong> — Handles PyInstaller-bundled deployments via <code>sys.frozen</code></li>
+  <li><strong>Path validation</strong> — <code>validate_paths()</code> checks that essential folders exist before pipeline start</li>
+</ul>
+
+<h3>5.2 Configuration File Reference</h3>
+<p>See <a href="#config-ref">Section 15: Configuration Reference</a> for complete key documentation.</p>
+
+<!-- ═══════════════════ 6. CORE MODULES ═══════════════════ -->
+<h1 id="core">6. Core Modules</h1>
+
+<h3>6.1 <code>auto_tune.py</code> (149 lines)</h3>
+<p>Detects GPU memory via <code>nvidia-smi</code> and selects optimal Triton parameters:</p>
+
+<table>
+  <tr><th>GPU Memory</th><th>Batch Size</th><th>Instances</th><th>Queue Delay (µs)</th></tr>
+  <tr><td>≥ 20 GB</td><td>192</td><td>6</td><td>300</td></tr>
+  <tr><td>≥ 14 GB</td><td>160</td><td>5</td><td>300</td></tr>
+  <tr><td>≥ 12 GB</td><td>128</td><td>4</td><td>300</td></tr>
+  <tr><td>≥ 8 GB</td><td>96</td><td>3</td><td>350</td></tr>
+  <tr><td>&lt; 8 GB / Undetected</td><td>64</td><td>2</td><td>400</td></tr>
+</table>
+
+<p>When <code>nvidia-smi</code> is unavailable, falls back to a 6 GB baseline. Updates config and regenerates <code>config.pbtxt</code> files.</p>
+
+<h3>6.2 <code>triton_config_generator.py</code> (227 lines)</h3>
+<p>Dynamically rewrites Triton model <code>config.pbtxt</code> files for all three models (<code>doc_ori</code>, <code>separator_detector</code>, <code>document_classifier</code>). Updates:</p>
+<ul>
+  <li><code>max_batch_size</code></li>
+  <li><code>instance_group</code> (count, GPU device)</li>
+  <li><code>dynamic_batching.preferred_batch_size</code></li>
+  <li><code>dynamic_batching.max_queue_delay_microseconds</code></li>
+</ul>
+
+<h3>6.3 <code>startup_report.py</code> (61 lines)</h3>
+<p>Prints a formatted terminal summary on every app launch showing: OS, CPU core count, configured max workers, Triton URL, configured vs recommended Triton params, GPU detection status, and enabled pipeline steps.</p>
+
+<!-- ═══════════════════ 7. PIPELINE STEPS ═══════════════════ -->
+<h1 id="pipeline">7. Pipeline Steps (Detailed)</h1>
+
+<p>All steps are loaded dynamically by the <strong>PipelineOrchestrator</strong> from <code>pipelines/</code> using <code>importlib</code>. Each step is a class with a <code>run()</code> or <code>execute()</code> method. Steps run sequentially; the pipeline halts on the first failure (fail-fast). Each step can be independently enabled/disabled via config.</p>
+
+<!-- Step 01 -->
+<div class="step-card" id="step01">
+  <h4>Step 01: Ingestion</h4>
+  <div class="step-meta">
+    <span>File: <code>pipelines/01_ingestion.py</code></span> · <span>Class: <code>Ingestion</code></span> · <span>368 lines</span> · <span class="badge badge-cpu">CPU</span>
+  </div>
+
+  <p><strong>Purpose:</strong> Copy raw images from the input folder to a backup location and initialize per-image tracking JSON files.</p>
+
+  <h4>Algorithm</h4>
+  <ol>
+    <li>Scan input folder for supported formats: <code>.jpg, .jpeg, .png, .tif, .tiff</code></li>
+    <li>Skip images that already have a tracking JSON (idempotent re-runs)</li>
+    <li>For each new image (parallel via <code>ThreadPoolExecutor</code>):
+      <ul>
+        <li>Copy file to backup folder</li>
+        <li>Extract metadata: dimensions, DPI, color mode, file hash (MD5)</li>
+        <li>Create tracking JSON with ingestion stage data</li>
+      </ul>
+    </li>
+    <li>Generate <code>ingestion_manifest.json</code> in state folder</li>
+  </ol>
+
+  <h4>Inputs & Outputs</h4>
+  <table>
+    <tr><th>Input</th><td>Raw images from <code>folders.input</code></td></tr>
+    <tr><th>Output</th><td>Backup copies in <code>folders.backup</code> + tracking JSONs in <code>folders.tracking</code></td></tr>
+    <tr><th>Manifest</th><td><code>state/ingestion_manifest.json</code></td></tr>
+  </table>
+
+  <h4>Parallelism</h4>
+  <p><code>ThreadPoolExecutor</code> with <code>max_workers</code> = config value (0 = all CPU cores).</p>
+
+  <h4>Tracking JSON Structure (created)</h4>
+  <pre><code>{
+  "image_name": "SAX10_IMG_20250805_100438.jpg",
+  "created_at": "2025-08-05T10:04:38",
+  "current_stage": "ingestion",
+  "current_status": "completed",
+  "stages": {
+    "ingestion": {
+      "status": "completed",
+      "metadata": {
+        "file_size_bytes": 4521300,
+        "file_hash": "a1b2c3d4...",
+        "original_path": "D:/input/SAX10_IMG_20250805_100438.jpg",
+        "backup_path": "D:/backup/SAX10_IMG_20250805_100438.jpg",
+        "width": 4032, "height": 3024,
+        "dpi": 300, "color_mode": "RGB"
+      }
+    }
+  },
+  "metadata": { "device_id": null, "operator_name": null, ... },
+  "errors": []
+}</code></pre>
+</div>
+
+<!-- Step 02 -->
+<div class="step-card" id="step02">
+  <h4>Step 02: Generate Data</h4>
+  <div class="step-meta">
+    <span>File: <code>pipelines/02_generate_data.py</code></span> · <span>Class: <code>GenerateData</code></span> · <span>614 lines</span> · <span class="badge badge-cpu">CPU</span>
+  </div>
+
+  <p><strong>Purpose:</strong> Extract metadata from image filenames and Excel lookup tables, enrich tracking JSONs, and generate a transfer CSV.</p>
+
+  <h4>Algorithm</h4>
+  <ol>
+    <li><strong>Parse filenames</strong> — Expected format: <code>{DEVICE}_IMG_{YYYYMMDD}_{HHMMSS}.jpg</code>
+      <br>Example: <code>SAX10_IMG_20250805_100438.jpg</code> → device=SAX10, date=2025-08-05, time=10:04:38</li>
+    <li><strong>Load Operator Excel</strong> — Maps Device ID → Operator Name</li>
+    <li><strong>Load Metadata Excel</strong> — Maps (Date, Device ID) → Box Details, Year (first 2 sheets only)</li>
+    <li><strong>If metadata Excel missing</strong> — Auto-creates a template from tracking file data</li>
+    <li><strong>For each tracking JSON:</strong>
+      <ul>
+        <li>Skip if <code>generate_data</code> stage already completed (idempotent)</li>
+        <li>Look up operator name and box details</li>
+        <li>Update tracking JSON with enriched metadata</li>
+        <li>Add row to CSV data</li>
+      </ul>
+    </li>
+    <li><strong>Generate</strong> <code>transfer_{TIMESTAMP}.csv</code> in input folder</li>
+    <li><strong>Generate</strong> <code>metadata_manifest.json</code> in state folder</li>
+  </ol>
+
+  <h4>Inputs & Outputs</h4>
+  <table>
+    <tr><th>Input</th><td>Tracking JSONs + Operator Excel + Metadata Excel</td></tr>
+    <tr><th>Output</th><td>Updated tracking JSONs + <code>transfer_TIMESTAMP.csv</code></td></tr>
+    <tr><th>Manifest</th><td><code>state/metadata_manifest.json</code></td></tr>
+  </table>
+
+  <h4>Excel Column Requirements</h4>
+  <table>
+    <tr><th>File</th><th>Required Columns</th></tr>
+    <tr><td>Operator List</td><td><code>Device ID</code>, <code>Operator Name</code></td></tr>
+    <tr><td>Metadata List</td><td><code>DATE</code>, <code>DEVICE ID (SAX)</code>, <code>Box Details</code>, <code>Year</code> (optional)</td></tr>
+  </table>
+</div>
+
+<!-- Step 03 -->
+<div class="step-card" id="step03">
+  <h4>Step 03: Orientation Predict</h4>
+  <div class="step-meta">
+    <span>File: <code>pipelines/03_orientation_predict.py</code></span> · <span>Class: <code>OrientationPredict</code></span> · <span>448 lines</span> · <span class="badge badge-gpu">GPU (Triton)</span>
+  </div>
+
+  <p><strong>Purpose:</strong> Classify image orientation (0°, 90°, 180°, 270°) using a ViT-based ONNX model served by Triton Inference Server.</p>
+
+  <h4>Preprocessing Pipeline (must match model training)</h4>
+  <ol>
+    <li>Decode image as RGB (PIL)</li>
+    <li>Resize shorter side to 256px (bicubic, maintain aspect ratio)</li>
+    <li>Center crop to 224×224</li>
+    <li>Scale pixel values to [0, 1]</li>
+    <li>Convert HWC → CHW layout</li>
+    <li>Normalize with ImageNet statistics: mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]</li>
+  </ol>
+
+  <h4>Inference Strategy — High Throughput</h4>
+  <ol>
+    <li><strong>Preprocess all images upfront</strong> using a wide thread pool (up to 64 workers) to eliminate per-batch CPU overhead</li>
+    <li><strong>Stack into batches</strong> of configured batch size (default: 64)</li>
+    <li><strong>Submit batches concurrently</strong> via <code>ThreadPoolExecutor</code> (max 8 in-flight) to keep Triton's GPU saturated</li>
+    <li><strong>Collect results</strong> as futures complete — each batch returns class predictions with softmax confidence</li>
+  </ol>
+
+  <h4>Triton Model Details</h4>
+  <table>
+    <tr><th>Model</th><td><code>doc_ori</code></td></tr>
+    <tr><th>Input</th><td><code>x</code> — FP32 [batch, 3, 224, 224]</td></tr>
+    <tr><th>Output</th><td><code>logits</code> — FP32 [batch, 4]</td></tr>
+    <tr><th>Classes</th><td>0° (index 0), 90° (index 1), 180° (index 2), 270° (index 3)</td></tr>
+    <tr><th>Protocol</th><td>gRPC on configured <code>triton.server_url</code></td></tr>
+  </table>
+
+  <h4>Outputs</h4>
+  <table>
+    <tr><th>Predictions JSON</th><td><code>state/triton_predictions/03_orientation_predictions_{timestamp}.json</code></td></tr>
+    <tr><th>Tracking update</th><td><code>stages.03_orientation_predict</code> added to each image's tracking JSON</td></tr>
+    <tr><th>Manifest</th><td><code>state/03_orientation_predict_manifest.json</code></td></tr>
+  </table>
+</div>
+
+<!-- Step 04 -->
+<div class="step-card" id="step04">
+  <h4>Step 04: Orientation Rotate</h4>
+  <div class="step-meta">
+    <span>File: <code>pipelines/04_orientation_rotate.py</code></span> · <span>Class: <code>OrientationRotate</code></span> · <span>296 lines</span> · <span class="badge badge-cpu">CPU</span>
+  </div>
+
+  <p><strong>Purpose:</strong> Apply the rotation detected in Step 03 to physically rotate images to upright orientation.</p>
+
+  <h4>Algorithm</h4>
+  <ol>
+    <li>Load the most recent <code>03_orientation_predictions_*.json</code> from <code>state/triton_predictions/</code></li>
+    <li>Skip images classified as 0° (already upright)</li>
+    <li>For each rotated image (90°, 180°, 270°), in parallel via <code>ThreadPoolExecutor</code>:
+      <ul>
+        <li>Read image with <code>cv2.imread()</code></li>
+        <li>Apply <code>cv2.rotate()</code> — <strong>pixel-perfect rotation</strong> (no interpolation artifacts, no pixel loss)</li>
+        <li>Overwrite original file in-place with <code>cv2.imwrite()</code> at JPEG quality 100</li>
+      </ul>
+    </li>
+    <li>Update tracking JSONs with rotation status</li>
+  </ol>
+
+  <h4>Rotation Mapping</h4>
+  <table>
+    <tr><th>Predicted</th><th>OpenCV Function</th><th>Effect</th></tr>
+    <tr><td>0°</td><td><em>None (skip)</em></td><td>Already upright</td></tr>
+    <tr><td>90°</td><td><code>cv2.ROTATE_90_COUNTERCLOCKWISE</code></td><td>Rotate 90° CCW</td></tr>
+    <tr><td>180°</td><td><code>cv2.ROTATE_180</code></td><td>Rotate 180°</td></tr>
+    <tr><td>270°</td><td><code>cv2.ROTATE_90_CLOCKWISE</code></td><td>Rotate 90° CW</td></tr>
+  </table>
+
+  <div class="callout callout-info">
+    <div class="callout-label">ℹ️ Note</div>
+    Images are modified <strong>in-place</strong> in the input folder. Originals are preserved in the backup folder from Step 01.
+  </div>
+</div>
+
+<!-- Step 05 -->
+<div class="step-card" id="step05">
+  <h4>Step 05: Deskew</h4>
+  <div class="step-meta">
+    <span>File: <code>pipelines/05_deskew.py</code></span> · <span>Class: <code>Deskew</code></span> · <span>332 lines</span> · <span>Worker: <code>deskew_worker.py</code></span> · <span class="badge badge-cpu">CPU</span>
+  </div>
+
+  <p><strong>Purpose:</strong> Detect skew angle of each document image using contour analysis.</p>
+
+  <h4>Algorithm (per image, in <code>deskew_worker.py</code>)</h4>
+  <ol>
+    <li>Read image with OpenCV</li>
+    <li>Convert to grayscale</li>
+    <li>Apply Gaussian blur (3×3 kernel)</li>
+    <li>Otsu thresholding (automatic)</li>
+    <li>Morphological close (25×25 kernel) — fills gaps to form document contour</li>
+    <li>Find external contours</li>
+    <li>Get largest contour → <code>cv2.minAreaRect()</code></li>
+    <li>Extract rotation angle, normalize to [-45°, 45°]</li>
+    <li>Store angle in tracking JSON</li>
+  </ol>
+
+  <div class="callout callout-warn">
+    <div class="callout-label">⚠️ Important</div>
+    This step <strong>detects but does NOT apply</strong> rotation. The actual rotation is deferred to the crop step (Step 06) which performs atomic rotate+crop. The detected angle is stored in tracking only.
+  </div>
+
+  <h4>Parameters</h4>
+  <table>
+    <tr><th>Parameter</th><th>Value</th><th>Notes</th></tr>
+    <tr><td>Rotation Threshold</td><td>0.5°</td><td>Only flag if angle exceeds this</td></tr>
+    <tr><td>Gaussian Kernel</td><td>3×3</td><td></td></tr>
+    <tr><td>Morphological Kernel</td><td>25×25</td><td>Legacy size matching original app</td></tr>
+    <tr><td>JPEG Quality</td><td>100</td><td>Maximum quality</td></tr>
+    <tr><td>Interpolation</td><td>LANCZOS4</td><td>Highest quality interpolation</td></tr>
+  </table>
+
+  <h4>Parallelism</h4>
+  <p><strong>Windows:</strong> <code>ThreadPoolExecutor</code> (avoids multiprocessing bootstrap issues). <strong>Unix/Linux:</strong> <code>ProcessPoolExecutor</code> (better for CPU-bound work).</p>
+</div>
+
+<!-- Step 06 -->
+<div class="step-card" id="step06">
+  <h4>Step 06: Crop</h4>
+  <div class="step-meta">
+    <span>File: <code>pipelines/06_crop.py</code></span> · <span>Class: <code>CropStep</code></span> · <span>215 lines</span> · <span>Worker: <code>crop_worker.py</code></span> · <span class="badge badge-cpu">CPU</span>
+  </div>
+
+  <p><strong>Purpose:</strong> Crop document images by detecting the document boundary and extracting it with simultaneous rotation correction (atomic deskew + crop).</p>
+
+  <h4>Method A Algorithm (for all images, in <code>crop_worker.py</code>)</h4>
+  <ol>
+    <li>Read image with OpenCV</li>
+    <li>Convert to grayscale</li>
+    <li>Gaussian blur (3×3)</li>
+    <li>Otsu thresholding</li>
+    <li>Morphological close (5×5 kernel)</li>
+    <li>Find largest external contour</li>
+    <li><code>cv2.minAreaRect()</code> → get rotated bounding box</li>
+    <li><code>cv2.getRotationMatrix2D()</code> → rotation matrix</li>
+    <li><code>cv2.warpAffine()</code> with LANCZOS4 + <code>BORDER_REPLICATE</code> → precise rotation</li>
+    <li><code>cv2.getRectSubPix()</code> → extract cropped region (sub-pixel precision)</li>
+    <li>Save overwriting original at JPEG quality 100</li>
+  </ol>
+
+  <div class="callout callout-info">
+    <div class="callout-label">ℹ️ Note</div>
+    Method A uses Otsu (automatic threshold) for normal/light documents. A Method C also exists in <code>crop_worker.py</code> using HSV Value channel with a fixed threshold of V≥53, designed for dark documents — but Method A is applied to all images in the current pipeline.
+  </div>
+
+  <h4>Entry Method</h4>
+  <p>Unlike other steps, CropStep uses <code>execute()</code> instead of <code>run()</code>. The orchestrator handles both method names.</p>
+</div>
+
+<!-- Step 07 -->
+<div class="step-card" id="step07">
+  <h4>Step 07: Separator Detect</h4>
+  <div class="step-meta">
+    <span>File: <code>pipelines/07_separator_detect.py</code></span> · <span>Class: <code>SeparatorDetect</code></span> · <span>423 lines</span> · <span>Worker: <code>separator_detect_worker.py</code></span> · <span class="badge badge-cpu">CPU</span>
+  </div>
+
+  <p><strong>Purpose:</strong> Classify each image as a "Separator" (black divider sheet) or "Normal" (document page) using a fast brightness-based algorithm. No GPU needed.</p>
+
+  <h4>P99 Brightness Algorithm</h4>
+  <ol>
+    <li>Open image with PIL</li>
+    <li>Convert to grayscale, resize to 128×128 (uses JPEG draft mode for speed)</li>
+    <li>Calculate P99 — the 99th percentile of pixel brightness values</li>
+    <li>Classification:
+      <ul>
+        <li><strong>P99 &lt; 50</strong> → Separator (near-black page)</li>
+        <li><strong>P99 ≥ 50</strong> → Normal document (contains bright paper)</li>
+      </ul>
+    </li>
+    <li>Calculate confidence score based on distance from threshold</li>
+  </ol>
+
+  <h4>Confidence Scoring</h4>
+  <ul>
+    <li><strong>Separator:</strong> <code>confidence = max(0, 1 - p99/50)</code> — higher confidence for darker pages</li>
+    <li><strong>Normal:</strong> <code>confidence = min(1, (p99 - 50) / (255 - 50))</code> — higher confidence for brighter pages</li>
+  </ul>
+
+  <h4>Outputs</h4>
+  <table>
+    <tr><th>Predictions</th><td><code>state/predictions/separator_predictions.json</code></td></tr>
+    <tr><th>Tracking</th><td>Each image's tracking JSON updated with <code>classification</code>, <code>p99_score</code>, <code>confidence</code></td></tr>
+    <tr><th>Manifest</th><td><code>state/07_separator_detect_manifest.json</code></td></tr>
+  </table>
+</div>
+
+<!-- Step 08 -->
+<div class="step-card" id="step08">
+  <h4>Step 08: Batch Separation</h4>
+  <div class="step-meta">
+    <span>File: <code>pipelines/08_batch_separation.py</code></span> · <span>Class: <code>BatchSeparation</code></span> · <span>525 lines</span> · <span class="badge badge-cpu">CPU</span>
+  </div>
+
+  <p><strong>Purpose:</strong> Split the processed images into numbered batch folders based on separator positions detected in Step 07, and move separator images to a dedicated folder.</p>
+
+  <h4>Algorithm (6 phases)</h4>
+  <ol>
+    <li><strong>Load images</strong> — Get all JPGs from input folder, sorted naturally</li>
+    <li><strong>Load CSV metadata</strong> — Single-pass read of all CSV files from input folder (O(1) lookups later)</li>
+    <li><strong>Classify from tracking</strong> — Read Step 07 classification from each image's tracking JSON</li>
+    <li><strong>Create batch groups</strong> — Split image list at separator positions; images between consecutive separators form a batch; if no separators, all images form one batch</li>
+    <li><strong>Move separators</strong> — Move all separator images to <code>folders.separator</code></li>
+    <li><strong>Move batches (parallel)</strong> — Using <code>ThreadPoolExecutor</code> (8 threads):
+      <ul>
+        <li>Determine next batch number from existing folders</li>
+        <li>Create folder named <code>{NNNNNN}-{BoxName}</code> (e.g., <code>000001-Estate_Box_5</code>)</li>
+        <li>Move batch images using <code>shutil.move()</code></li>
+      </ul>
+    </li>
+  </ol>
+
+  <h4>Batch Folder Naming</h4>
+  <pre><code>D:/batches/
+├── 000001-Estate_Box_5/
+│   ├── SAX10_IMG_20250805_100438.jpg
+│   ├── SAX10_IMG_20250805_100439.jpg
+│   └── ...
+├── 000002-Estate_Box_6/
+│   └── ...
+└── ...</code></pre>
+  <p>Box name is derived from the first image's CSV metadata (<code>box_details</code> field). Invalid filename characters are sanitized.</p>
+
+  <div class="callout callout-warn">
+    <div class="callout-label">⚠️ Important</div>
+    This step <strong>moves</strong> files (not copies) — images are removed from the input folder. The backup from Step 01 is the safety net.
+  </div>
+</div>
+
+<!-- ═══════════════════ 8. WORKERS ═══════════════════ -->
+<h1 id="workers">8. Worker Modules</h1>
+
+<p>CPU-heavy operations are isolated into separate worker modules for proper threading/multiprocessing serialization (pickle compatibility).</p>
+
+<h3>8.1 <code>deskew_worker.py</code> (144 lines)</h3>
+<p>Function: <code>_process_image_worker(args: Tuple) → Dict</code></p>
+<p>Takes a tuple of <code>(image_path, rotation_threshold, gauss_kernel, morph_kernel, jpeg_quality, interpolation)</code>. Returns a dict with <code>filename</code>, <code>status</code>, <code>message</code>, <code>rotation_angle</code>, <code>processing_time</code>.</p>
+<p>Includes Unix-only <code>SIGALRM</code> timeout (30 seconds) — gracefully skipped on Windows.</p>
+
+<h3>8.2 <code>crop_worker.py</code> (177 lines)</h3>
+<p>Two functions:</p>
+<ul>
+  <li><code>_process_method_a(args)</code> — Otsu + Grayscale + 5×5 morphological close (for normal docs)</li>
+  <li><code>_process_method_c(args)</code> — HSV Value channel + fixed threshold 53 + 25×25 close (for dark docs)</li>
+</ul>
+<p>Both share <code>_crop_and_deskew()</code> — the core rotate+crop function using <code>warpAffine</code> + <code>getRectSubPix</code>.</p>
+
+<h3>8.3 <code>separator_detect_worker.py</code> (70 lines)</h3>
+<p>Function: <code>_process_image_worker(args: Tuple) → Dict</code></p>
+<p>Lightweight P99 brightness calculation using PIL at 128×128 resolution. JPEG draft mode for speed.</p>
+
+<!-- ═══════════════════ 9. TRITON ═══════════════════ -->
+<h1 id="triton">9. Triton Integration</h1>
+
+<h3>9.1 Overview</h3>
+<p>NVIDIA Triton Inference Server runs as a Docker container serving ONNX models via gRPC. The application connects as a client for GPU-accelerated inference.</p>
+
+<h3>9.2 <code>triton_api.py</code> (251 lines) — <span class="badge badge-active">ACTIVE</span></h3>
+<p>Synchronous gRPC client wrapper (<code>TritonAPI</code> class):</p>
+<ul>
+  <li><code>classify(model, images, ...)</code> — Single-batch classification with preprocessing</li>
+  <li><code>classify_batch_async(model, batch, images, ...)</code> — Pre-processed batch inference (used by Step 03 in thread pool for concurrent submission)</li>
+  <li><code>detect(model, images, ...)</code> — Generic detection interface</li>
+</ul>
+<p>Handles softmax conversion of logits to probabilities and argmax class selection.</p>
+
+<h3>9.3 <code>triton_classifier_client.py</code> (387 lines) — <span class="badge badge-unused">UNUSED</span></h3>
+<p>Alternative async gRPC client using <code>tritonclient.grpc.aio</code>. Provides higher-throughput async batching but is not referenced by any active pipeline step.</p>
+
+<h3>9.4 <code>serve_models.py</code> (234 lines)</h3>
+<p>Docker launcher for Triton:</p>
+<ol>
+  <li>Verifies models exist and Docker is running</li>
+  <li>Attempts GPU mode first (<code>--gpus all</code>)</li>
+  <li>Falls back to CPU-only if GPU fails</li>
+  <li>Exposes ports: HTTP 8000, gRPC 8001, Metrics 8002</li>
+  <li>Uses Docker image: <code>nvcr.io/nvidia/tritonserver:24.12-py3</code></li>
+</ol>
+
+<h3>9.5 Docker Command (GPU mode)</h3>
+<pre><code>docker run --rm --gpus all \
+  -p 8000:8000 -p 8001:8001 -p 8002:8002 \
+  -v {models_dir}:/models \
+  --name triton-server \
+  nvcr.io/nvidia/tritonserver:24.12-py3 \
+  tritonserver --model-repository=/models \
+  --grpc-port=8001 --http-port=8000 --metrics-port=8002</code></pre>
+
+<!-- ═══════════════════ 10. MODELS ═══════════════════ -->
+<h1 id="models">10. ONNX Models</h1>
+
+<table>
+  <tr><th>Model</th><th>Input Name</th><th>Input Shape</th><th>Output Name</th><th>Output Shape</th><th>Classes</th><th>Status</th></tr>
+  <tr>
+    <td><code>doc_ori</code></td>
+    <td><code>x</code></td>
+    <td>FP32 [B, 3, 224, 224]</td>
+    <td><code>logits</code></td>
+    <td>FP32 [B, 4]</td>
+    <td>0°, 90°, 180°, 270°</td>
+    <td><span class="badge badge-active">ACTIVE</span></td>
+  </tr>
+  <tr>
+    <td><code>document_classifier</code></td>
+    <td><code>pixel_values</code></td>
+    <td>FP32 [B, 3, 224, 224]</td>
+    <td><code>logits</code></td>
+    <td>FP32 [B, 2]</td>
+    <td>Normal, Dark</td>
+    <td><span class="badge badge-unused">UNUSED</span></td>
+  </tr>
+  <tr>
+    <td><code>separator_detector</code></td>
+    <td><code>pixel_values</code></td>
+    <td>FP32 [B, 3, 224, 224]</td>
+    <td><code>logits</code></td>
+    <td>FP32 [B, 2]</td>
+    <td>Separator, Normal</td>
+    <td><span class="badge badge-unused">UNUSED</span></td>
+  </tr>
+</table>
+
+<div class="callout callout-info">
+  <div class="callout-label">ℹ️ Note</div>
+  Only <code>doc_ori</code> is actively used by the pipeline (Step 03). The <code>document_classifier</code> and <code>separator_detector</code> Triton models exist but Step 07 uses a CPU-based P99 brightness algorithm instead.
+</div>
+
+<h3>Preprocessing Specification (<code>doc_ori</code>)</h3>
+<pre><code>{
+  "input_color": "RGB",
+  "input_layout": "NCHW",
+  "preprocess": {
+    "resize_short": 256,
+    "crop_size": 224,
+    "normalize": {
+      "mean": [0.485, 0.456, 0.406],
+      "std":  [0.229, 0.224, 0.225]
+    }
+  }
+}</code></pre>
+
+<!-- ═══════════════════ 11. UI ═══════════════════ -->
+<h1 id="ui">11. UI Layer</h1>
+
+<h3>11.1 MainWindow (<code>ui/main_window.py</code>, 887 lines)</h3>
+<p>Tkinter-based GUI (1400×750 px, centered on screen) with three sections:</p>
+
+<h4>Configuration Panel</h4>
+<ul>
+  <li>8 folder/file browsers: Input, Batch, Backup, Separator, Operator List, Tracking, XMP Profile, Metadata List</li>
+  <li>Triton Server URL text field</li>
+  <li>Max Workers (CPU) text field</li>
+  <li>Separator Confidence Threshold (0.0–1.0) text field</li>
+  <li>8 pipeline phase checkboxes (①–⑧ enable/disable)</li>
+</ul>
+
+<h4>Console Output</h4>
+<ul>
+  <li>Dark-themed (<code>#1e1e1e</code>) scrolling text area, Consolas font</li>
+  <li>Color-coded tags: info (blue), success (cyan), warning (yellow), error (red), step (magenta), progress (green)</li>
+  <li>Read-only (select/copy allowed)</li>
+</ul>
+
+<h4>Controls</h4>
+<table>
+  <tr><th>Button</th><th>Action</th></tr>
+  <tr><td><strong>[▶] START</strong></td><td>Validate paths → Save config → Auto-tune Triton → Launch orchestrator in daemon thread</td></tr>
+  <tr><td><strong>[!] STOP</strong></td><td>Set <code>is_running = False</code> → pipeline checks this flag between steps</td></tr>
+  <tr><td><strong>[||] PAUSE</strong></td><td>Set <code>is_paused = True</code> (flag exists but no step currently checks it)</td></tr>
+  <tr><td><strong>[▶▶] RESUME</strong></td><td>Set <code>is_paused = False</code></td></tr>
+  <tr><td><strong>[📋] Copy Log</strong></td><td>Copy entire console content to clipboard</td></tr>
+  <tr><td><strong>[✓] Apply Settings</strong></td><td>Save current UI values to config.json</td></tr>
+  <tr><td><strong>[?] About</strong></td><td>Show version/feature dialog</td></tr>
+</table>
+
+<h3>11.2 Logging Bridge</h3>
+<p><code>UILoggingHandler</code> — A custom <code>logging.Handler</code> subclass that forwards all Python log records to the UI console via <code>_print_log()</code> callback. Maps log levels to color tags.</p>
+
+<h3>11.3 Pipeline Execution</h3>
+<p>The <code>_run_pipeline()</code> method runs in a daemon thread:</p>
+<ol>
+  <li>Calls <code>auto_tune_triton()</code> to optimize for current GPU</li>
+  <li>Creates a <code>PipelineOrchestrator</code> with UI callback + stop callback</li>
+  <li>Calls <code>orchestrator.run()</code></li>
+  <li>Updates status label on completion (green=success, orange=errors, red=fatal)</li>
+</ol>
+
+<!-- ═══════════════════ 12. TRACKING ═══════════════════ -->
+<h1 id="tracking">12. Tracking & State System</h1>
+
+<h3>12.1 Per-Image Tracking JSON</h3>
+<p>Each image gets a JSON file in <code>folders.tracking</code> named <code>{image_stem}.json</code>. This file is progressively updated by each pipeline step:</p>
+
+<pre><code>{
+  "image_name": "SAX10_IMG_20250805_100438.jpg",
+  "created_at": "2025-08-05T10:04:38",
+  "updated_at": "2025-08-05T10:09:12",
+  "current_stage": "08_batch_separation",
+  "current_status": "completed",
+  "stages": {
+    "ingestion":              { "status": "completed", ... },
+    "generate_data":          { "status": "completed", ... },
+    "03_orientation_predict":  { "status": "completed", "detected_rotation": "90", "confidence": 0.98 },
+    "04_orientation_rotate":   { "status": "completed", "rotation_applied": true },
+    "05_deskew":              { "status": "completed", "rotation_angle": 1.23 },
+    "06_crop":                { "status": "success", ... },
+    "07_separator_detect":     { "status": "completed", "classification": "normal", "p99_score": 187.5 },
+    "08_batch_separation":     { "status": "completed", "batch_folder": "000001" }
+  },
+  "metadata": {
+    "device_id": "SAX10",
+    "operator_name": "John Doe",
+    "box_details": "Estate Box 5",
+    "capture_date": "2025-08-05",
+    "capture_time": "10:04:38"
+  },
+  "errors": []
+}</code></pre>
+
+<h3>12.2 Step Manifests</h3>
+<p>Each step writes a summary manifest to the <code>state/</code> folder:</p>
+<table>
+  <tr><th>Step</th><th>Manifest File</th></tr>
+  <tr><td>01</td><td><code>state/ingestion_manifest.json</code></td></tr>
+  <tr><td>02</td><td><code>state/metadata_manifest.json</code></td></tr>
+  <tr><td>03</td><td><code>state/03_orientation_predict_manifest.json</code></td></tr>
+  <tr><td>04</td><td><code>state/04_orientation_rotate_manifest.json</code></td></tr>
+  <tr><td>05</td><td><code>state/05_deskew_manifest.json</code></td></tr>
+  <tr><td>06</td><td><code>state/06_crop_manifest.json</code></td></tr>
+  <tr><td>07</td><td><code>state/07_separator_detect_manifest.json</code></td></tr>
+  <tr><td>08</td><td><code>state/08_batch_separation_manifest.json</code></td></tr>
+</table>
+
+<h3>12.3 Prediction Files</h3>
+<table>
+  <tr><th>Step</th><th>File</th></tr>
+  <tr><td>03</td><td><code>state/triton_predictions/03_orientation_predictions_{timestamp}.json</code></td></tr>
+  <tr><td>07</td><td><code>state/predictions/separator_predictions.json</code></td></tr>
+</table>
+
+<!-- ═══════════════════ 13. DATA FLOW ═══════════════════ -->
+<h1 id="data-flow">13. Data Flow Diagram</h1>
+
+<p>Visual representation of how data moves through the 8-step pipeline, from raw images to organized batch folders.</p>
+
+<div class="glass-card" style="padding: 32px;">
+
+  <!-- Step 01 -->
+  <div class="data-flow-step">
+    <div class="data-flow-number">
+      <div class="num">01</div>
+      <div class="line"></div>
+    </div>
+    <div class="data-flow-content">
+      <div class="df-title">Ingestion <span class="df-tag df-tag-cpu">CPU</span></div>
+      <div class="df-desc">Copy raw images → <code>backup/</code> &nbsp;·&nbsp; Create <code>tracking/{stem}.json</code> per image &nbsp;·&nbsp; Images remain in input folder</div>
+    </div>
+  </div>
+
+  <!-- Step 02 -->
+  <div class="data-flow-step">
+    <div class="data-flow-number">
+      <div class="num">02</div>
+      <div class="line"></div>
+    </div>
+    <div class="data-flow-content">
+      <div class="df-title">Generate Data <span class="df-tag df-tag-cpu">CPU</span></div>
+      <div class="df-desc">Operator.xlsx + Metadata.xlsx → enrich tracking JSON &nbsp;·&nbsp; Generate <code>transfer_{timestamp}.csv</code></div>
+    </div>
+  </div>
+
+  <!-- Step 03 -->
+  <div class="data-flow-step">
+    <div class="data-flow-number">
+      <div class="num" style="background:var(--gpu-purple);">03</div>
+      <div class="line"></div>
+    </div>
+    <div class="data-flow-content">
+      <div class="df-title">Orientation Predict <span class="df-tag df-tag-gpu">GPU — Triton</span></div>
+      <div class="df-desc">Preprocess → batch gRPC inference → classify 0°/90°/180°/270° &nbsp;·&nbsp; Save predictions to <code>state/triton_predictions/</code></div>
+    </div>
+  </div>
+
+  <!-- Step 04 -->
+  <div class="data-flow-step">
+    <div class="data-flow-number">
+      <div class="num">04</div>
+      <div class="line"></div>
+    </div>
+    <div class="data-flow-content">
+      <div class="df-title">Orientation Rotate <span class="df-tag df-tag-cpu">CPU</span></div>
+      <div class="df-desc">Load predictions → rotate non-upright images <strong>IN-PLACE</strong> via <code>cv2.rotate()</code> &nbsp;·&nbsp; Input images now physically rotated</div>
+    </div>
+  </div>
+
+  <!-- Step 05 -->
+  <div class="data-flow-step">
+    <div class="data-flow-number">
+      <div class="num">05</div>
+      <div class="line"></div>
+    </div>
+    <div class="data-flow-content">
+      <div class="df-title">Deskew <span class="df-tag df-tag-cpu">CPU</span></div>
+      <div class="df-desc">Detect skew angle only → store angle in tracking JSON &nbsp;·&nbsp; No rotation applied (deferred to crop step)</div>
+    </div>
+  </div>
+
+  <!-- Step 06 -->
+  <div class="data-flow-step">
+    <div class="data-flow-number">
+      <div class="num">06</div>
+      <div class="line"></div>
+    </div>
+    <div class="data-flow-content">
+      <div class="df-title">Crop <span class="df-tag df-tag-cpu">CPU</span></div>
+      <div class="df-desc">Otsu → minAreaRect → warpAffine → getRectSubPix &nbsp;·&nbsp; Atomic rotate+crop <strong>IN-PLACE</strong> &nbsp;·&nbsp; Images now deskewed and cropped</div>
+    </div>
+  </div>
+
+  <!-- Step 07 -->
+  <div class="data-flow-step">
+    <div class="data-flow-number">
+      <div class="num">07</div>
+      <div class="line"></div>
+    </div>
+    <div class="data-flow-content">
+      <div class="df-title">Separator Detect <span class="df-tag df-tag-cpu">CPU</span></div>
+      <div class="df-desc">128×128 grayscale → P99 percentile &nbsp;·&nbsp; p99 &lt; 50 → "separator" &nbsp;|&nbsp; p99 ≥ 50 → "normal" &nbsp;·&nbsp; Save predictions</div>
+    </div>
+  </div>
+
+  <!-- Step 08 -->
+  <div class="data-flow-step">
+    <div class="data-flow-number">
+      <div class="num">08</div>
+      <div class="line" style="background:transparent;"></div>
+    </div>
+    <div class="data-flow-content">
+      <div class="df-title">Batch Separation <span class="df-tag df-tag-cpu">CPU</span></div>
+      <div class="df-desc">Split at separator positions → numbered batch folders &nbsp;·&nbsp; Move docs → <code>batches/NNNNNN-BoxName/</code> &nbsp;·&nbsp; Move seps → <code>separators/</code> &nbsp;·&nbsp; Input folder now empty</div>
+    </div>
+  </div>
+
+  <!-- Final output -->
+  <div style="margin-top: 16px; padding: 16px 20px; background: rgba(184,146,62,0.08); border-radius: var(--radius); border: 1px solid rgba(184,146,62,0.2);">
+    <strong style="color: var(--gold);">Final Output:</strong>
+    <span style="font-size: 0.92em; color: var(--fg-muted);">
+      <code>batches/NNNNNN-BoxName/</code> (organized documents) &nbsp;·&nbsp;
+      <code>separators/</code> (black sheets) &nbsp;·&nbsp;
+      <code>backup/</code> (original copies) &nbsp;·&nbsp;
+      <code>tracking/*.json</code> (full processing history)
+    </span>
+  </div>
+
+</div>
+
+<!-- ═══════════════════ 14. API REFERENCE ═══════════════════ -->
+<h1 id="api-ref">14. Full API Reference</h1>
+
+<h3>14.1 <code>PipelineOrchestrator</code></h3>
+<table>
+  <tr><th>Method</th><th>Signature</th><th>Description</th></tr>
+  <tr><td><code>__init__</code></td><td><code>(config_manager, logger=None, ui_callback=None, is_running_callback=None)</code></td><td>Initialize with config, optional logger/UI/stop callbacks</td></tr>
+  <tr><td><code>_normalize_step_result</code></td><td><code>(result) → bool</code> <em>static</em></td><td>Convert step return (bool or dict) to success boolean</td></tr>
+  <tr><td><code>_load_step_class</code></td><td><code>(module_file, class_name) → class</code></td><td>Dynamic import via importlib</td></tr>
+  <tr><td><code>run</code></td><td><code>() → bool</code></td><td>Execute all enabled steps sequentially. Returns True if all pass.</td></tr>
+</table>
+
+<h3>14.2 <code>ConfigManager</code></h3>
+<table>
+  <tr><th>Method</th><th>Signature</th><th>Description</th></tr>
+  <tr><td><code>__init__</code></td><td><code>(config_file=None)</code></td><td>Load from file or defaults</td></tr>
+  <tr><td><code>get</code></td><td><code>(key, default=None) → Any</code></td><td>Dot-notation access: <code>"triton.batch_size"</code></td></tr>
+  <tr><td><code>set</code></td><td><code>(key, value) → None</code></td><td>Dot-notation write</td></tr>
+  <tr><td><code>save_config</code></td><td><code>(config=None) → bool</code></td><td>Write to JSON file</td></tr>
+  <tr><td><code>validate_paths</code></td><td><code>() → (bool, list[str])</code></td><td>Check essential folders exist</td></tr>
+  <tr><td><code>get_all</code></td><td><code>() → Dict</code></td><td>Return full config dict</td></tr>
+  <tr><td><code>reset_to_defaults</code></td><td><code>() → None</code></td><td>Reset everything to defaults</td></tr>
+</table>
+
+<h3>14.3 <code>TritonAPI</code></h3>
+<table>
+  <tr><th>Method</th><th>Signature</th><th>Description</th></tr>
+  <tr><td><code>__init__</code></td><td><code>(server_url, verbose=True)</code></td><td>Connect to Triton via gRPC</td></tr>
+  <tr><td><code>classify</code></td><td><code>(model, images, input_name, output_name, class_names) → Dict</code></td><td>Preprocess + classify a list of image paths</td></tr>
+  <tr><td><code>classify_batch_async</code></td><td><code>(model, batch, images, class_names, ...) → Dict</code></td><td>Classify a pre-processed numpy batch (for thread pool use)</td></tr>
+  <tr><td><code>detect</code></td><td><code>(model, images, input_name, output_names) → List[Dict]</code></td><td>Generic detection interface</td></tr>
+</table>
+
+<h3>14.4 Pipeline Step Classes</h3>
+<p>All step classes follow a common pattern:</p>
+<table>
+  <tr><th>Method</th><th>Present In</th><th>Description</th></tr>
+  <tr><td><code>__init__(config_manager, logger=None)</code></td><td>All steps</td><td>Initialize with config and logger</td></tr>
+  <tr><td><code>run() → bool/Dict</code></td><td>Steps 01–05, 07–08</td><td>Execute the step</td></tr>
+  <tr><td><code>execute() → Dict</code></td><td>Step 06 (CropStep)</td><td>Execute the step (alternate name)</td></tr>
+  <tr><td><code>set_stop_callback(callback)</code></td><td>Steps 03–08</td><td>Register user-stop check function</td></tr>
+  <tr><td><code>_should_continue() → bool</code></td><td>Steps 03–08</td><td>Check if pipeline should continue</td></tr>
+  <tr><td><code>_update_tracking_json(...)</code></td><td>All steps</td><td>Update per-image tracking file</td></tr>
+  <tr><td><code>_generate_manifest()</code> or <code>_create_manifest()</code></td><td>All steps</td><td>Write step summary to state folder</td></tr>
+</table>
+
+<!-- ═══════════════════ 15. CONFIG REFERENCE ═══════════════════ -->
+<h1 id="config-ref">15. Configuration Reference</h1>
+
+<h3>15.1 <code>app</code></h3>
+<table>
+  <tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr>
+  <tr><td><code>app.name</code></td><td>string</td><td>"ImageProcessing Auto"</td><td>Application name</td></tr>
+  <tr><td><code>app.version</code></td><td>string</td><td>"1.0.0"</td><td>Application version</td></tr>
+  <tr><td><code>app.debug</code></td><td>bool</td><td>false</td><td>Debug mode flag</td></tr>
+</table>
+
+<h3>15.2 <code>folders</code></h3>
+<table>
+  <tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr>
+  <tr><td><code>folders.input</code></td><td>string</td><td><em>(empty)</em></td><td>Source folder with raw images</td></tr>
+  <tr><td><code>folders.batch</code></td><td>string</td><td><em>(empty)</em></td><td>Output folder for organized batches</td></tr>
+  <tr><td><code>folders.backup</code></td><td>string</td><td><em>(empty)</em></td><td>Backup folder for original copies</td></tr>
+  <tr><td><code>folders.separator</code></td><td>string</td><td><em>(empty)</em></td><td>Folder for separator sheet images</td></tr>
+  <tr><td><code>folders.tracking</code></td><td>string</td><td><code>{project}/tracking</code></td><td>Per-image tracking JSON files</td></tr>
+  <tr><td><code>folders.state</code></td><td>string</td><td><code>{project}/state</code></td><td>Pipeline state/manifests</td></tr>
+  <tr><td><code>folders.logs</code></td><td>string</td><td><code>{project}/logs</code></td><td>Log file output</td></tr>
+</table>
+
+<h3>15.3 <code>processing</code> (Step Enable/Disable)</h3>
+<table>
+  <tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr>
+  <tr><td><code>processing.enable_step_01_ingestion</code></td><td>bool</td><td>true</td><td>Enable Step 01</td></tr>
+  <tr><td><code>processing.enable_step_02_generate_data</code></td><td>bool</td><td>true</td><td>Enable Step 02</td></tr>
+  <tr><td><code>processing.enable_step_03_orientation_predict</code></td><td>bool</td><td>true</td><td>Enable Step 03</td></tr>
+  <tr><td><code>processing.enable_step_04_orientation_rotate</code></td><td>bool</td><td>true</td><td>Enable Step 04</td></tr>
+  <tr><td><code>processing.enable_step_05_deskew</code></td><td>bool</td><td>true</td><td>Enable Step 05</td></tr>
+  <tr><td><code>processing.enable_step_06_crop</code></td><td>bool</td><td>true</td><td>Enable Step 06</td></tr>
+  <tr><td><code>processing.enable_step_07_separator_detect</code></td><td>bool</td><td>false</td><td>Enable Step 07</td></tr>
+  <tr><td><code>processing.enable_step_08_batch_separation</code></td><td>bool</td><td>false</td><td>Enable Step 08</td></tr>
+  <tr><td><code>processing.enable_step_09_batch_rename</code></td><td>bool</td><td>false</td><td>Planned — not implemented</td></tr>
+  <tr><td><code>processing.enable_step_10_tiff_convert</code></td><td>bool</td><td>false</td><td>Planned — not implemented</td></tr>
+</table>
+
+<h3>15.4 <code>triton</code></h3>
+<table>
+  <tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr>
+  <tr><td><code>triton.server_url</code></td><td>string</td><td>"localhost:8000"</td><td>Triton gRPC endpoint (note: gRPC is typically port 8001)</td></tr>
+  <tr><td><code>triton.batch_size</code></td><td>int</td><td>8</td><td>Inference batch size (auto-tuned on start)</td></tr>
+  <tr><td><code>triton.timeout_sec</code></td><td>int</td><td>300</td><td>Request timeout in seconds</td></tr>
+  <tr><td><code>triton.enable_batching</code></td><td>bool</td><td>true</td><td>Enable Triton dynamic batching</td></tr>
+  <tr><td><code>triton.enable_dynamic_batching</code></td><td>bool</td><td>true</td><td>Enable Triton dynamic batching</td></tr>
+  <tr><td><code>triton.max_queue_delay_microseconds</code></td><td>int</td><td>400</td><td>Max queue delay before processing batch</td></tr>
+  <tr><td><code>triton.dynamic_batching_preferred_batch_size</code></td><td>int[]</td><td>[64, 32, 16]</td><td>Preferred batch sizes (descending)</td></tr>
+  <tr><td><code>triton.num_async_workers</code></td><td>int</td><td>12</td><td>Async worker threads</td></tr>
+  <tr><td><code>triton.retry_count</code></td><td>int</td><td>3</td><td>Retry failed requests</td></tr>
+  <tr><td><code>triton.separator_confidence_threshold</code></td><td>float</td><td>0.85</td><td>Confidence threshold for separator classification</td></tr>
+</table>
+
+<h3>15.5 <code>triton_models</code></h3>
+<table>
+  <tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr>
+  <tr><td><code>triton_models.orientation_model</code></td><td>string</td><td>"doc_ori"</td><td>Orientation model name</td></tr>
+  <tr><td><code>triton_models.classifier_model</code></td><td>string</td><td>"document_classifier"</td><td>Document classifier model name</td></tr>
+  <tr><td><code>triton_models.separator_model</code></td><td>string</td><td>"separator_detector"</td><td>Separator detector model name</td></tr>
+</table>
+
+<h3>15.6 <code>resources</code></h3>
+<table>
+  <tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr>
+  <tr><td><code>resources.max_workers</code></td><td>int</td><td>0</td><td>CPU worker threads (0 = auto-detect all cores)</td></tr>
+  <tr><td><code>resources.max_gpu_memory_fraction</code></td><td>float</td><td>0.8</td><td>GPU memory allocation fraction</td></tr>
+  <tr><td><code>resources.enable_gpu</code></td><td>bool</td><td>true</td><td>Enable GPU acceleration</td></tr>
+  <tr><td><code>resources.triton_instances</code></td><td>int</td><td>2</td><td>Triton model instance count</td></tr>
+</table>
+
+<h3>15.7 <code>metadata</code> / <code>paths</code></h3>
+<table>
+  <tr><th>Key</th><th>Type</th><th>Description</th></tr>
+  <tr><td><code>metadata.xmp_profile_path</code></td><td>string</td><td>XMP color profile file</td></tr>
+  <tr><td><code>metadata.operator_list_path</code></td><td>string</td><td>Operator lookup Excel file</td></tr>
+  <tr><td><code>metadata.metadata_list_path</code></td><td>string</td><td>Metadata lookup Excel file</td></tr>
+</table>
+<div class="callout callout-info">
+  <div class="callout-label">ℹ️ Note</div>
+  The <code>paths.*</code> keys are legacy aliases for <code>metadata.*</code>. Both are kept in sync automatically by <code>ConfigManager._sync_metadata_path_aliases()</code>.
+</div>
+
+<h3>15.8 <code>logging</code></h3>
+<table>
+  <tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr>
+  <tr><td><code>logging.level</code></td><td>string</td><td>"INFO"</td><td>Log level</td></tr>
+  <tr><td><code>logging.file</code></td><td>string</td><td><code>{project}/logs/pipeline.log</code></td><td>Log file path</td></tr>
+  <tr><td><code>logging.console</code></td><td>bool</td><td>true</td><td>Also log to console</td></tr>
+</table>
+
+<!-- ═══════════════════ 16. DEPENDENCIES ═══════════════════ -->
+<h1 id="dependencies">16. Dependencies</h1>
+
+<h3>16.1 Python Dependencies (<code>requirements.txt</code>)</h3>
+<table>
+  <tr><th>Package</th><th>Version</th><th>Used By</th></tr>
+  <tr><td><code>numpy</code></td><td>2.3.3</td><td>All image processing, Triton tensors</td></tr>
+  <tr><td><code>opencv-python</code></td><td>4.10.0.84</td><td>Steps 04, 05, 06 — rotation, deskew, crop</td></tr>
+  <tr><td><code>pandas</code></td><td>2.3.3</td><td>Step 02 — Excel reading, CSV generation</td></tr>
+  <tr><td><code>Pillow</code></td><td>11.3.0</td><td>Steps 01, 03, 07 — image metadata, preprocessing, P99</td></tr>
+  <tr><td><code>openpyxl</code></td><td>3.1.5</td><td>Step 02 — Excel read/write support</td></tr>
+  <tr><td><code>tritonclient[grpc]</code></td><td>2.45.0</td><td>Step 03 — gRPC inference client</td></tr>
+</table>
+
+<h3>16.2 System Dependencies</h3>
+<table>
+  <tr><th>Dependency</th><th>Required For</th><th>Notes</th></tr>
+  <tr><td>Python ≥3.11, &lt;3.14</td><td>Runtime</td><td>Uses match statements and type hints</td></tr>
+  <tr><td>Conda environment <code>camera-capture</code></td><td>START_APP.bat</td><td>Hardcoded in batch launcher</td></tr>
+  <tr><td>Docker Desktop</td><td>Triton server</td><td>Required for Step 03 (GPU inference)</td></tr>
+  <tr><td>NVIDIA GPU + drivers</td><td>GPU acceleration</td><td>Optional — falls back to CPU</td></tr>
+  <tr><td><code>nvidia-smi</code></td><td>Auto-tune</td><td>Optional — falls back to 6 GB baseline</td></tr>
+</table>
+
+<div class="footer">
+  <p><strong>ImageProcessing Auto v1.0</strong> — Complete Technical Documentation</p>
+  <p>Generated March 25, 2026 &nbsp;·&nbsp; 34 Python files &nbsp;·&nbsp; ~8,430 lines of code</p>
+</div>
+
+</div><!-- .container -->
+
+</body>
+</html>

@@ -98,13 +98,13 @@ const projects: Project[] = [
 function getTypeStyles(type: Project["type"]) {
   switch (type) {
     case "Live App":
-      return "border-white/40 bg-[#aed1d6]/32 text-[#2F2A26]";
+      return "border-[#a8d5a2]/60 bg-[#a8d5a2]/28 text-[#2F2A26]";
 
     case "GitHub":
-      return "border-white/40 bg-[#aed1d6]/32 text-[#2F2A26]";
+      return "border-[#a0b8d0]/60 bg-[#a0b8d0]/28 text-[#2F2A26]";
 
     case "Demo":
-      return "border-white/40 bg-[#aed1d6]/32 text-[#2F2A26]";
+      return "border-[#d4c070]/60 bg-[#d4c070]/22 text-[#2F2A26]";
 
     case "Case Study":
     default:
@@ -115,11 +115,11 @@ function getTypeStyles(type: Project["type"]) {
 function getStatusStyles(status?: Project["status"]) {
   switch (status) {
     case "Production":
-      return "border-white/35 bg-[#cfb0cd]/25 text-slate-700";
+      return "border-[#a8d5a2]/50 bg-[#a8d5a2]/20 text-slate-700";
     case "Internal":
-      return "border-white/35 bg-[#cfb0cd]/25 text-slate-700";
+      return "border-[#d4c070]/50 bg-[#d4c070]/18 text-slate-700";
     case "Prototype":
-      return "border-white/35 bg-[#cfb0cd]/25 text-slate-700";
+      return "border-[#d4a870]/50 bg-[#d4a870]/18 text-slate-700";
     case "Research":
     default:
       return "border-white/35 bg-[#cfb0cd]/25 text-slate-700";
@@ -198,14 +198,14 @@ export default function ProjectsSection() {
                           ? "warm"
                           : "default"
                       }
-                      className="group relative h-full overflow-hidden border border-white/32 p-8 transition duration-300 hover:!bg-[#D2EOD3] hover:!backdrop-blur-none hover:!bg-opacity-100 hover:border-[#BFDDBF] hover:shadow-[0_34px_90px_rgba(120,88,56,0.18),0_0_0_1px_rgba(210,224,211,0.9),0_0_100px_rgba(210,224,211,0.8)] focus-within:border-[#D2EOD3]"
+                      className="group relative h-full overflow-hidden border border-white/32 p-8 transition duration-300 hover:!bg-[#D2E0D3] hover:!backdrop-blur-none hover:!bg-opacity-100 hover:border-[#BFDDBF] hover:shadow-[0_34px_90px_rgba(120,88,56,0.18),0_0_0_1px_rgba(210,224,211,0.9),0_0_100px_rgba(210,224,211,0.8)] focus-within:border-[#D2E0D3]"
                     >
                       <div className="absolute inset-x-0 top-0 h-px bg-white/40 transition duration-300 group-hover:bg-white/70" />
 
                       <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100">
-                        <div className="absolute -right-10 -top-10 h-36 w-36 rounded-full bg-[#D2EOD3]/30 blur-3xl" />
-                        <div className="absolute bottom-0 left-0 h-32 w-32 rounded-full bg-[#D2EOD3]/22 blur-3xl" />
-                        <div className="absolute right-1/3 top-1/2 h-24 w-24 rounded-full bg-[#D2EOD3]/18 blur-2xl" />
+                        <div className="absolute -right-10 -top-10 h-36 w-36 rounded-full bg-[#D2E0D3]/30 blur-3xl" />
+                        <div className="absolute bottom-0 left-0 h-32 w-32 rounded-full bg-[#D2E0D3]/22 blur-3xl" />
+                        <div className="absolute right-1/3 top-1/2 h-24 w-24 rounded-full bg-[#D2E0D3]/18 blur-2xl" />
                       </div>
 
                       <div className="relative z-10 flex items-start justify-between gap-4">

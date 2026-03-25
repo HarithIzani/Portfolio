@@ -5,7 +5,9 @@ import Link from "next/link";
 import GlassCard from "@/components/ui/glass-card";
 
 export default function ArchivalAIPipelinePage() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isImageOpen, setIsImageOpen] = useState(false);
+  const [isDocOpen, setIsDocOpen] = useState(false);
+
   const tech = [
     "Python",
     "TensorFlow",
@@ -16,6 +18,9 @@ export default function ArchivalAIPipelinePage() {
     "Docker",
     "REST APIs",
   ];
+
+  const pipelineImageSrc = "/archival-pipeline.jpg";
+  const documentationSrc = "/ImageProcessing_Auto_Documentation.html";
 
   return (
     <main className="min-h-screen px-6 py-10 text-[#2F2A26]">
@@ -146,36 +151,74 @@ export default function ArchivalAIPipelinePage() {
             </p>
 
             <div className="mt-6">
-              <div
-                onClick={() => setIsOpen(true)}
-                className="cursor-pointer overflow-hidden rounded-[20px] border border-white/40"
+              <button
+                type="button"
+                onClick={() => setIsImageOpen(true)}
+                className="block w-full cursor-pointer text-left"
               >
-                <img
-                  src="/archival-pipeline.jpg"
-                  alt="Archival AI Pipeline Diagram"
-                  className="w-full object-cover transition duration-300 hover:scale-[1.02]"
-                />
-              </div>
+                <div className="overflow-hidden rounded-[20px] border border-white/40">
+                  <img
+                    src={pipelineImageSrc}
+                    alt="Archival AI Pipeline Diagram"
+                    className="w-full object-cover transition duration-300 hover:scale-[1.02]"
+                  />
+                </div>
+              </button>
             </div>
           </GlassCard>
         </section>
 
+        <section className="mt-8">
+          <GlassCard variant="highlight" className="p-8 md:p-10">
+            <h2 className="text-2xl font-semibold">Technical Documentation</h2>
+            <div className="mt-4 h-px w-16 bg-[#C6A27A]/45" />
+
+            <p className="mt-6 max-w-3xl text-sm leading-7 text-[#6B625A]">
+              Full technical documentation for the ImageProcessing Auto system,
+              including architecture, directory structure, configuration, Triton
+              integration, models, and detailed step-by-step pipeline documentation.
+            </p>
+
+            <div className="mt-6 flex flex-wrap gap-4">
+              <a
+                href={documentationSrc}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary rounded-full px-6 py-3 text-sm font-medium"
+              >
+                Open Full Documentation ↗
+              </a>
+
+              <button
+                type="button"
+                onClick={() => setIsDocOpen(true)}
+                className="rounded-full border border-white/40 bg-white/16 px-6 py-3 text-sm font-medium text-[#2F2A26] transition hover:bg-white/24"
+              >
+                Preview Inside Page
+              </button>
+            </div>
+          </GlassCard>
+        </section>
       </div>
 
-      {isOpen && (
+      {isImageOpen && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md"
-          onClick={() => setIsOpen(false)}
+          onClick={() => setIsImageOpen(false)}
         >
-          <div className="relative max-h-[90vh] max-w-[90vw]">
+          <div
+            className="relative max-h-[90vh] max-w-[90vw]"
+            onClick={(e) => e.stopPropagation()}
+          >
             <img
-              src="/archival-pipeline.jpg"
+              src={pipelineImageSrc}
               alt="Full Pipeline"
               className="max-h-[90vh] max-w-[90vw] rounded-[16px] shadow-2xl"
             />
 
             <button
-              onClick={() => setIsOpen(false)}
+              type="button"
+              onClick={() => setIsImageOpen(false)}
               className="absolute -right-4 -top-4 rounded-full bg-white px-3 py-1 text-sm shadow-lg"
             >
               ✕
@@ -184,6 +227,31 @@ export default function ArchivalAIPipelinePage() {
         </div>
       )}
 
+      {isDocOpen && (
+        <div
+          className="fixed inset-0 z-50 bg-black/70 p-6 backdrop-blur-md"
+          onClick={() => setIsDocOpen(false)}
+        >
+          <div
+            className="relative mx-auto mt-4 h-[90vh] w-full max-w-7xl overflow-hidden rounded-[20px] border border-white/20 bg-white shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={() => setIsDocOpen(false)}
+              className="btn-primary absolute right-4 top-4 z-10 rounded-full px-4 py-2 text-sm font-medium"
+            >
+              ✕ Close
+            </button>
+
+            <iframe
+              src={documentationSrc}
+              title="ImageProcessing Auto Documentation"
+              className="h-full w-full"
+            />
+          </div>
+        </div>
+      )}
     </main>
   );
 }

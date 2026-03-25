@@ -73,7 +73,7 @@ h3,
 }
 
 .btn-primary:hover {
-  background-color: #D2EOD3; /* full green */
+  background-color: #D2E0D3; /* full green */
   border-color: rgba(180, 200, 180, 0.6);
 
   transform: translateY(-1px);
