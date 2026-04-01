@@ -23,6 +23,23 @@ type Project = {
 
 const projects: Project[] = [
   {
+    title: "Portable Traffic Data Gathering Tool",
+    summary:
+      "Built a portable computer vision system for near real-time traffic monitoring on edge hardware, detecting vehicles, pedestrians, and environmental conditions using transfer learning.",
+    type: "Case Study",
+    action: "View Details",
+    link: "/projects/portable-traffic-data-gathering-tool",
+    tech: [
+      "Python",
+      "MobileNet V2 640",
+      "Transfer Learning",
+      "Computer Vision",
+      "Raspberry Pi",
+      "Berkeley DeepDrive",
+    ],
+    status: "Research",
+  },
+  {
     title: "Archival AI Pipeline",
     summary:
       "Processed ~100k archival images in ~5 hours using an orchestrated AI pipeline combining GPU-based inference, multi-core CPU processing, and config-driven workflow automation.",
@@ -40,23 +57,6 @@ const projects: Project[] = [
       "Metadata Generation",
     ],
     status: "Production",
-  },
-  {
-    title: "Portable Traffic Data Gathering Tool",
-    summary:
-      "Built a portable computer vision system for near real-time traffic monitoring on edge hardware, detecting vehicles, pedestrians, and environmental conditions using transfer learning.",
-    type: "Case Study",
-    action: "View Details",
-    link: "/projects/portable-traffic-data-gathering-tool",
-    tech: [
-      "Python",
-      "MobileNet V2 640",
-      "Transfer Learning",
-      "Computer Vision",
-      "Raspberry Pi",
-      "Berkeley DeepDrive",
-    ],
-    status: "Research",
   },
   {
     title: "EEG-Based Stress Profiling (ADHD vs Normal)",

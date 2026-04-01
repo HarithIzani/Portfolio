@@ -37,10 +37,10 @@ type ApiResult = {
 };
 type FrameRecord = Record<string, string | number>;
 
-function drawDetections(canvas: HTMLCanvasElement, detections: Detection[]) {
+function drawDetections(canvas: HTMLCanvasElement, detections: Detection[], clear = true) {
   const ctx = canvas.getContext("2d");
   if (!ctx) return;
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  if (clear) ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   const { width: w, height: h } = canvas;
   const fontSize = Math.max(12, Math.round(h / 50));
@@ -160,7 +160,7 @@ export default function TrafficDetector() {
       canvas.height = img.naturalHeight;
       const ctx = canvas.getContext("2d")!;
       ctx.drawImage(img, 0, 0);
-      drawDetections(canvas, result.detections);
+      drawDetections(canvas, result.detections, false); // false = don't clear the image
       URL.revokeObjectURL(url);
     };
     img.src = url;
