@@ -21,7 +21,7 @@ export default function PortableTrafficDataGatheringToolPage() {
   ];
 
   const githubUrl =
-    "https://github.com/HarithIzani/FYP-Portable-Traffic-Data-Gathering-Tool-Tensorflow/wiki";
+    "https://github.com/HarithIzani/FYP-Portable-Traffic-Data-Gathering-Tool-Tensorflow";
   const diagramSrc = "/portable-traffic-diagram.svg";
   const additionalImageSrc = "/traffic-data-diagram.png";
   const documentationSrc = "/Traffic_Data_Documentation.html";
