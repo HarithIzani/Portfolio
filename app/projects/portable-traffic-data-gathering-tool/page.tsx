@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import GlassCard from "@/components/ui/glass-card";
 import ScrollToTopButton from "@/components/ui/scroll-to-top";
+import TrafficDetector from "@/components/traffic-demo/TrafficDetector";
 
 export default function PortableTrafficDataGatheringToolPage() {
   const [isOpen, setIsOpen] = useState(false);
@@ -296,6 +297,24 @@ export default function PortableTrafficDataGatheringToolPage() {
                 better handle both light and dark environments.
               </li>
             </ul>
+          </GlassCard>
+        </section>
+
+        <section className="mt-8">
+          <GlassCard variant="teal" className="p-8 md:p-10">
+            <h2 className="text-3xl font-semibold">Live Demo</h2>
+            <div className="mt-4 h-px w-16 bg-[#C9A84C]/60" />
+
+            <p className="mt-6 max-w-3xl text-sm leading-7 text-[#7A4E46]">
+              Upload a traffic image or video and watch the system detect
+              vehicles and pedestrians in real time. The framework automatically
+              selects the day or night model based on frame luminance — exactly
+              as it runs on the Raspberry Pi. Max file size: 50 MB.
+            </p>
+
+            <div className="mt-8">
+              <TrafficDetector />
+            </div>
           </GlassCard>
         </section>
 
